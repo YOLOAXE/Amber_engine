@@ -1,0 +1,9 @@
+; AMBERDLL_Debug.def : Declares the module parameters for the application
+
+LIBRARY AMBERDLL_Debug
+DESCRIPTION 'AMBER_ENGINE_DLL'
+
+EXPORTS
+	; Explicitly exported initialization routine
+	create_object_W @1
+	destroy_object_W @2
