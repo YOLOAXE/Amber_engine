@@ -4,7 +4,7 @@ namespace Ge
 {
 	bool LogicalDevice::initialize(VulkanMisc * vM, WindowSurface * m_windowSurface)
 	{
-		QueueFamilyIndices indices = PhysicalDevices::findQueueFamilies(vM->str_VulkanDeviceMisc->str_physicalDevice, vDM);
+		QueueFamilyIndices indices = PhysicalDevices::findQueueFamilies(vM->str_VulkanDeviceMisc->str_physicalDevice, vM);
 		
 		std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
 		std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
@@ -69,13 +69,13 @@ namespace Ge
 		Debug::INITSUCCESS("LogicalDevice");
 		
 		vkGetDeviceQueue(m_device, indices.graphicsFamily.value(), 0, &m_graphicsQueue);
-		m_windowSurface->SetupPresentQueue(m_device, indices.presentFamily.value(), vDM);
+		m_windowSurface->SetupPresentQueue(indices.presentFamily.value(), vM);
 		vM->str_VulkanDeviceMisc->str_device = m_device;
 		vM->str_VulkanDeviceMisc->str_graphicsQueue = m_graphicsQueue;
 		return true;
 	}
 
-	void LogicalDevice::Release()
+	void LogicalDevice::release()
 	{	
 		vkDestroyDevice(vulkanM->str_VulkanDeviceMisc->str_device, nullptr);
 		vulkanM->str_VulkanDeviceMisc->str_device = VK_NULL_HANDLE;

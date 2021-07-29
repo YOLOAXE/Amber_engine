@@ -1,9 +1,9 @@
 
-if (NOT EXISTS "/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/glfw/install_manifest.txt")
-  message(FATAL_ERROR "Cannot find install manifest: \"/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/glfw/install_manifest.txt\"")
+if (NOT EXISTS "/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/glfw/install_manifest.txt")
+  message(FATAL_ERROR "Cannot find install manifest: \"/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/glfw/install_manifest.txt\"")
 endif()
 
-file(READ "/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/glfw/install_manifest.txt" files)
+file(READ "/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/glfw/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 
 foreach (file ${files})

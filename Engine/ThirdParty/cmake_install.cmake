@@ -1,4 +1,4 @@
-# Install script for directory: /home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty
+# Install script for directory: /home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,14 +39,14 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/glfw/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/termcolor/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/tinyobjloader/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/stb-cmake/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/glm/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/imgui-cmake/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/Bullet3/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/openal-soft/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/glfw/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/termcolor/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/tinyobjloader/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/stb-cmake/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/glm/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/imgui-cmake/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/openal-soft/cmake_install.cmake")
 
 endif()
 

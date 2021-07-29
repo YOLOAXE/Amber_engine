@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/m/Documents/Moteur/Amber_engine/AmberEngine
+CMAKE_SOURCE_DIR = /home/m/Documents/Moteur/AMBER_ENGINE/Engine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/m/Documents/Moteur/Amber_engine/AmberEngine
+CMAKE_BINARY_DIR = /home/m/Documents/Moteur/AMBER_ENGINE/Engine
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(CMAKE_COMMAND) -E cmake_progress_start /home/m/Documents/Moteur/Amber_engine/AmberEngine/CMakeFiles /home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/imgui-cmake/CMakeFiles/progress.marks
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/m/Documents/Moteur/Amber_engine/AmberEngine/CMakeFiles 0
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(CMAKE_COMMAND) -E cmake_progress_start /home/m/Documents/Moteur/AMBER_ENGINE/Engine/CMakeFiles /home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/imgui-cmake/CMakeFiles/progress.marks
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/m/Documents/Moteur/AMBER_ENGINE/Engine/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/clean
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/preinstall
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/preinstall
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/rule:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/rule
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/rule
 .PHONY : ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/rule
 
 # Convenience name for target.
@@ -168,7 +168,7 @@ ImGUI: ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/rule
 
 # fast build rule for target.
 ImGUI/fast:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build
 .PHONY : ImGUI/fast
 
 Source/imgui.o: Source/imgui.cpp.o
@@ -177,7 +177,7 @@ Source/imgui.o: Source/imgui.cpp.o
 
 # target to build an object file
 Source/imgui.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui.cpp.o
 .PHONY : Source/imgui.cpp.o
 
 Source/imgui.i: Source/imgui.cpp.i
@@ -186,7 +186,7 @@ Source/imgui.i: Source/imgui.cpp.i
 
 # target to preprocess a source file
 Source/imgui.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui.cpp.i
 .PHONY : Source/imgui.cpp.i
 
 Source/imgui.s: Source/imgui.cpp.s
@@ -195,7 +195,7 @@ Source/imgui.s: Source/imgui.cpp.s
 
 # target to generate assembly for a file
 Source/imgui.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui.cpp.s
 .PHONY : Source/imgui.cpp.s
 
 Source/imgui_demo.o: Source/imgui_demo.cpp.o
@@ -204,7 +204,7 @@ Source/imgui_demo.o: Source/imgui_demo.cpp.o
 
 # target to build an object file
 Source/imgui_demo.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_demo.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_demo.cpp.o
 .PHONY : Source/imgui_demo.cpp.o
 
 Source/imgui_demo.i: Source/imgui_demo.cpp.i
@@ -213,7 +213,7 @@ Source/imgui_demo.i: Source/imgui_demo.cpp.i
 
 # target to preprocess a source file
 Source/imgui_demo.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_demo.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_demo.cpp.i
 .PHONY : Source/imgui_demo.cpp.i
 
 Source/imgui_demo.s: Source/imgui_demo.cpp.s
@@ -222,7 +222,7 @@ Source/imgui_demo.s: Source/imgui_demo.cpp.s
 
 # target to generate assembly for a file
 Source/imgui_demo.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_demo.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_demo.cpp.s
 .PHONY : Source/imgui_demo.cpp.s
 
 Source/imgui_draw.o: Source/imgui_draw.cpp.o
@@ -231,7 +231,7 @@ Source/imgui_draw.o: Source/imgui_draw.cpp.o
 
 # target to build an object file
 Source/imgui_draw.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_draw.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_draw.cpp.o
 .PHONY : Source/imgui_draw.cpp.o
 
 Source/imgui_draw.i: Source/imgui_draw.cpp.i
@@ -240,7 +240,7 @@ Source/imgui_draw.i: Source/imgui_draw.cpp.i
 
 # target to preprocess a source file
 Source/imgui_draw.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_draw.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_draw.cpp.i
 .PHONY : Source/imgui_draw.cpp.i
 
 Source/imgui_draw.s: Source/imgui_draw.cpp.s
@@ -249,7 +249,7 @@ Source/imgui_draw.s: Source/imgui_draw.cpp.s
 
 # target to generate assembly for a file
 Source/imgui_draw.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_draw.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_draw.cpp.s
 .PHONY : Source/imgui_draw.cpp.s
 
 Source/imgui_impl_glfw.o: Source/imgui_impl_glfw.cpp.o
@@ -258,7 +258,7 @@ Source/imgui_impl_glfw.o: Source/imgui_impl_glfw.cpp.o
 
 # target to build an object file
 Source/imgui_impl_glfw.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_glfw.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_glfw.cpp.o
 .PHONY : Source/imgui_impl_glfw.cpp.o
 
 Source/imgui_impl_glfw.i: Source/imgui_impl_glfw.cpp.i
@@ -267,7 +267,7 @@ Source/imgui_impl_glfw.i: Source/imgui_impl_glfw.cpp.i
 
 # target to preprocess a source file
 Source/imgui_impl_glfw.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_glfw.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_glfw.cpp.i
 .PHONY : Source/imgui_impl_glfw.cpp.i
 
 Source/imgui_impl_glfw.s: Source/imgui_impl_glfw.cpp.s
@@ -276,7 +276,7 @@ Source/imgui_impl_glfw.s: Source/imgui_impl_glfw.cpp.s
 
 # target to generate assembly for a file
 Source/imgui_impl_glfw.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_glfw.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_glfw.cpp.s
 .PHONY : Source/imgui_impl_glfw.cpp.s
 
 Source/imgui_impl_vulkan.o: Source/imgui_impl_vulkan.cpp.o
@@ -285,7 +285,7 @@ Source/imgui_impl_vulkan.o: Source/imgui_impl_vulkan.cpp.o
 
 # target to build an object file
 Source/imgui_impl_vulkan.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_vulkan.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_vulkan.cpp.o
 .PHONY : Source/imgui_impl_vulkan.cpp.o
 
 Source/imgui_impl_vulkan.i: Source/imgui_impl_vulkan.cpp.i
@@ -294,7 +294,7 @@ Source/imgui_impl_vulkan.i: Source/imgui_impl_vulkan.cpp.i
 
 # target to preprocess a source file
 Source/imgui_impl_vulkan.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_vulkan.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_vulkan.cpp.i
 .PHONY : Source/imgui_impl_vulkan.cpp.i
 
 Source/imgui_impl_vulkan.s: Source/imgui_impl_vulkan.cpp.s
@@ -303,7 +303,7 @@ Source/imgui_impl_vulkan.s: Source/imgui_impl_vulkan.cpp.s
 
 # target to generate assembly for a file
 Source/imgui_impl_vulkan.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_vulkan.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_vulkan.cpp.s
 .PHONY : Source/imgui_impl_vulkan.cpp.s
 
 Source/imgui_widgets.o: Source/imgui_widgets.cpp.o
@@ -312,7 +312,7 @@ Source/imgui_widgets.o: Source/imgui_widgets.cpp.o
 
 # target to build an object file
 Source/imgui_widgets.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_widgets.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_widgets.cpp.o
 .PHONY : Source/imgui_widgets.cpp.o
 
 Source/imgui_widgets.i: Source/imgui_widgets.cpp.i
@@ -321,7 +321,7 @@ Source/imgui_widgets.i: Source/imgui_widgets.cpp.i
 
 # target to preprocess a source file
 Source/imgui_widgets.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_widgets.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_widgets.cpp.i
 .PHONY : Source/imgui_widgets.cpp.i
 
 Source/imgui_widgets.s: Source/imgui_widgets.cpp.s
@@ -330,7 +330,7 @@ Source/imgui_widgets.s: Source/imgui_widgets.cpp.s
 
 # target to generate assembly for a file
 Source/imgui_widgets.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_widgets.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_widgets.cpp.s
 .PHONY : Source/imgui_widgets.cpp.s
 
 # Help Target
@@ -375,6 +375,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,4 +1,4 @@
-# Install script for directory: /home/m/Documents/Moteur/Amber_engine/AmberEngine
+# Install script for directory: /home/m/Documents/Moteur/AMBER_ENGINE/Engine
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,9 +39,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/AMBER/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/Amber_engine/AmberEngine/AMBERDLL/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/AMBER/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/AMBERDLL/cmake_install.cmake")
 
 endif()
 
@@ -53,5 +53,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/m/Documents/Moteur/Amber_engine/AmberEngine/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/m/Documents/Moteur/AMBER_ENGINE/Engine/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

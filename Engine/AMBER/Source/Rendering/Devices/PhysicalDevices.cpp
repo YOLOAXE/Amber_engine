@@ -25,11 +25,11 @@ namespace Ge
 
 		for (int i = 0; i < devices.size() && m_physicalDevice == VK_NULL_HANDLE; i++)// iteration de toutes les cartes graphiques en selectionnant la meilleur
 		{
-			if (isDeviceSuitable(devices[i], vM->str_VulkanDeviceMisc))// verification des conditions d'utilisation de la carte graphique
+			if (isDeviceSuitable(devices[i], vM))// verification des conditions d'utilisation de la carte graphique
 			{
 				m_physicalDevice = devices[i];
 				vM->str_VulkanDeviceMisc->str_physicalDevice = m_physicalDevice;
-				m_msaaSamples = getMaxUsableSampleCount(vM->str_VulkanDeviceMisc);// recuperation du nombre maximal de sample par pixel (anti aliasing)
+				m_msaaSamples = getMaxUsableSampleCount(vM);// recuperation du nombre maximal de sample par pixel (anti aliasing)
 				vM->str_VulkanDeviceMisc->str_msaaSamples = m_msaaSamples;
 			}
 		}
@@ -69,9 +69,9 @@ namespace Ge
 
 	bool PhysicalDevices::isDeviceSuitable(VkPhysicalDevice device, VulkanMisc * vM)
 	{
-		QueueFamilyIndices indices = PhysicalDevices::findQueueFamilies(device,vM->str_VulkanDeviceMisc);//On recupere la famille de queue de la carte graphique Prensent,graphique
+		QueueFamilyIndices indices = PhysicalDevices::findQueueFamilies(device,vM);//On recupere la famille de queue de la carte graphique Prensent,graphique
 
-		bool extensionsSupported = checkDeviceExtensionSupport(device, vM->str_VulkanDeviceMisc);//on regarde si l'extention vulkan est supporter par la carte graphique
+		bool extensionsSupported = checkDeviceExtensionSupport(device, vM);//on regarde si l'extention vulkan est supporter par la carte graphique
 
 		bool swapChainAdequate = false;
 		if (extensionsSupported)

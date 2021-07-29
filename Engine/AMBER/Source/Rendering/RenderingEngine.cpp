@@ -36,12 +36,42 @@ namespace Ge
             Debug::INITFAILED("WindowSurface");
             return false;
         }
+        if(!RenderingEngine::m_physicalDevice.initialize(&m_vulkanMisc))
+        {
+            Debug::INITFAILED("PhysicalDevice");
+            return false;
+        }
+        if(!RenderingEngine::m_logicalDevice.initialize(&m_vulkanMisc,&m_windowSurface))
+        {
+            Debug::INITFAILED("LogicalDevice");
+            return false;
+        }
+        if(!RenderingEngine::m_commandPool.initialize(&m_vulkanMisc))
+        {
+            Debug::INITFAILED("CommandPool");
+            return false;   
+        }
+        if(!RenderingEngine::m_bufferManager.initialize(&m_vulkanMisc))
+        {
+            Debug::INITFAILED("BufferManager");
+            return false; 
+        }
+        if(!RenderingEngine::m_swapChain.initialize(&m_vulkanMisc))
+        {
+            Debug::INITFAILED("SwapChain");
+            return false;
+        }
         Debug::INITSUCCESS("RenderingEngine");
         return true;
     }
 
     void RenderingEngine::release()
     {
+        RenderingEngine::m_swapChain.release();
+        RenderingEngine::m_bufferManager.release();
+        RenderingEngine::m_commandPool.release();
+        RenderingEngine::m_logicalDevice.release();
+        RenderingEngine::m_physicalDevice.release();
         RenderingEngine::m_windowSurface.release();
         RenderingEngine::m_validationLayer.release();
 		RenderingEngine::m_instanceVulkan.release();

@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/m/Documents/Moteur/Amber_engine/AmberEngine
+CMAKE_SOURCE_DIR = /home/m/Documents/Moteur/AMBER_ENGINE/Engine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/m/Documents/Moteur/Amber_engine/AmberEngine
+CMAKE_BINARY_DIR = /home/m/Documents/Moteur/AMBER_ENGINE/Engine
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(CMAKE_COMMAND) -E cmake_progress_start /home/m/Documents/Moteur/Amber_engine/AmberEngine/CMakeFiles /home/m/Documents/Moteur/Amber_engine/AmberEngine/AMBER/CMakeFiles/progress.marks
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/m/Documents/Moteur/Amber_engine/AmberEngine/CMakeFiles 0
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(CMAKE_COMMAND) -E cmake_progress_start /home/m/Documents/Moteur/AMBER_ENGINE/Engine/CMakeFiles /home/m/Documents/Moteur/AMBER_ENGINE/Engine/AMBER/CMakeFiles/progress.marks
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/m/Documents/Moteur/AMBER_ENGINE/Engine/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/clean
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/preinstall
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/preinstall
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 AMBER/CMakeFiles/AMBER.dir/rule:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/CMakeFiles/AMBER.dir/rule
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f CMakeFiles/Makefile2 AMBER/CMakeFiles/AMBER.dir/rule
 .PHONY : AMBER/CMakeFiles/AMBER.dir/rule
 
 # Convenience name for target.
@@ -168,7 +168,7 @@ AMBER: AMBER/CMakeFiles/AMBER.dir/rule
 
 # fast build rule for target.
 AMBER/fast:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/build
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/build
 .PHONY : AMBER/fast
 
 Source/Debug/Debug.o: Source/Debug/Debug.cpp.o
@@ -177,7 +177,7 @@ Source/Debug/Debug.o: Source/Debug/Debug.cpp.o
 
 # target to build an object file
 Source/Debug/Debug.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Debug/Debug.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Debug/Debug.cpp.o
 .PHONY : Source/Debug/Debug.cpp.o
 
 Source/Debug/Debug.i: Source/Debug/Debug.cpp.i
@@ -186,7 +186,7 @@ Source/Debug/Debug.i: Source/Debug/Debug.cpp.i
 
 # target to preprocess a source file
 Source/Debug/Debug.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Debug/Debug.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Debug/Debug.cpp.i
 .PHONY : Source/Debug/Debug.cpp.i
 
 Source/Debug/Debug.s: Source/Debug/Debug.cpp.s
@@ -195,7 +195,7 @@ Source/Debug/Debug.s: Source/Debug/Debug.cpp.s
 
 # target to generate assembly for a file
 Source/Debug/Debug.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Debug/Debug.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Debug/Debug.cpp.s
 .PHONY : Source/Debug/Debug.cpp.s
 
 Source/GameEngine.o: Source/GameEngine.cpp.o
@@ -204,7 +204,7 @@ Source/GameEngine.o: Source/GameEngine.cpp.o
 
 # target to build an object file
 Source/GameEngine.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/GameEngine.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/GameEngine.cpp.o
 .PHONY : Source/GameEngine.cpp.o
 
 Source/GameEngine.i: Source/GameEngine.cpp.i
@@ -213,7 +213,7 @@ Source/GameEngine.i: Source/GameEngine.cpp.i
 
 # target to preprocess a source file
 Source/GameEngine.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/GameEngine.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/GameEngine.cpp.i
 .PHONY : Source/GameEngine.cpp.i
 
 Source/GameEngine.s: Source/GameEngine.cpp.s
@@ -222,7 +222,7 @@ Source/GameEngine.s: Source/GameEngine.cpp.s
 
 # target to generate assembly for a file
 Source/GameEngine.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/GameEngine.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/GameEngine.cpp.s
 .PHONY : Source/GameEngine.cpp.s
 
 Source/Main.o: Source/Main.cpp.o
@@ -231,7 +231,7 @@ Source/Main.o: Source/Main.cpp.o
 
 # target to build an object file
 Source/Main.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Main.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Main.cpp.o
 .PHONY : Source/Main.cpp.o
 
 Source/Main.i: Source/Main.cpp.i
@@ -240,7 +240,7 @@ Source/Main.i: Source/Main.cpp.i
 
 # target to preprocess a source file
 Source/Main.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Main.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Main.cpp.i
 .PHONY : Source/Main.cpp.i
 
 Source/Main.s: Source/Main.cpp.s
@@ -249,8 +249,116 @@ Source/Main.s: Source/Main.cpp.s
 
 # target to generate assembly for a file
 Source/Main.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Main.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Main.cpp.s
 .PHONY : Source/Main.cpp.s
+
+Source/Rendering/Buffer/BufferManager.o: Source/Rendering/Buffer/BufferManager.cpp.o
+
+.PHONY : Source/Rendering/Buffer/BufferManager.o
+
+# target to build an object file
+Source/Rendering/Buffer/BufferManager.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Buffer/BufferManager.cpp.o
+.PHONY : Source/Rendering/Buffer/BufferManager.cpp.o
+
+Source/Rendering/Buffer/BufferManager.i: Source/Rendering/Buffer/BufferManager.cpp.i
+
+.PHONY : Source/Rendering/Buffer/BufferManager.i
+
+# target to preprocess a source file
+Source/Rendering/Buffer/BufferManager.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Buffer/BufferManager.cpp.i
+.PHONY : Source/Rendering/Buffer/BufferManager.cpp.i
+
+Source/Rendering/Buffer/BufferManager.s: Source/Rendering/Buffer/BufferManager.cpp.s
+
+.PHONY : Source/Rendering/Buffer/BufferManager.s
+
+# target to generate assembly for a file
+Source/Rendering/Buffer/BufferManager.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Buffer/BufferManager.cpp.s
+.PHONY : Source/Rendering/Buffer/BufferManager.cpp.s
+
+Source/Rendering/Devices/LogicalDevice.o: Source/Rendering/Devices/LogicalDevice.cpp.o
+
+.PHONY : Source/Rendering/Devices/LogicalDevice.o
+
+# target to build an object file
+Source/Rendering/Devices/LogicalDevice.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Devices/LogicalDevice.cpp.o
+.PHONY : Source/Rendering/Devices/LogicalDevice.cpp.o
+
+Source/Rendering/Devices/LogicalDevice.i: Source/Rendering/Devices/LogicalDevice.cpp.i
+
+.PHONY : Source/Rendering/Devices/LogicalDevice.i
+
+# target to preprocess a source file
+Source/Rendering/Devices/LogicalDevice.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Devices/LogicalDevice.cpp.i
+.PHONY : Source/Rendering/Devices/LogicalDevice.cpp.i
+
+Source/Rendering/Devices/LogicalDevice.s: Source/Rendering/Devices/LogicalDevice.cpp.s
+
+.PHONY : Source/Rendering/Devices/LogicalDevice.s
+
+# target to generate assembly for a file
+Source/Rendering/Devices/LogicalDevice.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Devices/LogicalDevice.cpp.s
+.PHONY : Source/Rendering/Devices/LogicalDevice.cpp.s
+
+Source/Rendering/Devices/PhysicalDevices.o: Source/Rendering/Devices/PhysicalDevices.cpp.o
+
+.PHONY : Source/Rendering/Devices/PhysicalDevices.o
+
+# target to build an object file
+Source/Rendering/Devices/PhysicalDevices.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Devices/PhysicalDevices.cpp.o
+.PHONY : Source/Rendering/Devices/PhysicalDevices.cpp.o
+
+Source/Rendering/Devices/PhysicalDevices.i: Source/Rendering/Devices/PhysicalDevices.cpp.i
+
+.PHONY : Source/Rendering/Devices/PhysicalDevices.i
+
+# target to preprocess a source file
+Source/Rendering/Devices/PhysicalDevices.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Devices/PhysicalDevices.cpp.i
+.PHONY : Source/Rendering/Devices/PhysicalDevices.cpp.i
+
+Source/Rendering/Devices/PhysicalDevices.s: Source/Rendering/Devices/PhysicalDevices.cpp.s
+
+.PHONY : Source/Rendering/Devices/PhysicalDevices.s
+
+# target to generate assembly for a file
+Source/Rendering/Devices/PhysicalDevices.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Devices/PhysicalDevices.cpp.s
+.PHONY : Source/Rendering/Devices/PhysicalDevices.cpp.s
+
+Source/Rendering/Pool/CommandPool.o: Source/Rendering/Pool/CommandPool.cpp.o
+
+.PHONY : Source/Rendering/Pool/CommandPool.o
+
+# target to build an object file
+Source/Rendering/Pool/CommandPool.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Pool/CommandPool.cpp.o
+.PHONY : Source/Rendering/Pool/CommandPool.cpp.o
+
+Source/Rendering/Pool/CommandPool.i: Source/Rendering/Pool/CommandPool.cpp.i
+
+.PHONY : Source/Rendering/Pool/CommandPool.i
+
+# target to preprocess a source file
+Source/Rendering/Pool/CommandPool.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Pool/CommandPool.cpp.i
+.PHONY : Source/Rendering/Pool/CommandPool.cpp.i
+
+Source/Rendering/Pool/CommandPool.s: Source/Rendering/Pool/CommandPool.cpp.s
+
+.PHONY : Source/Rendering/Pool/CommandPool.s
+
+# target to generate assembly for a file
+Source/Rendering/Pool/CommandPool.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Pool/CommandPool.cpp.s
+.PHONY : Source/Rendering/Pool/CommandPool.cpp.s
 
 Source/Rendering/RenderingEngine.o: Source/Rendering/RenderingEngine.cpp.o
 
@@ -258,7 +366,7 @@ Source/Rendering/RenderingEngine.o: Source/Rendering/RenderingEngine.cpp.o
 
 # target to build an object file
 Source/Rendering/RenderingEngine.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/RenderingEngine.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/RenderingEngine.cpp.o
 .PHONY : Source/Rendering/RenderingEngine.cpp.o
 
 Source/Rendering/RenderingEngine.i: Source/Rendering/RenderingEngine.cpp.i
@@ -267,7 +375,7 @@ Source/Rendering/RenderingEngine.i: Source/Rendering/RenderingEngine.cpp.i
 
 # target to preprocess a source file
 Source/Rendering/RenderingEngine.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/RenderingEngine.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/RenderingEngine.cpp.i
 .PHONY : Source/Rendering/RenderingEngine.cpp.i
 
 Source/Rendering/RenderingEngine.s: Source/Rendering/RenderingEngine.cpp.s
@@ -276,8 +384,62 @@ Source/Rendering/RenderingEngine.s: Source/Rendering/RenderingEngine.cpp.s
 
 # target to generate assembly for a file
 Source/Rendering/RenderingEngine.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/RenderingEngine.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/RenderingEngine.cpp.s
 .PHONY : Source/Rendering/RenderingEngine.cpp.s
+
+Source/Rendering/SwapChain/ImageViewSwapChains.o: Source/Rendering/SwapChain/ImageViewSwapChains.cpp.o
+
+.PHONY : Source/Rendering/SwapChain/ImageViewSwapChains.o
+
+# target to build an object file
+Source/Rendering/SwapChain/ImageViewSwapChains.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/ImageViewSwapChains.cpp.o
+.PHONY : Source/Rendering/SwapChain/ImageViewSwapChains.cpp.o
+
+Source/Rendering/SwapChain/ImageViewSwapChains.i: Source/Rendering/SwapChain/ImageViewSwapChains.cpp.i
+
+.PHONY : Source/Rendering/SwapChain/ImageViewSwapChains.i
+
+# target to preprocess a source file
+Source/Rendering/SwapChain/ImageViewSwapChains.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/ImageViewSwapChains.cpp.i
+.PHONY : Source/Rendering/SwapChain/ImageViewSwapChains.cpp.i
+
+Source/Rendering/SwapChain/ImageViewSwapChains.s: Source/Rendering/SwapChain/ImageViewSwapChains.cpp.s
+
+.PHONY : Source/Rendering/SwapChain/ImageViewSwapChains.s
+
+# target to generate assembly for a file
+Source/Rendering/SwapChain/ImageViewSwapChains.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/ImageViewSwapChains.cpp.s
+.PHONY : Source/Rendering/SwapChain/ImageViewSwapChains.cpp.s
+
+Source/Rendering/SwapChain/SwapChain.o: Source/Rendering/SwapChain/SwapChain.cpp.o
+
+.PHONY : Source/Rendering/SwapChain/SwapChain.o
+
+# target to build an object file
+Source/Rendering/SwapChain/SwapChain.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/SwapChain.cpp.o
+.PHONY : Source/Rendering/SwapChain/SwapChain.cpp.o
+
+Source/Rendering/SwapChain/SwapChain.i: Source/Rendering/SwapChain/SwapChain.cpp.i
+
+.PHONY : Source/Rendering/SwapChain/SwapChain.i
+
+# target to preprocess a source file
+Source/Rendering/SwapChain/SwapChain.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/SwapChain.cpp.i
+.PHONY : Source/Rendering/SwapChain/SwapChain.cpp.i
+
+Source/Rendering/SwapChain/SwapChain.s: Source/Rendering/SwapChain/SwapChain.cpp.s
+
+.PHONY : Source/Rendering/SwapChain/SwapChain.s
+
+# target to generate assembly for a file
+Source/Rendering/SwapChain/SwapChain.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/SwapChain.cpp.s
+.PHONY : Source/Rendering/SwapChain/SwapChain.cpp.s
 
 Source/Rendering/Vulkan/InstanceVulkan.o: Source/Rendering/Vulkan/InstanceVulkan.cpp.o
 
@@ -285,7 +447,7 @@ Source/Rendering/Vulkan/InstanceVulkan.o: Source/Rendering/Vulkan/InstanceVulkan
 
 # target to build an object file
 Source/Rendering/Vulkan/InstanceVulkan.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/InstanceVulkan.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/InstanceVulkan.cpp.o
 .PHONY : Source/Rendering/Vulkan/InstanceVulkan.cpp.o
 
 Source/Rendering/Vulkan/InstanceVulkan.i: Source/Rendering/Vulkan/InstanceVulkan.cpp.i
@@ -294,7 +456,7 @@ Source/Rendering/Vulkan/InstanceVulkan.i: Source/Rendering/Vulkan/InstanceVulkan
 
 # target to preprocess a source file
 Source/Rendering/Vulkan/InstanceVulkan.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/InstanceVulkan.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/InstanceVulkan.cpp.i
 .PHONY : Source/Rendering/Vulkan/InstanceVulkan.cpp.i
 
 Source/Rendering/Vulkan/InstanceVulkan.s: Source/Rendering/Vulkan/InstanceVulkan.cpp.s
@@ -303,7 +465,7 @@ Source/Rendering/Vulkan/InstanceVulkan.s: Source/Rendering/Vulkan/InstanceVulkan
 
 # target to generate assembly for a file
 Source/Rendering/Vulkan/InstanceVulkan.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/InstanceVulkan.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/InstanceVulkan.cpp.s
 .PHONY : Source/Rendering/Vulkan/InstanceVulkan.cpp.s
 
 Source/Rendering/Vulkan/ValidationLayer.o: Source/Rendering/Vulkan/ValidationLayer.cpp.o
@@ -312,7 +474,7 @@ Source/Rendering/Vulkan/ValidationLayer.o: Source/Rendering/Vulkan/ValidationLay
 
 # target to build an object file
 Source/Rendering/Vulkan/ValidationLayer.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/ValidationLayer.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/ValidationLayer.cpp.o
 .PHONY : Source/Rendering/Vulkan/ValidationLayer.cpp.o
 
 Source/Rendering/Vulkan/ValidationLayer.i: Source/Rendering/Vulkan/ValidationLayer.cpp.i
@@ -321,7 +483,7 @@ Source/Rendering/Vulkan/ValidationLayer.i: Source/Rendering/Vulkan/ValidationLay
 
 # target to preprocess a source file
 Source/Rendering/Vulkan/ValidationLayer.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/ValidationLayer.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/ValidationLayer.cpp.i
 .PHONY : Source/Rendering/Vulkan/ValidationLayer.cpp.i
 
 Source/Rendering/Vulkan/ValidationLayer.s: Source/Rendering/Vulkan/ValidationLayer.cpp.s
@@ -330,7 +492,7 @@ Source/Rendering/Vulkan/ValidationLayer.s: Source/Rendering/Vulkan/ValidationLay
 
 # target to generate assembly for a file
 Source/Rendering/Vulkan/ValidationLayer.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/ValidationLayer.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Vulkan/ValidationLayer.cpp.s
 .PHONY : Source/Rendering/Vulkan/ValidationLayer.cpp.s
 
 Source/Rendering/Window/Window.o: Source/Rendering/Window/Window.cpp.o
@@ -339,7 +501,7 @@ Source/Rendering/Window/Window.o: Source/Rendering/Window/Window.cpp.o
 
 # target to build an object file
 Source/Rendering/Window/Window.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/Window.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/Window.cpp.o
 .PHONY : Source/Rendering/Window/Window.cpp.o
 
 Source/Rendering/Window/Window.i: Source/Rendering/Window/Window.cpp.i
@@ -348,7 +510,7 @@ Source/Rendering/Window/Window.i: Source/Rendering/Window/Window.cpp.i
 
 # target to preprocess a source file
 Source/Rendering/Window/Window.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/Window.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/Window.cpp.i
 .PHONY : Source/Rendering/Window/Window.cpp.i
 
 Source/Rendering/Window/Window.s: Source/Rendering/Window/Window.cpp.s
@@ -357,7 +519,7 @@ Source/Rendering/Window/Window.s: Source/Rendering/Window/Window.cpp.s
 
 # target to generate assembly for a file
 Source/Rendering/Window/Window.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/Window.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/Window.cpp.s
 .PHONY : Source/Rendering/Window/Window.cpp.s
 
 Source/Rendering/Window/WindowSurface.o: Source/Rendering/Window/WindowSurface.cpp.o
@@ -366,7 +528,7 @@ Source/Rendering/Window/WindowSurface.o: Source/Rendering/Window/WindowSurface.c
 
 # target to build an object file
 Source/Rendering/Window/WindowSurface.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/WindowSurface.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/WindowSurface.cpp.o
 .PHONY : Source/Rendering/Window/WindowSurface.cpp.o
 
 Source/Rendering/Window/WindowSurface.i: Source/Rendering/Window/WindowSurface.cpp.i
@@ -375,7 +537,7 @@ Source/Rendering/Window/WindowSurface.i: Source/Rendering/Window/WindowSurface.c
 
 # target to preprocess a source file
 Source/Rendering/Window/WindowSurface.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/WindowSurface.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/WindowSurface.cpp.i
 .PHONY : Source/Rendering/Window/WindowSurface.cpp.i
 
 Source/Rendering/Window/WindowSurface.s: Source/Rendering/Window/WindowSurface.cpp.s
@@ -384,7 +546,7 @@ Source/Rendering/Window/WindowSurface.s: Source/Rendering/Window/WindowSurface.c
 
 # target to generate assembly for a file
 Source/Rendering/Window/WindowSurface.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/WindowSurface.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Window/WindowSurface.cpp.s
 .PHONY : Source/Rendering/Window/WindowSurface.cpp.s
 
 Source/Setting/SettingManager.o: Source/Setting/SettingManager.cpp.o
@@ -393,7 +555,7 @@ Source/Setting/SettingManager.o: Source/Setting/SettingManager.cpp.o
 
 # target to build an object file
 Source/Setting/SettingManager.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Setting/SettingManager.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Setting/SettingManager.cpp.o
 .PHONY : Source/Setting/SettingManager.cpp.o
 
 Source/Setting/SettingManager.i: Source/Setting/SettingManager.cpp.i
@@ -402,7 +564,7 @@ Source/Setting/SettingManager.i: Source/Setting/SettingManager.cpp.i
 
 # target to preprocess a source file
 Source/Setting/SettingManager.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Setting/SettingManager.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Setting/SettingManager.cpp.i
 .PHONY : Source/Setting/SettingManager.cpp.i
 
 Source/Setting/SettingManager.s: Source/Setting/SettingManager.cpp.s
@@ -411,7 +573,7 @@ Source/Setting/SettingManager.s: Source/Setting/SettingManager.cpp.s
 
 # target to generate assembly for a file
 Source/Setting/SettingManager.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Setting/SettingManager.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Setting/SettingManager.cpp.s
 .PHONY : Source/Setting/SettingManager.cpp.s
 
 Source/Struct/Vector2.o: Source/Struct/Vector2.cpp.o
@@ -420,7 +582,7 @@ Source/Struct/Vector2.o: Source/Struct/Vector2.cpp.o
 
 # target to build an object file
 Source/Struct/Vector2.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector2.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector2.cpp.o
 .PHONY : Source/Struct/Vector2.cpp.o
 
 Source/Struct/Vector2.i: Source/Struct/Vector2.cpp.i
@@ -429,7 +591,7 @@ Source/Struct/Vector2.i: Source/Struct/Vector2.cpp.i
 
 # target to preprocess a source file
 Source/Struct/Vector2.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector2.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector2.cpp.i
 .PHONY : Source/Struct/Vector2.cpp.i
 
 Source/Struct/Vector2.s: Source/Struct/Vector2.cpp.s
@@ -438,7 +600,7 @@ Source/Struct/Vector2.s: Source/Struct/Vector2.cpp.s
 
 # target to generate assembly for a file
 Source/Struct/Vector2.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector2.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector2.cpp.s
 .PHONY : Source/Struct/Vector2.cpp.s
 
 Source/Struct/Vector3.o: Source/Struct/Vector3.cpp.o
@@ -447,7 +609,7 @@ Source/Struct/Vector3.o: Source/Struct/Vector3.cpp.o
 
 # target to build an object file
 Source/Struct/Vector3.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector3.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector3.cpp.o
 .PHONY : Source/Struct/Vector3.cpp.o
 
 Source/Struct/Vector3.i: Source/Struct/Vector3.cpp.i
@@ -456,7 +618,7 @@ Source/Struct/Vector3.i: Source/Struct/Vector3.cpp.i
 
 # target to preprocess a source file
 Source/Struct/Vector3.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector3.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector3.cpp.i
 .PHONY : Source/Struct/Vector3.cpp.i
 
 Source/Struct/Vector3.s: Source/Struct/Vector3.cpp.s
@@ -465,7 +627,7 @@ Source/Struct/Vector3.s: Source/Struct/Vector3.cpp.s
 
 # target to generate assembly for a file
 Source/Struct/Vector3.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector3.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector3.cpp.s
 .PHONY : Source/Struct/Vector3.cpp.s
 
 Source/Struct/Vector4.o: Source/Struct/Vector4.cpp.o
@@ -474,7 +636,7 @@ Source/Struct/Vector4.o: Source/Struct/Vector4.cpp.o
 
 # target to build an object file
 Source/Struct/Vector4.cpp.o:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector4.cpp.o
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector4.cpp.o
 .PHONY : Source/Struct/Vector4.cpp.o
 
 Source/Struct/Vector4.i: Source/Struct/Vector4.cpp.i
@@ -483,7 +645,7 @@ Source/Struct/Vector4.i: Source/Struct/Vector4.cpp.i
 
 # target to preprocess a source file
 Source/Struct/Vector4.cpp.i:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector4.cpp.i
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector4.cpp.i
 .PHONY : Source/Struct/Vector4.cpp.i
 
 Source/Struct/Vector4.s: Source/Struct/Vector4.cpp.s
@@ -492,7 +654,7 @@ Source/Struct/Vector4.s: Source/Struct/Vector4.cpp.s
 
 # target to generate assembly for a file
 Source/Struct/Vector4.cpp.s:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector4.cpp.s
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Struct/Vector4.cpp.s
 .PHONY : Source/Struct/Vector4.cpp.s
 
 # Help Target
@@ -517,9 +679,27 @@ help:
 	@echo "... Source/Main.o"
 	@echo "... Source/Main.i"
 	@echo "... Source/Main.s"
+	@echo "... Source/Rendering/Buffer/BufferManager.o"
+	@echo "... Source/Rendering/Buffer/BufferManager.i"
+	@echo "... Source/Rendering/Buffer/BufferManager.s"
+	@echo "... Source/Rendering/Devices/LogicalDevice.o"
+	@echo "... Source/Rendering/Devices/LogicalDevice.i"
+	@echo "... Source/Rendering/Devices/LogicalDevice.s"
+	@echo "... Source/Rendering/Devices/PhysicalDevices.o"
+	@echo "... Source/Rendering/Devices/PhysicalDevices.i"
+	@echo "... Source/Rendering/Devices/PhysicalDevices.s"
+	@echo "... Source/Rendering/Pool/CommandPool.o"
+	@echo "... Source/Rendering/Pool/CommandPool.i"
+	@echo "... Source/Rendering/Pool/CommandPool.s"
 	@echo "... Source/Rendering/RenderingEngine.o"
 	@echo "... Source/Rendering/RenderingEngine.i"
 	@echo "... Source/Rendering/RenderingEngine.s"
+	@echo "... Source/Rendering/SwapChain/ImageViewSwapChains.o"
+	@echo "... Source/Rendering/SwapChain/ImageViewSwapChains.i"
+	@echo "... Source/Rendering/SwapChain/ImageViewSwapChains.s"
+	@echo "... Source/Rendering/SwapChain/SwapChain.o"
+	@echo "... Source/Rendering/SwapChain/SwapChain.i"
+	@echo "... Source/Rendering/SwapChain/SwapChain.s"
 	@echo "... Source/Rendering/Vulkan/InstanceVulkan.o"
 	@echo "... Source/Rendering/Vulkan/InstanceVulkan.i"
 	@echo "... Source/Rendering/Vulkan/InstanceVulkan.s"
@@ -555,6 +735,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/m/Documents/Moteur/Amber_engine/AmberEngine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

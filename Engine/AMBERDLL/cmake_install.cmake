@@ -1,4 +1,4 @@
-# Install script for directory: /home/m/Documents/Moteur/Amber_engine/AmberEngine/AMBERDLL
+# Install script for directory: /home/m/Documents/Moteur/AMBER_ENGINE/Engine/AMBERDLL
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -7,6 +7,11 @@
 #include "ValidationLayer.hpp"
 #include "Window.hpp"
 #include "WindowSurface.hpp"
+#include "PhysicalDevices.hpp"
+#include "LogicalDevice.hpp"
+#include "CommandPool.hpp"
+#include "BufferManager.hpp"
+#include "SwapChain.hpp"
 
 namespace Ge
 {
@@ -26,6 +31,11 @@ namespace Ge
         ValidationLayer m_validationLayer;
 		InstanceVulkan m_instanceVulkan;
         WindowSurface m_windowSurface;
+        PhysicalDevices m_physicalDevice;
+        LogicalDevice m_logicalDevice;
+        CommandPool m_commandPool;
+        BufferManager m_bufferManager;
+        SwapChain m_swapChain;
     };
 }
 

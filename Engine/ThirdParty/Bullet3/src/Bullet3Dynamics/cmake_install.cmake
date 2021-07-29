@@ -1,4 +1,4 @@
-# Install script for directory: /home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/Bullet3/src/Bullet3Dynamics
+# Install script for directory: /home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3/src/Bullet3Dynamics
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,10 +38,10 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/Bullet3/src/Bullet3Dynamics/libBullet3Dynamics.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3/src/Bullet3Dynamics/libBullet3Dynamics.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/bullet" TYPE DIRECTORY FILES "/home/m/Documents/Moteur/Amber_engine/AmberEngine/ThirdParty/Bullet3/src/Bullet3Dynamics" FILES_MATCHING REGEX "/[^/]*\\.h$" REGEX "/\\.svn$" EXCLUDE REGEX "/CMakeFiles$" EXCLUDE)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/bullet" TYPE DIRECTORY FILES "/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3/src/Bullet3Dynamics" FILES_MATCHING REGEX "/[^/]*\\.h$" REGEX "/\\.svn$" EXCLUDE REGEX "/CMakeFiles$" EXCLUDE)
 endif()
 

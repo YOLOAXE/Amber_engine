@@ -19,7 +19,7 @@ namespace Ge
         static uint32_t getCountQueueFamily(VkPhysicalDevice device);
         static uint32_t getGraphiqueIndexFamily(VkPhysicalDevice device);
 
-    private:
+    public:
         bool initialize(VulkanMisc *vM);
         void release();
 
