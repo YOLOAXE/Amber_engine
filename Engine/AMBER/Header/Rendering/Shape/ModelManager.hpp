@@ -8,11 +8,10 @@ namespace Ge
 {
     class ModelManager
     {
-        public:
-            bool initiliaze(VulkanMisc * vM);
-            void release();
-            static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM);
-
+    public:
+        bool initiliaze(VulkanMisc *vM);
+        void release();
+        static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM);
     };
 }
 

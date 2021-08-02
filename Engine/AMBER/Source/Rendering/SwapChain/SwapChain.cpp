@@ -26,7 +26,7 @@ namespace Ge
 		createInfo.imageFormat = surfaceFormat.format;
 		createInfo.imageColorSpace = surfaceFormat.colorSpace;
 		createInfo.imageExtent = extent;
-		createInfo.imageArrayLayers = 1;//imageArrayLayers indique le nombre de couches que chaque image poss�de
+		createInfo.imageArrayLayers = 1;//imageArrayLayers indique le nombre de couches que chaque image possede
 		createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
 		QueueFamilyIndices indices = PhysicalDevices::findQueueFamilies(vM->str_VulkanDeviceMisc->str_physicalDevice, vM);

@@ -1,34 +1,17 @@
 #include "DescriptorLayoutManager.hpp"
 #include "CameraManager.hpp"
 #include "ModelManager.hpp"
+#include "TextureManager.hpp"
+#include "MaterialManager.hpp"
+#include "LightManager.hpp"
 
 namespace Ge
 {
 
-    bool DescriptorLayoutManager::initialize(VulkanMisc *vM)
-    {
+	bool DescriptorLayoutManager::initialize(VulkanMisc *vM)
+	{
 		vulkanM = vM;
-        /*
-		VkDescriptorSetLayoutBinding samplerLayoutBinding{};
-		samplerLayoutBinding.binding = 1;
-		samplerLayoutBinding.descriptorCount = (vM->str_VulkanDescriptor->TextureCount == 0 ? 1 : vM->str_VulkanDescriptor->TextureCount);
-		samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		samplerLayoutBinding.pImmutableSamplers = nullptr;
-		samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_VERTEX_BIT;
-
-		VkDescriptorSetLayoutBinding ubmLayoutBinding{};
-		ubmLayoutBinding.binding = 2;
-		ubmLayoutBinding.descriptorCount = (vM->str_VulkanDescriptor->materialCount == 0 ? 1 : vM->str_VulkanDescriptor->materialCount);
-		ubmLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		ubmLayoutBinding.pImmutableSamplers = nullptr;
-		ubmLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_VERTEX_BIT;
-
-		VkDescriptorSetLayoutBinding ublLayoutBinding{};
-		ublLayoutBinding.binding = 3;
-		ublLayoutBinding.descriptorCount = (vM->str_VulkanDescriptor->lightCount == 0 ? 1 : vM->str_VulkanDescriptor->lightCount);
-		ublLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		ublLayoutBinding.pImmutableSamplers = nullptr;
-		ublLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_VERTEX_BIT;
+		/*
 
 		VkDescriptorSetLayoutBinding ubdLayoutBinding{};
 		ubdLayoutBinding.binding = 4;
@@ -49,18 +32,22 @@ namespace Ge
 			Debug::Error("Echec de la creation du descriptor set layout");
 			return false;
 		}*/
+
+		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(LightManager::createVkDescriptorSetLayout(vM));
+		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(MaterialManager::createVkDescriptorSetLayout(vM));
+		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(TextureManager::createVkDescriptorSetLayout(vM));
 		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(ModelManager::createVkDescriptorSetLayout(vM));
 		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(CameraManager::createVkDescriptorSetLayout(vM));
-        Debug::INITSUCCESS("DescriptorLayoutManager");
-        return true;
-    }
+		Debug::INITSUCCESS("DescriptorLayoutManager");
+		return true;
+	}
 
-    void DescriptorLayoutManager::release()
-    {
-		for(int i = 0; i < vulkanM->str_VulkanSwapChainMisc->str_descriptorSetLayout.size(); i++)
+	void DescriptorLayoutManager::release()
+	{
+		for (int i = 0; i < vulkanM->str_VulkanSwapChainMisc->str_descriptorSetLayout.size(); i++)
 		{
-        	vkDestroyDescriptorSetLayout(vulkanM->str_VulkanDeviceMisc->str_device, vulkanM->str_VulkanSwapChainMisc->str_descriptorSetLayout[0], nullptr);
+			vkDestroyDescriptorSetLayout(vulkanM->str_VulkanDeviceMisc->str_device, vulkanM->str_VulkanSwapChainMisc->str_descriptorSetLayout[0], nullptr);
 		}
-    }
+	}
 
 }
