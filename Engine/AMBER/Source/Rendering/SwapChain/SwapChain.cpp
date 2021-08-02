@@ -61,7 +61,6 @@ namespace Ge
 		m_swapChainImages.resize(m_imageCount);
 		vkGetSwapchainImagesKHR(device, m_swapChain, &m_imageCount, m_swapChainImages.data());
 
-		Debug::INITSUCCESS("SwapChain");
 		m_swapChainImageFormat = surfaceFormat.format;
 		m_swapChainExtent = extent;
 		vM->str_VulkanSwapChainMisc->str_presentModeKHR = presentMode;
@@ -79,11 +78,39 @@ namespace Ge
 			m_swapChainImagesView[i] = new ImageViewSwapChains(&m_swapChainImages[i],m_swapChainImageFormat,vM);
 			vM->str_VulkanSwapChainMisc->str_swapChainImageViews.push_back(m_swapChainImagesView[i]->getImageView());
 		}
+		if(!m_renderPass.initialize(m_swapChainImageFormat, PhysicalDevices::getMaxUsableSampleCount(vM), vM))
+		{
+			Debug::INITFAILED("RenderPass");
+			return false;
+		}
+		if(!SwapChain::initializeLayout())
+		{
+			Debug::INITFAILED("InitializeLayout");
+			return false;
+		}
+		Debug::INITSUCCESS("SwapChain");
 		return true;
+	}
+
+	bool SwapChain::initializeLayout()
+	{
+		if(!m_descriptorLayoutManager.initialize(vulkanM))
+		{
+			Debug::INITFAILED("DescriptorLayoutManager");
+			return false;
+		}
+		return true;
+	}
+
+	void SwapChain::releaseLayout()
+	{
+		m_descriptorLayoutManager.release();
 	}
 
 	void SwapChain::release()
 	{
+		SwapChain::releaseLayout();
+		m_renderPass.release();
 		for(int i = 0; i < m_swapChainImagesView.size(); i++) 
 		{
 			delete(m_swapChainImagesView[i]);
@@ -100,7 +127,7 @@ namespace Ge
 			if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 			{
 				//VK_FORMAT_B8G8R8A8_SRGB  :  stock les canaux de couleur R, G, B et A dans cet ordre et en entiers non sign�s de 8 bits.
-				//VK_COLOR_SPACE_SRGB_NONLINEAR_KHR si le sRGB est support�
+				//VK_COLOR_SPACE_SRGB_NONLINEAR_KHR si le sRGB est supporte
 				return availableFormat;
 			}
 		}

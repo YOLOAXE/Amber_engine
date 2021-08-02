@@ -10,7 +10,7 @@ namespace Ge
 
         void Debug::release()
         {
-
+                Debug::RELEASESUCCESS("Debug");
         }
 
         void Debug::Log(const char *format, ...)

@@ -46,11 +46,11 @@ namespace Ge
             Debug::INITFAILED("LogicalDevice");
             return false;
         }
-        if(!RenderingEngine::m_commandPool.initialize(&m_vulkanMisc))
+        /*if(!RenderingEngine::m_commandPool.initialize(&m_vulkanMisc))
         {
             Debug::INITFAILED("CommandPool");
             return false;   
-        }
+        }*/
         if(!RenderingEngine::m_bufferManager.initialize(&m_vulkanMisc))
         {
             Debug::INITFAILED("BufferManager");
@@ -69,7 +69,7 @@ namespace Ge
     {
         RenderingEngine::m_swapChain.release();
         RenderingEngine::m_bufferManager.release();
-        RenderingEngine::m_commandPool.release();
+        //RenderingEngine::m_commandPool.release();
         RenderingEngine::m_logicalDevice.release();
         RenderingEngine::m_physicalDevice.release();
         RenderingEngine::m_windowSurface.release();

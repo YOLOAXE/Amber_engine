@@ -30,6 +30,6 @@ namespace Ge
 		 pour pouvoir indiquer a la swap chain quil faut ce redimentionner*/
 		auto win = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));
 		win->framebufferResized = true;
-		Debug::Info("Redimension de la fenetre : %d , %d", nullptr,width,height);
+		Debug::Info("Redimension de la fenetre : %d , %d", width,height);
 	}
 }

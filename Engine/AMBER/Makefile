@@ -387,6 +387,33 @@ Source/Rendering/RenderingEngine.cpp.s:
 	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/RenderingEngine.cpp.s
 .PHONY : Source/Rendering/RenderingEngine.cpp.s
 
+Source/Rendering/SwapChain/DescriptorLayoutManager.o: Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.o
+
+.PHONY : Source/Rendering/SwapChain/DescriptorLayoutManager.o
+
+# target to build an object file
+Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.o
+.PHONY : Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.o
+
+Source/Rendering/SwapChain/DescriptorLayoutManager.i: Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.i
+
+.PHONY : Source/Rendering/SwapChain/DescriptorLayoutManager.i
+
+# target to preprocess a source file
+Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.i
+.PHONY : Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.i
+
+Source/Rendering/SwapChain/DescriptorLayoutManager.s: Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.s
+
+.PHONY : Source/Rendering/SwapChain/DescriptorLayoutManager.s
+
+# target to generate assembly for a file
+Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.s
+.PHONY : Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.s
+
 Source/Rendering/SwapChain/ImageViewSwapChains.o: Source/Rendering/SwapChain/ImageViewSwapChains.cpp.o
 
 .PHONY : Source/Rendering/SwapChain/ImageViewSwapChains.o
@@ -413,6 +440,33 @@ Source/Rendering/SwapChain/ImageViewSwapChains.s: Source/Rendering/SwapChain/Ima
 Source/Rendering/SwapChain/ImageViewSwapChains.cpp.s:
 	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/ImageViewSwapChains.cpp.s
 .PHONY : Source/Rendering/SwapChain/ImageViewSwapChains.cpp.s
+
+Source/Rendering/SwapChain/RenderPass.o: Source/Rendering/SwapChain/RenderPass.cpp.o
+
+.PHONY : Source/Rendering/SwapChain/RenderPass.o
+
+# target to build an object file
+Source/Rendering/SwapChain/RenderPass.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/RenderPass.cpp.o
+.PHONY : Source/Rendering/SwapChain/RenderPass.cpp.o
+
+Source/Rendering/SwapChain/RenderPass.i: Source/Rendering/SwapChain/RenderPass.cpp.i
+
+.PHONY : Source/Rendering/SwapChain/RenderPass.i
+
+# target to preprocess a source file
+Source/Rendering/SwapChain/RenderPass.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/RenderPass.cpp.i
+.PHONY : Source/Rendering/SwapChain/RenderPass.cpp.i
+
+Source/Rendering/SwapChain/RenderPass.s: Source/Rendering/SwapChain/RenderPass.cpp.s
+
+.PHONY : Source/Rendering/SwapChain/RenderPass.s
+
+# target to generate assembly for a file
+Source/Rendering/SwapChain/RenderPass.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/RenderPass.cpp.s
+.PHONY : Source/Rendering/SwapChain/RenderPass.cpp.s
 
 Source/Rendering/SwapChain/SwapChain.o: Source/Rendering/SwapChain/SwapChain.cpp.o
 
@@ -694,9 +748,15 @@ help:
 	@echo "... Source/Rendering/RenderingEngine.o"
 	@echo "... Source/Rendering/RenderingEngine.i"
 	@echo "... Source/Rendering/RenderingEngine.s"
+	@echo "... Source/Rendering/SwapChain/DescriptorLayoutManager.o"
+	@echo "... Source/Rendering/SwapChain/DescriptorLayoutManager.i"
+	@echo "... Source/Rendering/SwapChain/DescriptorLayoutManager.s"
 	@echo "... Source/Rendering/SwapChain/ImageViewSwapChains.o"
 	@echo "... Source/Rendering/SwapChain/ImageViewSwapChains.i"
 	@echo "... Source/Rendering/SwapChain/ImageViewSwapChains.s"
+	@echo "... Source/Rendering/SwapChain/RenderPass.o"
+	@echo "... Source/Rendering/SwapChain/RenderPass.i"
+	@echo "... Source/Rendering/SwapChain/RenderPass.s"
 	@echo "... Source/Rendering/SwapChain/SwapChain.o"
 	@echo "... Source/Rendering/SwapChain/SwapChain.i"
 	@echo "... Source/Rendering/SwapChain/SwapChain.s"

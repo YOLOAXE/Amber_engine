@@ -23,8 +23,8 @@ namespace Ge
 	}
 
 	void CommandPool::release()
-	{
-		Debug::RELEASESUCCESS("CommandPool");
+	{		
 		vkDestroyCommandPool(vulkanM->str_VulkanDeviceMisc->str_device, m_commandPool, nullptr);
+		Debug::RELEASESUCCESS("CommandPool");
 	}
 }

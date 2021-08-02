@@ -6,6 +6,8 @@
 #include "SwapChainSupportDetails.hpp"
 #include "QueueFamilyIndices.hpp"
 #include "ImageViewSwapChains.hpp"
+#include "RenderPass.hpp"
+#include "DescriptorLayoutManager.hpp"
 
 namespace Ge
 {
@@ -21,11 +23,15 @@ namespace Ge
 		friend class RenderingEngine;
 		bool initialize(VulkanMisc * vM);
 		void release();
+		bool initializeLayout();
+		void releaseLayout();
 	private:
 		VkExtent2D m_swapChainExtent;
 		VkFormat m_swapChainImageFormat;
 		std::vector<VkImage> m_swapChainImages;
 		std::vector<ImageViewSwapChains *> m_swapChainImagesView;
+		DescriptorLayoutManager m_descriptorLayoutManager;
+		RenderPass m_renderPass;
 		VkSwapchainKHR m_swapChain;
 		uint32_t m_imageCount;
 		VulkanMisc * vulkanM;
