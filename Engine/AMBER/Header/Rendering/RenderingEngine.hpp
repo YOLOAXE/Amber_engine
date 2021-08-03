@@ -26,6 +26,8 @@ namespace Ge
         VulkanMisc m_vulkanMisc;
         VulkanDeviceMisc m_vulkanDeviceMisc;
         VulkanSwapChainMisc m_vulkanSwapChainMisc;
+        VulkanDescriptor m_VulkanDescriptor;
+        VulkanCommandeBufferMisc m_VulkanCommandeBufferMisc;
 
         Window m_window;
         ValidationLayer m_validationLayer;

@@ -11,7 +11,7 @@ namespace Ge
     {
     }
 
-    static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM)
+    VkDescriptorSetLayout LightManager::createVkDescriptorSetLayout(VulkanMisc *vM)
     {
         VkDescriptorSetLayout m_descriptorSetLayout;
         VkDescriptorSetLayoutBinding ublLayoutBinding{};

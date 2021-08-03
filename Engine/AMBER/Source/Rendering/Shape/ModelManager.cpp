@@ -2,6 +2,17 @@
 
 namespace Ge
 {
+
+	bool ModelManager::initiliaze(VulkanMisc *vM)
+	{
+		return true;
+	}
+
+    void ModelManager::release()
+	{
+
+	}
+
     VkDescriptorSetLayout ModelManager::createVkDescriptorSetLayout(VulkanMisc *vM)
     {
         VkDescriptorSetLayout m_descriptorSetLayout;

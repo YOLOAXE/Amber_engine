@@ -2,16 +2,22 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_EXT_nonuniform_qualifier : enable
 
-layout(binding = 0) uniform UniformBufferObject 
+layout(binding = 0, set = 0) uniform UniformBufferCamera 
 {
-    mat4 model;
+	vec3 camPos;
     mat4 view;
     mat4 proj;
+} ubc;
+
+layout(binding = 0, set = 1) uniform sampler2D texSampler[];
+
+layout(binding = 0, set = 2) uniform UniformBufferModel
+{
+    mat4 model;
 } ubo[];
 
-layout(binding = 1) uniform sampler2D texSampler[];
 
-layout(binding = 2) uniform UniformBufferMaterial
+layout(binding = 0, set = 3) uniform UniformBufferMaterial
 {
 	vec3  albedo;
 	vec2 offset;
@@ -27,7 +33,7 @@ layout(binding = 2) uniform UniformBufferMaterial
 	bool light;
 } ubm[];
 
-layout(binding = 3) uniform UniformBufferLight
+layout(binding = 0,set = 4) uniform UniformBufferLight
 {
 	vec3 position;
     vec3 direction;
@@ -45,13 +51,11 @@ layout(binding = 3) uniform UniformBufferLight
 	mat4 LightSpaceMatrix;
 } ubl[];
 
-layout(binding = 4) uniform UniformBufferDiver
+layout(binding = 0, set = 5) uniform UniformBufferDiver
 {
-	vec3 camPos;
 	uint maxLight;
 	float u_time;
 	float gamma;
-	uint indShadowLight;
 }ubd;
 
 layout(push_constant) uniform PushConstants
@@ -61,32 +65,22 @@ layout(push_constant) uniform PushConstants
 } index;
 
 layout(location = 0) in vec3 inPosition;
-layout(location = 1) in vec3 inColor;
+layout(location = 1) in vec3 inNormal;
 layout(location = 2) in vec2 inTexCoord;
 
 layout(location = 0) out vec2 fragTexCoord;
 layout(location = 1) out vec3 WorldPos;
 layout(location = 2) out vec3 NormalPos;
 layout (location = 3) out vec3 outViewVec;
-layout (location = 4) out vec3 outLightVec;
-layout (location = 5) out vec4 outShadowCoord;
-
-const mat4 biasMat = mat4( 
-	0.5, 0.0, 0.0, 0.0,
-	0.0, 0.5, 0.0, 0.0,
-	0.0, 0.0, 1.0, 0.0,
-	0.5, 0.5, 0.0, 1.0 );
 
 void main() 
 {
 	fragTexCoord = inTexCoord * ubm[index.material].offset;
 	WorldPos = vec3(ubo[index.ubo].model * vec4(inPosition, 1.0));
-	NormalPos = mat3(transpose(inverse(ubo[index.ubo].model))) * inColor;
+	NormalPos = mat3(transpose(inverse(ubo[index.ubo].model))) * inNormal;
 
 	vec4 pos = ubo[index.ubo].model * vec4(inPosition, 1.0);
-	outLightVec = normalize(ubl[ubd.indShadowLight].position - inPosition);
     outViewVec = -pos.xyz;			
-	outShadowCoord = ( biasMat * ubl[ubd.indShadowLight].LightSpaceMatrix * ubo[index.ubo].model ) * vec4(inPosition, 1.0);
 	
-    gl_Position = ubo[index.ubo].proj * ubo[index.ubo].view * ubo[index.ubo].model * vec4(inPosition, 1.0);
+    gl_Position = ubc.proj * ubc.view * ubo[index.ubo].model * vec4(inPosition, 1.0);
 }

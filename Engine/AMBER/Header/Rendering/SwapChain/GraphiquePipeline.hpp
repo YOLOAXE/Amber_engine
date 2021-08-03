@@ -16,7 +16,7 @@ namespace Ge
     class GraphiquePipeline
     {
     public:
-        GraphiquePipeline(VulkanMisc *vM, const std::string &FragFile, const std::string &VertFile);
+        GraphiquePipeline(VulkanMisc *vM, std::string FragFile, std::string VertFile);
         ~GraphiquePipeline();
 
     private:
@@ -28,7 +28,7 @@ namespace Ge
         GraphiquePipelineElement m_graphiquePipelineElement;
     private:
         VulkanMisc *vulkanM;
-    }
+    };
 }
 
 #endif //__ENGINE_GRAPHIQUE_PIPELINE__

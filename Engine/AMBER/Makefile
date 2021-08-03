@@ -279,6 +279,33 @@ Source/Rendering/Buffer/BufferManager.cpp.s:
 	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Buffer/BufferManager.cpp.s
 .PHONY : Source/Rendering/Buffer/BufferManager.cpp.s
 
+Source/Rendering/Camera/CameraManager.o: Source/Rendering/Camera/CameraManager.cpp.o
+
+.PHONY : Source/Rendering/Camera/CameraManager.o
+
+# target to build an object file
+Source/Rendering/Camera/CameraManager.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Camera/CameraManager.cpp.o
+.PHONY : Source/Rendering/Camera/CameraManager.cpp.o
+
+Source/Rendering/Camera/CameraManager.i: Source/Rendering/Camera/CameraManager.cpp.i
+
+.PHONY : Source/Rendering/Camera/CameraManager.i
+
+# target to preprocess a source file
+Source/Rendering/Camera/CameraManager.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Camera/CameraManager.cpp.i
+.PHONY : Source/Rendering/Camera/CameraManager.cpp.i
+
+Source/Rendering/Camera/CameraManager.s: Source/Rendering/Camera/CameraManager.cpp.s
+
+.PHONY : Source/Rendering/Camera/CameraManager.s
+
+# target to generate assembly for a file
+Source/Rendering/Camera/CameraManager.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Camera/CameraManager.cpp.s
+.PHONY : Source/Rendering/Camera/CameraManager.cpp.s
+
 Source/Rendering/Devices/LogicalDevice.o: Source/Rendering/Devices/LogicalDevice.cpp.o
 
 .PHONY : Source/Rendering/Devices/LogicalDevice.o
@@ -332,6 +359,87 @@ Source/Rendering/Devices/PhysicalDevices.s: Source/Rendering/Devices/PhysicalDev
 Source/Rendering/Devices/PhysicalDevices.cpp.s:
 	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Devices/PhysicalDevices.cpp.s
 .PHONY : Source/Rendering/Devices/PhysicalDevices.cpp.s
+
+Source/Rendering/Light/LightManager.o: Source/Rendering/Light/LightManager.cpp.o
+
+.PHONY : Source/Rendering/Light/LightManager.o
+
+# target to build an object file
+Source/Rendering/Light/LightManager.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Light/LightManager.cpp.o
+.PHONY : Source/Rendering/Light/LightManager.cpp.o
+
+Source/Rendering/Light/LightManager.i: Source/Rendering/Light/LightManager.cpp.i
+
+.PHONY : Source/Rendering/Light/LightManager.i
+
+# target to preprocess a source file
+Source/Rendering/Light/LightManager.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Light/LightManager.cpp.i
+.PHONY : Source/Rendering/Light/LightManager.cpp.i
+
+Source/Rendering/Light/LightManager.s: Source/Rendering/Light/LightManager.cpp.s
+
+.PHONY : Source/Rendering/Light/LightManager.s
+
+# target to generate assembly for a file
+Source/Rendering/Light/LightManager.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Light/LightManager.cpp.s
+.PHONY : Source/Rendering/Light/LightManager.cpp.s
+
+Source/Rendering/Materials/MaterialManager.o: Source/Rendering/Materials/MaterialManager.cpp.o
+
+.PHONY : Source/Rendering/Materials/MaterialManager.o
+
+# target to build an object file
+Source/Rendering/Materials/MaterialManager.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Materials/MaterialManager.cpp.o
+.PHONY : Source/Rendering/Materials/MaterialManager.cpp.o
+
+Source/Rendering/Materials/MaterialManager.i: Source/Rendering/Materials/MaterialManager.cpp.i
+
+.PHONY : Source/Rendering/Materials/MaterialManager.i
+
+# target to preprocess a source file
+Source/Rendering/Materials/MaterialManager.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Materials/MaterialManager.cpp.i
+.PHONY : Source/Rendering/Materials/MaterialManager.cpp.i
+
+Source/Rendering/Materials/MaterialManager.s: Source/Rendering/Materials/MaterialManager.cpp.s
+
+.PHONY : Source/Rendering/Materials/MaterialManager.s
+
+# target to generate assembly for a file
+Source/Rendering/Materials/MaterialManager.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Materials/MaterialManager.cpp.s
+.PHONY : Source/Rendering/Materials/MaterialManager.cpp.s
+
+Source/Rendering/Materials/TextureManager.o: Source/Rendering/Materials/TextureManager.cpp.o
+
+.PHONY : Source/Rendering/Materials/TextureManager.o
+
+# target to build an object file
+Source/Rendering/Materials/TextureManager.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Materials/TextureManager.cpp.o
+.PHONY : Source/Rendering/Materials/TextureManager.cpp.o
+
+Source/Rendering/Materials/TextureManager.i: Source/Rendering/Materials/TextureManager.cpp.i
+
+.PHONY : Source/Rendering/Materials/TextureManager.i
+
+# target to preprocess a source file
+Source/Rendering/Materials/TextureManager.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Materials/TextureManager.cpp.i
+.PHONY : Source/Rendering/Materials/TextureManager.cpp.i
+
+Source/Rendering/Materials/TextureManager.s: Source/Rendering/Materials/TextureManager.cpp.s
+
+.PHONY : Source/Rendering/Materials/TextureManager.s
+
+# target to generate assembly for a file
+Source/Rendering/Materials/TextureManager.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Materials/TextureManager.cpp.s
+.PHONY : Source/Rendering/Materials/TextureManager.cpp.s
 
 Source/Rendering/Pool/CommandPool.o: Source/Rendering/Pool/CommandPool.cpp.o
 
@@ -387,6 +495,33 @@ Source/Rendering/RenderingEngine.cpp.s:
 	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/RenderingEngine.cpp.s
 .PHONY : Source/Rendering/RenderingEngine.cpp.s
 
+Source/Rendering/Shape/ModelManager.o: Source/Rendering/Shape/ModelManager.cpp.o
+
+.PHONY : Source/Rendering/Shape/ModelManager.o
+
+# target to build an object file
+Source/Rendering/Shape/ModelManager.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Shape/ModelManager.cpp.o
+.PHONY : Source/Rendering/Shape/ModelManager.cpp.o
+
+Source/Rendering/Shape/ModelManager.i: Source/Rendering/Shape/ModelManager.cpp.i
+
+.PHONY : Source/Rendering/Shape/ModelManager.i
+
+# target to preprocess a source file
+Source/Rendering/Shape/ModelManager.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Shape/ModelManager.cpp.i
+.PHONY : Source/Rendering/Shape/ModelManager.cpp.i
+
+Source/Rendering/Shape/ModelManager.s: Source/Rendering/Shape/ModelManager.cpp.s
+
+.PHONY : Source/Rendering/Shape/ModelManager.s
+
+# target to generate assembly for a file
+Source/Rendering/Shape/ModelManager.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/Shape/ModelManager.cpp.s
+.PHONY : Source/Rendering/Shape/ModelManager.cpp.s
+
 Source/Rendering/SwapChain/DescriptorLayoutManager.o: Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.o
 
 .PHONY : Source/Rendering/SwapChain/DescriptorLayoutManager.o
@@ -413,6 +548,60 @@ Source/Rendering/SwapChain/DescriptorLayoutManager.s: Source/Rendering/SwapChain
 Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.s:
 	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.s
 .PHONY : Source/Rendering/SwapChain/DescriptorLayoutManager.cpp.s
+
+Source/Rendering/SwapChain/GraphiquePipeline.o: Source/Rendering/SwapChain/GraphiquePipeline.cpp.o
+
+.PHONY : Source/Rendering/SwapChain/GraphiquePipeline.o
+
+# target to build an object file
+Source/Rendering/SwapChain/GraphiquePipeline.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/GraphiquePipeline.cpp.o
+.PHONY : Source/Rendering/SwapChain/GraphiquePipeline.cpp.o
+
+Source/Rendering/SwapChain/GraphiquePipeline.i: Source/Rendering/SwapChain/GraphiquePipeline.cpp.i
+
+.PHONY : Source/Rendering/SwapChain/GraphiquePipeline.i
+
+# target to preprocess a source file
+Source/Rendering/SwapChain/GraphiquePipeline.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/GraphiquePipeline.cpp.i
+.PHONY : Source/Rendering/SwapChain/GraphiquePipeline.cpp.i
+
+Source/Rendering/SwapChain/GraphiquePipeline.s: Source/Rendering/SwapChain/GraphiquePipeline.cpp.s
+
+.PHONY : Source/Rendering/SwapChain/GraphiquePipeline.s
+
+# target to generate assembly for a file
+Source/Rendering/SwapChain/GraphiquePipeline.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/GraphiquePipeline.cpp.s
+.PHONY : Source/Rendering/SwapChain/GraphiquePipeline.cpp.s
+
+Source/Rendering/SwapChain/GraphiquePipelineManager.o: Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.o
+
+.PHONY : Source/Rendering/SwapChain/GraphiquePipelineManager.o
+
+# target to build an object file
+Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.o
+.PHONY : Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.o
+
+Source/Rendering/SwapChain/GraphiquePipelineManager.i: Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.i
+
+.PHONY : Source/Rendering/SwapChain/GraphiquePipelineManager.i
+
+# target to preprocess a source file
+Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.i
+.PHONY : Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.i
+
+Source/Rendering/SwapChain/GraphiquePipelineManager.s: Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.s
+
+.PHONY : Source/Rendering/SwapChain/GraphiquePipelineManager.s
+
+# target to generate assembly for a file
+Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.s
+.PHONY : Source/Rendering/SwapChain/GraphiquePipelineManager.cpp.s
 
 Source/Rendering/SwapChain/ImageViewSwapChains.o: Source/Rendering/SwapChain/ImageViewSwapChains.cpp.o
 
@@ -736,21 +925,42 @@ help:
 	@echo "... Source/Rendering/Buffer/BufferManager.o"
 	@echo "... Source/Rendering/Buffer/BufferManager.i"
 	@echo "... Source/Rendering/Buffer/BufferManager.s"
+	@echo "... Source/Rendering/Camera/CameraManager.o"
+	@echo "... Source/Rendering/Camera/CameraManager.i"
+	@echo "... Source/Rendering/Camera/CameraManager.s"
 	@echo "... Source/Rendering/Devices/LogicalDevice.o"
 	@echo "... Source/Rendering/Devices/LogicalDevice.i"
 	@echo "... Source/Rendering/Devices/LogicalDevice.s"
 	@echo "... Source/Rendering/Devices/PhysicalDevices.o"
 	@echo "... Source/Rendering/Devices/PhysicalDevices.i"
 	@echo "... Source/Rendering/Devices/PhysicalDevices.s"
+	@echo "... Source/Rendering/Light/LightManager.o"
+	@echo "... Source/Rendering/Light/LightManager.i"
+	@echo "... Source/Rendering/Light/LightManager.s"
+	@echo "... Source/Rendering/Materials/MaterialManager.o"
+	@echo "... Source/Rendering/Materials/MaterialManager.i"
+	@echo "... Source/Rendering/Materials/MaterialManager.s"
+	@echo "... Source/Rendering/Materials/TextureManager.o"
+	@echo "... Source/Rendering/Materials/TextureManager.i"
+	@echo "... Source/Rendering/Materials/TextureManager.s"
 	@echo "... Source/Rendering/Pool/CommandPool.o"
 	@echo "... Source/Rendering/Pool/CommandPool.i"
 	@echo "... Source/Rendering/Pool/CommandPool.s"
 	@echo "... Source/Rendering/RenderingEngine.o"
 	@echo "... Source/Rendering/RenderingEngine.i"
 	@echo "... Source/Rendering/RenderingEngine.s"
+	@echo "... Source/Rendering/Shape/ModelManager.o"
+	@echo "... Source/Rendering/Shape/ModelManager.i"
+	@echo "... Source/Rendering/Shape/ModelManager.s"
 	@echo "... Source/Rendering/SwapChain/DescriptorLayoutManager.o"
 	@echo "... Source/Rendering/SwapChain/DescriptorLayoutManager.i"
 	@echo "... Source/Rendering/SwapChain/DescriptorLayoutManager.s"
+	@echo "... Source/Rendering/SwapChain/GraphiquePipeline.o"
+	@echo "... Source/Rendering/SwapChain/GraphiquePipeline.i"
+	@echo "... Source/Rendering/SwapChain/GraphiquePipeline.s"
+	@echo "... Source/Rendering/SwapChain/GraphiquePipelineManager.o"
+	@echo "... Source/Rendering/SwapChain/GraphiquePipelineManager.i"
+	@echo "... Source/Rendering/SwapChain/GraphiquePipelineManager.s"
 	@echo "... Source/Rendering/SwapChain/ImageViewSwapChains.o"
 	@echo "... Source/Rendering/SwapChain/ImageViewSwapChains.i"
 	@echo "... Source/Rendering/SwapChain/ImageViewSwapChains.s"

@@ -2,15 +2,15 @@
 
 namespace Ge
 {
-    GraphiquePipeline::GraphiquePipeline(VulkanMisc *vM, const std::string &FragFile, const std::string &VertFile)
+    GraphiquePipeline::GraphiquePipeline(VulkanMisc *vM,std::string FragFile,std::string VertFile)
     {
-        vulkanM = vM;
+        vulkanM = vM;		
         ShaderElement VertShader = LoadShader(VertFile, "main", vM->str_VulkanDeviceMisc->str_device, true);
 		ShaderElement FragShader = LoadShader(FragFile, "main", vM->str_VulkanDeviceMisc->str_device, false);
 		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
 		shaderStages[0] = VertShader.shaderStageCreateInfo;
 		shaderStages[1] = FragShader.shaderStageCreateInfo;
-
+		
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 
@@ -129,7 +129,8 @@ namespace Ge
 		pipelineInfo.renderPass = vM->str_VulkanSwapChainMisc->str_renderPass;
 		pipelineInfo.subpass = 0;
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
-
+		pipelineInfo.pNext = VK_NULL_HANDLE; 
+		
 		if (vkCreateGraphicsPipelines(vM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_graphicsPipelineCache, 1, &pipelineInfo, nullptr, &m_graphiquePipelineElement.m_graphicsPipeline) != VK_SUCCESS)
 		{
 			Debug::Error("Echec de la creation du pipeline graphique");
@@ -137,12 +138,12 @@ namespace Ge
 	
 		DestroyShaderElement(vM->str_VulkanDeviceMisc->str_device, VertShader);
 		DestroyShaderElement(vM->str_VulkanDeviceMisc->str_device, FragShader);
-        vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.push_back(m_graphiquePipelineElement);
+        vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.push_back(&m_graphiquePipelineElement);
     }
 
     GraphiquePipeline::~GraphiquePipeline()
     {
-		vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.erase(std::remove(vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.begin(), vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.end(), m_graphiquePipelineElement), vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.end());
+		vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.erase(std::remove(vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.begin(), vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.end(), &m_graphiquePipelineElement), vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.end());
         vkDestroyPipelineCache(vulkanM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_graphicsPipelineCache, nullptr);
 		vkDestroyPipeline(vulkanM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_graphicsPipeline, nullptr);		
 		vkDestroyPipelineLayout(vulkanM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_pipelineLayout, nullptr);
@@ -195,6 +196,8 @@ namespace Ge
         VkShaderModuleCreateInfo createInfo{};
         createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
         createInfo.codeSize = code.size();
+		createInfo.pNext = VK_NULL_HANDLE;
+		createInfo.flags = 0;
         createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
 
         VkShaderModule shaderModule;

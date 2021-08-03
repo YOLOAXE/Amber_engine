@@ -16,7 +16,7 @@ struct VulkanSwapChainMisc
     std::vector<VkImageView> str_swapChainImageViews;
     VkRenderPass str_renderPass = VK_NULL_HANDLE;
     std::vector<VkDescriptorSetLayout> str_descriptorSetLayout;
-    std::vector<GraphiquePipelineElement> str_graphiquePipelineElement;
+    std::vector<GraphiquePipelineElement *> str_graphiquePipelineElement;
     uint32_t str_imageCount;
     VkSurfaceFormatKHR str_surfaceFormatKHR;
     VkPresentModeKHR str_presentModeKHR;

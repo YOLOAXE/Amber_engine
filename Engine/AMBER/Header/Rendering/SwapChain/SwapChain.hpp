@@ -8,6 +8,7 @@
 #include "ImageViewSwapChains.hpp"
 #include "RenderPass.hpp"
 #include "DescriptorLayoutManager.hpp"
+#include "GraphiquePipelineManager.hpp"
 
 namespace Ge
 {
@@ -23,8 +24,8 @@ namespace Ge
 		friend class RenderingEngine;
 		bool initialize(VulkanMisc * vM);
 		void release();
-		bool initializeLayout();
-		void releaseLayout();
+		bool initPipeline();
+		void releasePipeline();
 	private:
 		VkExtent2D m_swapChainExtent;
 		VkFormat m_swapChainImageFormat;
@@ -32,6 +33,7 @@ namespace Ge
 		std::vector<ImageViewSwapChains *> m_swapChainImagesView;
 		DescriptorLayoutManager m_descriptorLayoutManager;
 		RenderPass m_renderPass;
+		GraphiquePipelineManager m_graphiquePipelineManager;
 		VkSwapchainKHR m_swapChain;
 		uint32_t m_imageCount;
 		VulkanMisc * vulkanM;

@@ -4,16 +4,22 @@
 
 float PI = 3.1415926535897932384626433832795f;
 
-layout(binding = 0) uniform UniformBufferObject 
+layout(binding = 0, set = 0) uniform UniformBufferCamera 
 {
-    mat4 model;
+	vec3 camPos;
     mat4 view;
     mat4 proj;
+} ubc;
+
+layout(binding = 0, set = 1) uniform sampler2D texSampler[];
+
+layout(binding = 0, set = 2) uniform UniformBufferModel
+{
+    mat4 model;
 } ubo[];
 
-layout(binding = 1) uniform sampler2D texSampler[];
 
-layout(binding = 2) uniform UniformBufferMaterial
+layout(binding = 0, set = 3) uniform UniformBufferMaterial
 {
 	vec3  albedo;
 	vec2 offset;
@@ -29,7 +35,7 @@ layout(binding = 2) uniform UniformBufferMaterial
 	bool light;
 } ubm[];
 
-layout(binding = 3) uniform UniformBufferLight
+layout(binding = 0,set = 4) uniform UniformBufferLight
 {
 	vec3 position;
     vec3 direction;
@@ -47,16 +53,12 @@ layout(binding = 3) uniform UniformBufferLight
 	mat4 LightSpaceMatrix;
 } ubl[];
 
-layout(binding = 4) uniform UniformBufferDiver
+layout(binding = 0, set = 5) uniform UniformBufferDiver
 {
-	vec3 camPos;
 	uint maxLight;
 	float u_time;
 	float gamma;
-	uint indShadowLight;
 }ubd;
-
-layout (binding = 5) uniform sampler2D shadowMap;
 
 layout(push_constant) uniform PushConstants
 {
@@ -68,12 +70,10 @@ layout(location = 0) in vec2 fragTexCoord;
 layout(location = 1) in vec3 WorldPos;
 layout(location = 2) in vec3 NormalPos;
 layout (location = 3) in vec3 inViewVec;
-layout (location = 4) in vec3 inLightVec;
-layout (location = 5) in vec4 inShadowCoord;
 
 layout(location = 0) out vec4 outColor;
 
-float textureProj(vec4 shadowCoord, vec2 off)
+/*float textureProj(vec4 shadowCoord, vec2 off)
 {
 	float shadow = 1.0;
 	if ( shadowCoord.z > -1.0 && shadowCoord.z < 1.0 ) 
@@ -127,17 +127,17 @@ vec3 getNormalFromMap()
     return normalize(TBN * (tangentNormal * ubm[index.material].normal));
 }
 
-// Calcule la couleur lors de l'utilisation d'une lumière directionnelle.
+// Calcule la couleur lors de l'utilisation d'une lumiï¿½re directionnelle.
 vec3 CalcDirLight(int ind, vec3 viewDir, vec3 normal, vec3 specMap, vec3 diffuseMap, float shadow)
 {
     vec3 lightDir = normalize(-ubl[ind].direction);
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
     // specular shading PHONG
-	/* 
-	vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), ubm[index.material].metallic);
-	*/
+	 
+	//vec3 reflectDir = reflect(-lightDir, normal);
+    //float spec = pow(max(dot(viewDir, reflectDir), 0.0), ubm[index.material].metallic);
+	
 	vec3 halfwayDir = normalize(lightDir + viewDir);  
     float spec = pow(max(dot(normal, halfwayDir), 0.0), ubm[index.material].metallic);
     // combine results
@@ -154,7 +154,7 @@ vec3 CalcDirLight(int ind, vec3 viewDir, vec3 normal, vec3 specMap, vec3 diffuse
 	}
 }
 
-// Calcule la couleur lors de l'utilisation d'une lumière ponctuelle.
+// Calcule la couleur lors de l'utilisation d'une lumiï¿½re ponctuelle.
 vec3 CalcPointLight(int ind, vec3 viewDir, vec3 normal, vec3 specMap, vec3 diffuseMap)
 {
     vec3 lightDir = normalize(ubl[ind].position - WorldPos);
@@ -201,14 +201,14 @@ vec3 CalcSpotLight(int ind, vec3 viewDir, vec3 normal, vec3 specMap, vec3 diffus
     specular *= attenuation * intensity;
     return (ambient + diffuse + specular);
 }
-
+*/
 void main() //Multiple light
 {	
-	if(!ubm[index.material].light)
-	{
+	//if(!ubm[index.material].light)
+	//{
 		outColor = vec4(texture(texSampler[ubm[index.material].albedoMap], fragTexCoord).rgb * ubm[index.material].albedo, 1.0);
-	}
-	else if(ubm[index.material].hdrMap > 0)
+	//}
+	/*else if(ubm[index.material].hdrMap > 0)
 	{
 		vec3 hdrColor = texture(texSampler[ubm[index.material].hdrMap], fragTexCoord).rgb * ubm[index.material].albedo;
 		vec3 mapped = vec3(1.0) - exp(-hdrColor * ubm[index.material].hdr);
@@ -219,7 +219,7 @@ void main() //Multiple light
 	{
 
 	vec3 norm = ubm[index.material].normalMap == 0 ? normalize(NormalPos) : getNormalFromMap();
-    vec3 viewDir = normalize(ubd.camPos - WorldPos);
+    vec3 viewDir = normalize(ubc.camPos - WorldPos);
     vec3 diffuse = pow(texture(texSampler[ubm[index.material].albedoMap], fragTexCoord).rgb * ubm[index.material].albedo,vec3(ubd.gamma));
 	vec3 specular = vec3(texture(texSampler[ubm[index.material].metallicMap], fragTexCoord));
 	float shadow = filterPCF(inShadowCoord / inShadowCoord.w);
@@ -244,5 +244,5 @@ void main() //Multiple light
 	outColor.rgb = pow(outColor.rgb, vec3(1.0/ubd.gamma));
 
     outColor = vec4(result, 1.0);
-	}
+	}*/
 }
