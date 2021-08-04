@@ -5,7 +5,9 @@ namespace Ge
 {
 	std::vector<const char*> PhysicalDevices::deviceExtensions =
 	{
-		VK_KHR_SWAPCHAIN_EXTENSION_NAME
+		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+		VK_KHR_MAINTENANCE3_EXTENSION_NAME,
+		VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME
 	};
 	bool PhysicalDevices::initialize(VulkanMisc * vM)
 	{
