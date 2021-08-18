@@ -5,12 +5,10 @@
 #include <vector>
 
 struct VulkanDescriptor
-{
-    VkDescriptorPool str_descriptorPool = VK_NULL_HANDLE;
-	VkDescriptorPool str_imGUIdescriptorPool = VK_NULL_HANDLE;
-	std::vector<VkDescriptorSet> str_descriptorSets;
+{    
+	VkDescriptorPool str_imGUIdescriptorPool = VK_NULL_HANDLE;	
     int modelCount = 0;
-    int TextureCount = 0;
+    int textureCount = 0;
     int materialCount = 0;
     int lightCount = 0;
 };

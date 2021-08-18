@@ -20,7 +20,7 @@ namespace Ge
         ~GraphiquePipeline();
 
     private:
-        static ShaderElement LoadShader(const std::string &filename, const char *entry, VkDevice device, bool isVertex);
+        static ShaderElement LoadShader(const std::string &filename, const char *entry, VkDevice device, bool isVertex,VulkanMisc * vM);
         static void DestroyShaderElement(VkDevice device, ShaderElement se);
         static std::vector<char> readFile(const std::string &filename);
         static VkShaderModule createShaderModule(const std::vector<char> &code, VkDevice device);

@@ -2,35 +2,68 @@
 
 namespace Ge
 {
-    bool CameraManager::initialized(VulkanMisc *vM)
+    bool CameraManager::initialize(VulkanMisc *vM, I_InputManager *im)
     {
+        Debug::INITSUCCESS("CameraManager");
+        vulkanM = vM;
+        m_flyCamera = new FlyCamera(vM, im);        
+        m_Camera[(I_Camera *)m_flyCamera] = (Camera *)m_flyCamera;
+        CameraManager::updatePriorityCamera(); 
+        /*std::vector<VkDescriptorBufferInfo> bufferInfo;
+        VkDescriptorBufferInfo bufferI{};
+        bufferI.buffer 
+        bufferInfo.push_back(bufferI);        
+        m_descriptor->updateCount(vM,1,bufferInfo);       */
+        //TODO update le buffer de la camera
         return true;
+    }
+
+    I_Camera *CameraManager::createCamera(std::string name = "Camera")
+    {
+        Camera * cam = new Camera(vulkanM);
+		m_Camera[(I_Camera *)cam] = cam;
+		cam->setName(name);
+		CameraManager::updatePriorityCamera();
+		return cam;
+    }
+    
+    void CameraManager::releaseCamera(I_Camera *camera)
+    {
+        Camera * cam = m_Camera[camera];
+        m_Camera.erase(camera);
+        delete (cam);				
+        CameraManager::updatePriorityCamera();
+    }
+    void CameraManager::updateAspectRatio()
+    {
+        currentCamera->updatePerspective();
+    }
+    void CameraManager::updatePriorityCamera()
+    {
+        int minimum = INT_MAX;
+        for (std::map<I_Camera *, Camera *>::iterator iter = m_Camera.begin(); iter != m_Camera.end(); ++iter)
+		{
+		   	if (iter->second->getPriority() < minimum)
+			{
+				minimum = iter->second->getPriority();
+				currentCamera = iter->second;
+			}
+		}
+        currentCamera->updatePerspective();        
+    }
+    I_Camera *CameraManager::getCurrentCamera()
+    {
+        return currentCamera;
     }
 
     void CameraManager::release()
     {
-
-    }
-
-    VkDescriptorSetLayout CameraManager::createVkDescriptorSetLayout(VulkanMisc *vM)
-    {
-        VkDescriptorSetLayout m_descriptorSetLayout;
-        VkDescriptorSetLayoutBinding uboLayoutBinding{};
-		uboLayoutBinding.binding = 0;
-		uboLayoutBinding.descriptorCount = 1;
-		uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		uboLayoutBinding.pImmutableSamplers = nullptr;
-		uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_VERTEX_BIT;
-
-        VkDescriptorSetLayoutCreateInfo layoutInfo{};
-		layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		layoutInfo.bindingCount = 1;
-		layoutInfo.pBindings = &uboLayoutBinding;
-
-		if (vkCreateDescriptorSetLayout(vM->str_VulkanDeviceMisc->str_device, &layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
+        for (std::map<I_Camera *, Camera *>::iterator iter = m_Camera.begin(); iter != m_Camera.end(); ++iter)
 		{
-			Debug::Error("Echec de la creation du descriptor set layout");
+			delete (iter->second);
 		}
-        return m_descriptorSetLayout;
+		m_Camera.clear();
+        delete (m_descriptor);
+        Debug::RELEASESUCCESS("CameraManager");
     }
 }

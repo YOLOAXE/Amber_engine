@@ -5,6 +5,7 @@
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
 #include <array>
+#include <functional>
 
 struct Vertex
 {
@@ -49,5 +50,16 @@ struct Vertex
         return pos == other.pos && normal == other.normal && texCoord == other.texCoord;
     }
 };
+
+namespace std //pour combiner correctement les champs d'une structure
+{
+	template<> struct hash<Vertex>
+	{
+		size_t operator()(Vertex const& vertex) const
+		{
+			return ((hash<glm::vec3>()(vertex.pos) ^ (hash<glm::vec3>()(vertex.normal) << 1)) >> 1) ^ (hash<glm::vec2>()(vertex.texCoord) << 1);
+		}
+	};
+}
 
 #endif //__ENGINE_VERTEX_VULKAN__

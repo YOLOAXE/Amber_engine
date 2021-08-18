@@ -1,5 +1,5 @@
 #ifndef __ENGINE_UNIFORM_BUFFER_CAMERA__
-#define __ENGINE_UNIFORM_BUFFER_OBJECTS_CAMERA__
+#define __ENGINE_UNIFORM_BUFFER_CAMERA__
 
 #include "glm/glm.hpp"
 

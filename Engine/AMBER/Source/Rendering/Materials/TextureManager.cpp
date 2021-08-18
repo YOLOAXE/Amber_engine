@@ -4,33 +4,52 @@ namespace Ge
 {
     bool TextureManager::initiliaze(VulkanMisc *vM)
     {
+        vulkanM = vM;
+        stbi_uc * pixel = new stbi_uc(3);
+        pixel[0] = 0;
+        pixel[1] = 0;
+        pixel[2] = 255;
+        nullTexture = new Textures(pixel, 1, 1, m_textures.size(), vulkanM);
+        m_textures[(Texture *)nullTexture] = nullTexture;
+        vulkanM->str_VulkanDescriptor->textureCount = m_textures.size();
+        delete(pixel);
+        Debug::INITSUCCESS("TextureManager");
         return true;
     }
 
     void TextureManager::release()
     {
+        for(std::map<Texture *,Textures *>::iterator iter = m_textures.begin(); iter != m_textures.end(); ++iter)
+        {            
+            delete(iter->second);                          
+        }
+        m_textures.clear();
+        vulkanM->str_VulkanDescriptor->textureCount = 0;
+        delete(m_descriptor);
+        Debug::RELEASESUCCESS("TextureManager");
     }
 
-    VkDescriptorSetLayout TextureManager::createVkDescriptorSetLayout(VulkanMisc *vM)
+    Texture *TextureManager::CreateTexture(const char *path)
     {
-        VkDescriptorSetLayout m_descriptorSetLayout;
-        VkDescriptorSetLayoutBinding samplerLayoutBinding{};
-		samplerLayoutBinding.binding = 0;
-		samplerLayoutBinding.descriptorCount = (vM->str_VulkanDescriptor->TextureCount == 0 ? 1 : vM->str_VulkanDescriptor->TextureCount);
-		samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		samplerLayoutBinding.pImmutableSamplers = nullptr;
-		samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_VERTEX_BIT;
-        
-        VkDescriptorSetLayoutCreateInfo layoutInfo{};
-		layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		layoutInfo.bindingCount = 1;
-		layoutInfo.pBindings = &samplerLayoutBinding;
+        int tw, th, tc;
+        stbi_uc *pixel = stbi_load(path, &tw, &th, &tc, STBI_rgb_alpha);
+        if (!pixel)
+        {
+            Debug::Warn("Echec du chargement de la texture");
+            return nullptr;
+        }
+        Textures *texture = new Textures(pixel, tw, th, m_textures.size(), vulkanM);
+        m_textures[(Texture *)texture] = texture;
+        stbi_image_free(pixel);
+        vulkanM->str_VulkanDescriptor->textureCount = m_textures.size();
+        return (Texture *)texture;
+    }
 
-		if (vkCreateDescriptorSetLayout(vM->str_VulkanDeviceMisc->str_device, &layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
-		{
-			Debug::Error("Echec de la creation du descriptor set layout");		
-		}
-
-        return m_descriptorSetLayout;
+    void TextureManager::DestroyTexture(Texture *texture)
+    {
+        Textures *t = m_textures[texture];
+        m_textures.erase(texture);
+        delete (t);
+        vulkanM->str_VulkanDescriptor->textureCount = m_textures.size();
     }
 }

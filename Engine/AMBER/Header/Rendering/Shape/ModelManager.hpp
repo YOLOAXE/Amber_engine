@@ -3,6 +3,12 @@
 
 #include "VulkanMisc.hpp"
 #include "Debug.hpp"
+#include <map>
+#include "ModelBuffer.hpp"
+#include "Model.hpp"
+#include <unordered_map>
+#include "Descriptor.hpp"
+#include "UniformBufferObject.hpp"
 
 namespace Ge
 {
@@ -11,7 +17,18 @@ namespace Ge
     public:
         bool initiliaze(VulkanMisc *vM);
         void release();
-        static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM);
+        ShapeBuffer *allocateBuffer(const char *path);
+        Model *createModel(ShapeBuffer *buffer, std::string nom = "Model");
+        void destroyModel(Model *model);
+        void destroyBuffer(ShapeBuffer *buffer);
+
+    private:
+        std::map<ShapeBuffer *, ModelBuffer *> m_modelBuffers;
+        std::map<Shape *, Model *> m_models;
+        VulkanMisc *vulkanM;
+
+    public:
+        static Descriptor *m_descriptor;
     };
 }
 

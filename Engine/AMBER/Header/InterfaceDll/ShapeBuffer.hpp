@@ -1,0 +1,6 @@
+#ifndef __ENGINE_INTERFACE_SHAPE_BUFFER__
+#define __ENGINE_INTERFACE_SHAPE_BUFFER__
+
+class ShapeBuffer{};
+
+#endif //__ENGINE_INTERFACE_SHAPE_BUFFER__

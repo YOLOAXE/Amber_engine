@@ -6,6 +6,8 @@
 #include "Debug.hpp"
 #include "RenderingEngine.hpp"
 #include "SettingManager.hpp"
+#include "Time.hpp"
+#include "InputManager.hpp"
 
 namespace Ge
 {
@@ -18,11 +20,14 @@ namespace Ge
         void update();
 
     private:
+        VulkanMisc * m_VulkanMisc;
         RenderingEngine m_renderingEngine;
         Debug m_debug;
         SettingManager m_settingManager;
-        ptrClass m_pointeurClass;
-        VulkanMisc * m_VulkanMisc;
+        ptrClass m_pointeurClass; 
+        Time m_time;
+        InputManager m_inputManager;
+        float m_lag = 0.0f;
     };
 }
 

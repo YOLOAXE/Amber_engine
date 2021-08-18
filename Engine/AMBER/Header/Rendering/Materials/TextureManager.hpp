@@ -3,15 +3,27 @@
 
 #include "VulkanMisc.hpp"
 #include "Debug.hpp"
+#include "Textures.hpp"
+#include <map>
+#include "Descriptor.hpp"
 
 namespace Ge
 {
     class TextureManager
     {
+    private:
+        friend class RenderingEngine;
+        bool initiliaze(VulkanMisc *vM);
+        void release();        
     public:
-        bool initiliaze(VulkanMisc * vM);
-        void release();
-        static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM);
+        Texture * CreateTexture(const char * path);
+		void DestroyTexture(Texture * texture);
+    private:
+        VulkanMisc *vulkanM;
+        std::map<Texture *,Textures *> m_textures;
+		Textures * nullTexture;
+    public:
+        static Descriptor * m_descriptor;
     };
 }
 

@@ -2,15 +2,15 @@
 
 namespace Ge
 {
-    GraphiquePipeline::GraphiquePipeline(VulkanMisc *vM,std::string FragFile,std::string VertFile)
-    {
-        vulkanM = vM;		
-        ShaderElement VertShader = LoadShader(VertFile, "main", vM->str_VulkanDeviceMisc->str_device, true);
-		ShaderElement FragShader = LoadShader(FragFile, "main", vM->str_VulkanDeviceMisc->str_device, false);
+	GraphiquePipeline::GraphiquePipeline(VulkanMisc *vM, std::string FragFile, std::string VertFile)
+	{
+		vulkanM = vM;
+		ShaderElement VertShader = LoadShader(VertFile, "main", vM->str_VulkanDeviceMisc->str_device, true,vM);
+		ShaderElement FragShader = LoadShader(FragFile, "main", vM->str_VulkanDeviceMisc->str_device, false,vM);
 		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
 		shaderStages[0] = VertShader.shaderStageCreateInfo;
 		shaderStages[1] = FragShader.shaderStageCreateInfo;
-		
+
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 
@@ -36,7 +36,7 @@ namespace Ge
 		viewport.maxDepth = 1.0f;
 
 		VkRect2D scissor{};
-		scissor.offset = { 0, 0 };
+		scissor.offset = {0, 0};
 		scissor.extent = vM->str_VulkanSwapChainMisc->str_swapChainExtent;
 
 		VkPipelineViewportStateCreateInfo viewportState{};
@@ -50,7 +50,7 @@ namespace Ge
 		rasterizer.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		rasterizer.depthClampEnable = VK_FALSE;
 		rasterizer.rasterizerDiscardEnable = VK_FALSE;
-		rasterizer.polygonMode = VK_POLYGON_MODE_FILL;// VK_POLYGON_MODE_FILL; VK_POLYGON_MODE_LINE;
+		rasterizer.polygonMode = VK_POLYGON_MODE_FILL; // VK_POLYGON_MODE_FILL; VK_POLYGON_MODE_LINE;
 		rasterizer.lineWidth = 1.0f;
 		rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
 		rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
@@ -89,14 +89,14 @@ namespace Ge
 		pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
 		pushConstantRange.offset = 0;
 		pushConstantRange.size = sizeof(PushConstants);
-	
+
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutInfo.setLayoutCount = vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.size();
 		pipelineLayoutInfo.pSetLayouts = vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.data();
 		pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
 		pipelineLayoutInfo.pushConstantRangeCount = 1;
-		
+
 		if (vkCreatePipelineLayout(vM->str_VulkanDeviceMisc->str_device, &pipelineLayoutInfo, nullptr, &m_graphiquePipelineElement.m_pipelineLayout) != VK_SUCCESS)
 		{
 			Debug::Error("Echec de la creation d'un pipeline layout");
@@ -129,83 +129,90 @@ namespace Ge
 		pipelineInfo.renderPass = vM->str_VulkanSwapChainMisc->str_renderPass;
 		pipelineInfo.subpass = 0;
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
-		pipelineInfo.pNext = VK_NULL_HANDLE; 
-		
+		pipelineInfo.pNext = VK_NULL_HANDLE;
+
 		if (vkCreateGraphicsPipelines(vM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_graphicsPipelineCache, 1, &pipelineInfo, nullptr, &m_graphiquePipelineElement.m_graphicsPipeline) != VK_SUCCESS)
 		{
 			Debug::Error("Echec de la creation du pipeline graphique");
 		}
-	
+
 		DestroyShaderElement(vM->str_VulkanDeviceMisc->str_device, VertShader);
 		DestroyShaderElement(vM->str_VulkanDeviceMisc->str_device, FragShader);
-        vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.push_back(&m_graphiquePipelineElement);
-    }
+		vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.push_back(&m_graphiquePipelineElement);
+	}
 
-    GraphiquePipeline::~GraphiquePipeline()
-    {
+	GraphiquePipeline::~GraphiquePipeline()
+	{
 		vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.erase(std::remove(vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.begin(), vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.end(), &m_graphiquePipelineElement), vulkanM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.end());
-        vkDestroyPipelineCache(vulkanM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_graphicsPipelineCache, nullptr);
-		vkDestroyPipeline(vulkanM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_graphicsPipeline, nullptr);		
+		vkDestroyPipelineCache(vulkanM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_graphicsPipelineCache, nullptr);
+		vkDestroyPipeline(vulkanM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_graphicsPipeline, nullptr);
 		vkDestroyPipelineLayout(vulkanM->str_VulkanDeviceMisc->str_device, m_graphiquePipelineElement.m_pipelineLayout, nullptr);
-    }
+	}
 
-    ShaderElement GraphiquePipeline::LoadShader(const std::string &filename, const char *entry, VkDevice device, bool isVertex)
-    {
-        ShaderElement se;
-        auto ShaderCode = readFile(filename);
-        VkShaderModule ShaderModule = createShaderModule(ShaderCode, device);
+	ShaderElement GraphiquePipeline::LoadShader(const std::string &filename, const char *entry, VkDevice device, bool isVertex, VulkanMisc *vM)
+	{
+		ShaderElement se;
+		std::vector<char> ShaderCode;
+		if (vM->str_VulkanSwapChainMisc->str_shaderLoader.count(filename) > 0)
+		{
+			ShaderCode = vM->str_VulkanSwapChainMisc->str_shaderLoader[filename];
+		}
+		else
+		{
+			ShaderCode = readFile(filename);
+		}
+		VkShaderModule ShaderModule = createShaderModule(ShaderCode, device);
 
-        VkPipelineShaderStageCreateInfo ShaderStageInfo{};
-        ShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-        ShaderStageInfo.stage = isVertex ? VK_SHADER_STAGE_VERTEX_BIT : VK_SHADER_STAGE_FRAGMENT_BIT;
-        ShaderStageInfo.module = ShaderModule;
-        ShaderStageInfo.pName = entry;
+		VkPipelineShaderStageCreateInfo ShaderStageInfo{};
+		ShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		ShaderStageInfo.stage = isVertex ? VK_SHADER_STAGE_VERTEX_BIT : VK_SHADER_STAGE_FRAGMENT_BIT;
+		ShaderStageInfo.module = ShaderModule;
+		ShaderStageInfo.pName = entry;
 
-        se.shaderModule = ShaderModule;
-        se.shaderStageCreateInfo = ShaderStageInfo;
-        return se;
-    }
+		se.shaderModule = ShaderModule;
+		se.shaderStageCreateInfo = ShaderStageInfo;
+		return se;
+	}
 
-    void GraphiquePipeline::DestroyShaderElement(VkDevice device, ShaderElement se)
-    {
-        vkDestroyShaderModule(device, se.shaderModule, nullptr);
-    }
+	void GraphiquePipeline::DestroyShaderElement(VkDevice device, ShaderElement se)
+	{
+		vkDestroyShaderModule(device, se.shaderModule, nullptr);
+	}
 
-    std::vector<char> GraphiquePipeline::readFile(const std::string &filename)
-    {
-        std::ifstream file(filename, std::ios::ate | std::ios::binary);
+	std::vector<char> GraphiquePipeline::readFile(const std::string &filename)
+	{
+		std::ifstream file(filename, std::ios::ate | std::ios::binary);
+		if (!file.is_open())
+		{
+			Debug::Error("Echec de l'ouverture du fichier %s", nullptr, filename.c_str());
+		}
 
-        if (!file.is_open())
-        {
-            Debug::Error("Echec de l'ouverture du fichier %s", nullptr, filename.c_str());
-        }
+		size_t fileSize = (size_t)file.tellg();
+		std::vector<char> buffer(fileSize);
 
-        size_t fileSize = (size_t)file.tellg();
-        std::vector<char> buffer(fileSize);
+		file.seekg(0);
+		file.read(buffer.data(), fileSize);
 
-        file.seekg(0);
-        file.read(buffer.data(), fileSize);
+		file.close();
 
-        file.close();
+		return buffer;
+	}
 
-        return buffer;
-    }
-
-    VkShaderModule GraphiquePipeline::createShaderModule(const std::vector<char> &code, VkDevice device)
-    {
-        VkShaderModuleCreateInfo createInfo{};
-        createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-        createInfo.codeSize = code.size();
+	VkShaderModule GraphiquePipeline::createShaderModule(const std::vector<char> &code, VkDevice device)
+	{
+		VkShaderModuleCreateInfo createInfo{};
+		createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+		createInfo.codeSize = code.size();
 		createInfo.pNext = VK_NULL_HANDLE;
 		createInfo.flags = 0;
-        createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
+		createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
 
-        VkShaderModule shaderModule;
-        if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
-        {
-            Debug::Error("Echec de la creation d'un shader module");
-        }
+		VkShaderModule shaderModule;
+		if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
+		{
+			Debug::Error("Echec de la creation d'un shader module");
+		}
 
-        return shaderModule;
-    }
+		return shaderModule;
+	}
 }

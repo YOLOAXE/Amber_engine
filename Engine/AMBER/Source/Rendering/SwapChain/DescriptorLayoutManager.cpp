@@ -4,27 +4,20 @@
 #include "TextureManager.hpp"
 #include "MaterialManager.hpp"
 #include "LightManager.hpp"
+#include "ShaderUniformBufferDivers.hpp"
 
 namespace Ge
 {
 	bool DescriptorLayoutManager::initialize(VulkanMisc *vM)
-	{
-		vulkanM = vM;
-		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(CameraManager::createVkDescriptorSetLayout(vM));		
-		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(TextureManager::createVkDescriptorSetLayout(vM));	
-		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(ModelManager::createVkDescriptorSetLayout(vM));	
-		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(MaterialManager::createVkDescriptorSetLayout(vM));				
-		vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(LightManager::createVkDescriptorSetLayout(vM));
+	{		
+		CameraManager::m_descriptor = new Descriptor(vM,VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,1);
+		TextureManager::m_descriptor = new Descriptor(vM,VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,1);
+		ModelManager::m_descriptor = new Descriptor(vM,VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,1);
+		MaterialManager::m_descriptor = new Descriptor(vM,VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,1);
+		LightManager::m_descriptor = new Descriptor(vM,VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,1);
+		ShaderUniformBufferDivers::m_descriptor = new Descriptor(vM,VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,1);
+		
 		Debug::INITSUCCESS("DescriptorLayoutManager");
 		return true;
 	}
-
-	void DescriptorLayoutManager::release()
-	{
-		for (int i = 0; i < vulkanM->str_VulkanSwapChainMisc->str_descriptorSetLayout.size(); i++)
-		{
-			vkDestroyDescriptorSetLayout(vulkanM->str_VulkanDeviceMisc->str_device, vulkanM->str_VulkanSwapChainMisc->str_descriptorSetLayout[i], nullptr);
-		}
-	}
-
 }

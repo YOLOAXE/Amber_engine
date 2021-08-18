@@ -12,10 +12,6 @@ namespace Ge
     {
     public:
         bool initialize(VulkanMisc *vM);
-        void release();
-    private:
-        VkDescriptorSetLayout m_descriptorSetLayout;
-        VulkanMisc *vulkanM;
     };
 }
 

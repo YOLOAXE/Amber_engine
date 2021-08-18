@@ -3,6 +3,11 @@
 
 #include "VulkanMisc.hpp"
 #include "Debug.hpp"
+#include "Vector3.hpp"
+#include "LPoint.hpp"
+#include "LSpot.hpp"
+#include "LDirectional.hpp"
+#include "Descriptor.hpp"
 
 namespace Ge
 {
@@ -11,7 +16,18 @@ namespace Ge
     public:
         bool initialize(VulkanMisc *vM);
         void release();
-        static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM);
+        SpotLight *createSpotLight(Vector3 position, Vector3 color, Vector3 direction, float cutOff, float outerCutOff, std::string name = "SpotLight");
+        DirectionalLight *createDirectionalLight(Vector3 direction, Vector3 color, std::string name = "DirectionalLight");
+        PointLight *createPointLight(Vector3 position, Vector3 color, std::string name = "PointLight");
+        void destroyLight(Light *light);
+        void updateUniformBufferLight();
+        void majIndex();
+
+    private:
+        VulkanMisc *vulkanM;
+        std::map<Light *, Lights *> m_mapLights;
+    public:
+        static Descriptor * m_descriptor;
     };
 }
 

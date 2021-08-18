@@ -72,7 +72,6 @@ namespace Ge
 		vM->str_VulkanSwapChainMisc->str_imageCount = m_imageCount;
 
 		m_swapChainImagesView.resize(m_imageCount);
-		vM->str_VulkanSwapChainMisc->str_swapChainImageViews.resize(m_imageCount);
 		for (int i = 0; i < m_imageCount; i++)
 		{
 			m_swapChainImagesView[i] = new ImageViewSwapChains(&m_swapChainImages[i], m_swapChainImageFormat, vM);
@@ -83,16 +82,17 @@ namespace Ge
 			Debug::INITFAILED("RenderPass");
 			return false;
 		}
-		if (!m_descriptorLayoutManager.initialize(vulkanM))
-		{
-			Debug::INITFAILED("DescriptorLayoutManager");
-			return false;
-		}
 		if (!SwapChain::initPipeline())
 		{
 			Debug::INITFAILED("InitializeLayout");
 			return false;
 		}
+		if(!SwapChain::m_descriptorLayoutManager.initialize(vM))
+		{
+			Debug::INITFAILED("DescriptorLayoutManager");
+			return false;
+		}
+
 		Debug::INITSUCCESS("SwapChain");
 		return true;
 	}
@@ -115,7 +115,6 @@ namespace Ge
 	void SwapChain::release()
 	{
 		SwapChain::releasePipeline();
-		m_descriptorLayoutManager.release();
 		m_renderPass.release();
 		for (int i = 0; i < m_swapChainImagesView.size(); i++)
 		{

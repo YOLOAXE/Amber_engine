@@ -7,8 +7,8 @@
 #include "QueueFamilyIndices.hpp"
 #include "ImageViewSwapChains.hpp"
 #include "RenderPass.hpp"
-#include "DescriptorLayoutManager.hpp"
 #include "GraphiquePipelineManager.hpp"
+#include "DescriptorLayoutManager.hpp"
 
 namespace Ge
 {
@@ -31,8 +31,8 @@ namespace Ge
 		VkFormat m_swapChainImageFormat;
 		std::vector<VkImage> m_swapChainImages;
 		std::vector<ImageViewSwapChains *> m_swapChainImagesView;
-		DescriptorLayoutManager m_descriptorLayoutManager;
 		RenderPass m_renderPass;
+		DescriptorLayoutManager m_descriptorLayoutManager;
 		GraphiquePipelineManager m_graphiquePipelineManager;
 		VkSwapchainKHR m_swapChain;
 		uint32_t m_imageCount;

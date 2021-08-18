@@ -12,6 +12,15 @@
 #include "CommandPool.hpp"
 #include "BufferManager.hpp"
 #include "SwapChain.hpp"
+#include "ColorResources.hpp"
+#include "DepthResources.hpp"
+#include "FrameBuffers.hpp"
+#include "TextureManager.hpp"
+#include "ModelManager.hpp"
+#include "MaterialManager.hpp"
+#include "ShaderUniformBufferDivers.hpp"
+#include "LightManager.hpp"
+#include "CameraManager.hpp"
 
 namespace Ge
 {
@@ -21,6 +30,7 @@ namespace Ge
         RenderingEngine();
         bool initialize(ptrClass * p_ptrClass);
         void release();
+        void drawFrame();
         VulkanMisc * getVulkanMisc();
     private:
         VulkanMisc m_vulkanMisc;
@@ -38,6 +48,15 @@ namespace Ge
         CommandPool m_commandPool;
         BufferManager m_bufferManager;
         SwapChain m_swapChain;
+        ColorResources m_colorResources;
+        DepthResources m_depthResources;
+        FrameBuffers m_frameBuffers;
+        TextureManager m_textureManager;
+        ModelManager m_modelManager;
+        MaterialManager m_materialManager;
+        ShaderUniformBufferDivers m_shaderUniformBufferDivers;
+        LightManager m_lightManager;
+        CameraManager m_cameraManager;
     };
 }
 
