@@ -14,10 +14,11 @@ namespace Ge
     private:
         friend class RenderingEngine;
         bool initiliaze(VulkanMisc *vM);
-        void release();        
+        void release();   
+        void updateDescriptor();     
     public:
-        Texture * CreateTexture(const char * path);
-		void DestroyTexture(Texture * texture);
+        Texture * createTexture(const char * path);
+		void destroyTexture(Texture * texture);
     private:
         VulkanMisc *vulkanM;
         std::map<Texture *,Textures *> m_textures;

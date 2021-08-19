@@ -9,12 +9,13 @@ namespace Ge
         m_flyCamera = new FlyCamera(vM, im);        
         m_Camera[(I_Camera *)m_flyCamera] = (Camera *)m_flyCamera;
         CameraManager::updatePriorityCamera(); 
-        /*std::vector<VkDescriptorBufferInfo> bufferInfo;
+        std::vector<VkDescriptorBufferInfo> bufferInfo;
         VkDescriptorBufferInfo bufferI{};
-        bufferI.buffer 
+        bufferI.buffer = currentCamera->getUniformBuffer().buffer;
+        bufferI.offset = 0;
+        bufferI.range = sizeof(UniformBufferCamera);
         bufferInfo.push_back(bufferI);        
-        m_descriptor->updateCount(vM,1,bufferInfo);       */
-        //TODO update le buffer de la camera
+        m_descriptor->updateCount(vM,1,bufferInfo);               
         return true;
     }
 

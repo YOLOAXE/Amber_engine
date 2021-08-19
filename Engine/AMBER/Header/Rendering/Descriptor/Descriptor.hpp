@@ -3,6 +3,7 @@
 
 #include "VulkanMisc.hpp"
 #include "Debug.hpp"
+#include <algorithm>
 
 namespace Ge
 {

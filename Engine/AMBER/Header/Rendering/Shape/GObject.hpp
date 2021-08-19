@@ -27,6 +27,7 @@ namespace Ge
 		virtual Vector4 getRotation();
 		virtual Vector3 getEulerAngles();
 		virtual Vector3 getScale();
+		virtual void mapMemory();
 		Vector3 transformDirectionAxeX();
 		Vector3 transformDirectionAxeY();
 		Vector3 transformDirectionAxeZ();

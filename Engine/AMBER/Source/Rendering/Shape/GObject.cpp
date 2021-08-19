@@ -11,7 +11,7 @@ namespace Ge
 		setPosition(Vector3(0.0f));
 		setEulerAngles(Vector3(0.0f));
 		setScale(Vector3(1.0f));
-		m_nom = "NoName";
+		m_nom = "NoName";		
 	}
 
 	void GObject::setName(std::string name)
@@ -43,6 +43,7 @@ namespace Ge
 		{
 			m_transform.translateMatrix = glm::translate(glm::mat4(1.0f), m_transform.position);
 		}
+		mapMemory();
 	}
 
 	void GObject::setEulerAngles(Vector3 eul)
@@ -55,6 +56,7 @@ namespace Ge
 		m_transform.rotationMatrix = glm::rotate(m_transform.rotationMatrix, glm::radians(m_transform.eulerAngles.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		m_transform.rotationMatrix = glm::rotate(m_transform.rotationMatrix, glm::radians(m_transform.eulerAngles.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		m_transform.rotation = toQuat(m_transform.rotationMatrix);
+		mapMemory();
 	}
 
 	void GObject::setRotation(Vector4 rot)
@@ -66,6 +68,7 @@ namespace Ge
 		m_transform.rot = rot;
 		m_transform.rotationMatrix = toMat4(m_transform.rotation);
 		extractEulerAngleXYZ(m_transform.rotationMatrix, m_transform.eulerAngles.x, m_transform.eulerAngles.y, m_transform.eulerAngles.z);
+		mapMemory();
 	}
 
 	void GObject::setScale(Vector3 scale)
@@ -74,6 +77,7 @@ namespace Ge
 		m_transform.scale.y = scale.y;
 		m_transform.scale.z = scale.z;
 		m_transform.size = scale;
+		mapMemory();
 	}
 
 	void GObject::setTarget(Vector3 target)
@@ -82,6 +86,7 @@ namespace Ge
 		m_transform.rotationMatrix = glm::lookAt(m_transform.position, m_transform.target, glm::vec3(0.0f, 0.0f, 1.0f));
 		m_transform.rotation = toQuat(m_transform.rotationMatrix);
 		extractEulerAngleXYZ(m_transform.rotationMatrix, m_transform.eulerAngles.x, m_transform.eulerAngles.y, m_transform.eulerAngles.z);
+		mapMemory();
 	}
 
 	Vector3 GObject::getPosition()
@@ -177,6 +182,10 @@ namespace Ge
 		setRotation(getRotation());
 	}
 
+	void GObject::mapMemory()
+	{
+	}
+
 	void GObject::addComponent(Component *c)
 	{
 	}
@@ -185,7 +194,7 @@ namespace Ge
 	{
 	}
 
-	void GObject::OnGUI()
+	void GObject::onGUI()
 	{
 		m_transformImgui.pos[0] = m_transform.pos.x;
 		m_transformImgui.pos[1] = m_transform.pos.y;

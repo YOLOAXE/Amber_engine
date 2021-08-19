@@ -23,6 +23,7 @@ namespace Ge
 
 	void Model::render(VkCommandBuffer CmdBuffer, VkDescriptorSet pDescriptorSets, VkPipelineLayout pipelineLayout, VkShaderStageFlags pushConstantShaderFlags)
 	{
+		//TODO bind sur le bon pipeline dans le command buffer par packet
 		//vkCmdBindPipeline(CmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(CmdBuffer, 0, 1, m_buffer->getVertexBuffer(), offsets);
@@ -30,7 +31,7 @@ namespace Ge
 		vkCmdBindIndexBuffer(CmdBuffer, m_buffer->getIndexBuffer(), 0, VK_INDEX_TYPE_UINT32);
 
 		vkCmdBindDescriptorSets(CmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &pDescriptorSets, 0, nullptr);
-		
+		//TODO bind tous les descriptor disponible
 		vkCmdPushConstants(
 			CmdBuffer,
 			pipelineLayout,
@@ -40,6 +41,15 @@ namespace Ge
 			&m_index);
 
 		vkCmdDrawIndexed(CmdBuffer, m_buffer->getIndiceSize(), 1, 0, 0, 0);
+	}
+
+	void Model::mapMemory()
+	{
+		m_ubo.model = m_transform.translateMatrix * m_transform.rotationMatrix;
+		m_ubo.model = glm::scale(m_ubo.model, m_transform.scale);
+
+		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubo, sizeof(m_ubo));
+		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
 	VkBuffer Model::getUniformBuffers()

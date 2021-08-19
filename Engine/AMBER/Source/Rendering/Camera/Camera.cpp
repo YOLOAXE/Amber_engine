@@ -14,6 +14,8 @@ namespace Ge
 			m_uniformBufferCamera.proj = glm::perspective(glm::radians(m_fov), vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height/ (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height, m_near, m_far);
 		}
 		m_uniformBufferCamera.proj[1][1] *= -1;
+		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(m_uniformBufferCamera));
+		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
 	Camera::Camera(VulkanMisc * vM) : GObject(true)
@@ -27,12 +29,22 @@ namespace Ge
 		m_near = 0.1f;
 		m_priority = 0;
 		vulkanM = vM;
+		m_uniformBufferCamera.camPos = m_transform.position;
+		m_uniformBufferCamera.view = m_transform.rotationMatrix * m_transform.translateMatrix;
 		Camera::updatePerspective();
-	}
+	}	
 
 	Camera::~Camera()
 	{
 		BufferManager::destroyBuffer(m_vmaUniformBuffer);
+	}
+
+	void Camera::mapMemory()
+	{		
+		m_uniformBufferCamera.camPos = m_transform.position;
+		m_uniformBufferCamera.view = m_transform.rotationMatrix * m_transform.translateMatrix;
+		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(m_uniformBufferCamera));
+		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
 	void Camera::setFieldOfView(float fov)

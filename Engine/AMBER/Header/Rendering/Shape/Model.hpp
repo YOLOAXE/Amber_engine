@@ -21,6 +21,7 @@ namespace Ge
 		VkBuffer getUniformBuffers();
 		ModelBuffer * getModelBuffer();
 		UniformBufferObject getUBO();
+		void mapMemory() override;
 		void setIndexUbo(int index);		
 	private:
 		VulkanMisc * vulkanM;

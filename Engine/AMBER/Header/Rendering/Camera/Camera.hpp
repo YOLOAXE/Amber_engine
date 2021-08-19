@@ -34,6 +34,7 @@ namespace Ge
 		float getFieldOfView();
 		float getNear();
 		float getFar();
+		void mapMemory() override;
 		int getPriority();
 		VmaBuffer getUniformBuffer();
 		glm::mat4 getView();

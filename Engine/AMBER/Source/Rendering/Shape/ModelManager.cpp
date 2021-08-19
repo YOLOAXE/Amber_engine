@@ -8,6 +8,12 @@ namespace Ge
 	bool ModelManager::initiliaze(VulkanMisc *vM)
 	{
 		vulkanM = vM;
+		//TODO crée un null buffer pour les descriptor set
+		/*if (!BufferManager::createBuffer(8, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffers, vM->str_VulkanDeviceMisc))
+		{
+			Debug::Error("Echec de la creation d'un uniform buffer");
+			return false;
+		}*/
 		Debug::INITSUCCESS("ModelManager");
 		return true;
 	}
