@@ -1,8 +1,7 @@
-#include "Caps_HUD.hpp"
+#include "Hud.hpp"
 #include "ColorResources.hpp"
 #include "PhysicalDevices.hpp"
 #include "SwapChain.hpp"
-#include "Model_Manager.hpp"
 
 
 namespace Ge
@@ -116,8 +115,8 @@ namespace Ge
 		init_info.Device = vM->str_VulkanDeviceMisc->str_device;
 		init_info.QueueFamily = PhysicalDevices::getCountQueueFamily(vM->str_VulkanDeviceMisc->str_physicalDevice);
 		init_info.Queue = vM->str_VulkanDeviceMisc->str_graphicsQueue;
-		init_info.PipelineCache = vM->str_VulkanSwapChainMisc->str_graphicsPipelineCache;
-		init_info.DescriptorPool = vM->str_VulkanDescriptor->str_imGUIdescriptorPool;
+		init_info.PipelineCache = VK_NULL_HANDLE;// vM->str_VulkanSwapChainMisc->str_graphicsPipelineCache; //TODO a verifier 
+		init_info.DescriptorPool = VK_NULL_HANDLE;// vM->str_VulkanDescriptor->str_imGUIdescriptorPool;
 		init_info.Allocator = nullptr;
 		init_info.MinImageCount = vM->str_VulkanSwapChainMisc->str_imageCount - 1;
 		init_info.ImageCount = vM->str_VulkanSwapChainMisc->str_imageCount;
@@ -220,8 +219,6 @@ namespace Ge
 
 	void Hud::ReleaseHUD(VkDevice device)
 	{
-		delete(m_projectGUI);
-		delete(m_hiearchyGUI);
 		for (auto framebuffer : m_imGuiFramebuffer)
 		{
 			vkDestroyFramebuffer(device, framebuffer, nullptr);
@@ -239,7 +236,7 @@ namespace Ge
 	void Hud::RecreateSwapChain(VulkanMisc* vM)
 	{
 		ReleaseHUD(vM->str_VulkanDeviceMisc->str_device);
-		Init_HUD(vM, m_ModelManager, m_LightManager, m_PhysicsEngine, m_SoundEngine, m_CameraManager);
+		Init_HUD(vM);
 	}
 
 	void Hud::Render(VulkanMisc* vM, uint32_t currentframe)
@@ -249,7 +246,7 @@ namespace Ge
 		info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 		vkBeginCommandBuffer(m_imGuiCommandBuffers[currentframe], &info);
-		Caps_HUD::ImGuiRender(vM);
+		Hud::ImGuiRender(vM);
 		ImGui::Render();
 
 		VkRenderPassBeginInfo binfo = {};
@@ -278,16 +275,9 @@ namespace Ge
 		ImGui::NewFrame();
 		if (m_GlobalGUIActive)
 		{
-			//ImGui::Checkbox("AUI", &isHUDActive);
-			MenuBar(&openInfo, &isHUDActive);
-
 			if (isHUDActive)
 			{
-				OverlayInfo(vM, &openInfo);
-				m_hiearchyGUI->OnGUI(vM);
-				m_projectGUI->OnGUI(vM);
-				//ImGui::ShowDemoWindow();
-				Console_Debug(vM);
+				ImGui::ShowDemoWindow();
 			}
 		}
 

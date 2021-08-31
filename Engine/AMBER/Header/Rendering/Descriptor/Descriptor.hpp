@@ -11,7 +11,7 @@ namespace Ge
     {
     public:
         Descriptor(VulkanMisc *vM, VkDescriptorType descriptorType, int baseCount);
-        ~Descriptor();
+		~Descriptor();
         VkDescriptorSetLayout getDescriptorSetLayout();
         VkDescriptorPool getDescriptorPool();
         std::vector<VkDescriptorSet> getDescriptorSets();

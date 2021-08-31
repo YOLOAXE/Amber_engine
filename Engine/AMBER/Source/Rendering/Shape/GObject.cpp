@@ -237,7 +237,7 @@ namespace Ge
 		{
 			for (Component *comp : m_Component)
 			{
-				comp->OnGUI();
+				comp->onGUI();
 			}
 		}
 	}

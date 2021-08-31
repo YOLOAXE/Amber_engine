@@ -3,7 +3,7 @@
 
 namespace Ge
 {
-	FlyCamera::FlyCamera(VulkanMisc * vM, I_InputManager * input)
+	FlyCamera::FlyCamera(VulkanMisc * vM, I_InputManager * input) : Camera(vM)
 	{
 		m_im = input;
 		m_angleY = 0.0f;

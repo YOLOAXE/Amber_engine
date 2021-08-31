@@ -1,13 +1,17 @@
-#include "CommmandBuffer.hpp"
+#include "CommandBuffer.hpp"
 
 namespace Ge
 {
-    class CommandBuffer
-    {
-        bool initialize(VulkanMisc * vM)
-        {
-            vulkanM = vM;
-        }
-        void release();
-    };
+
+	bool CommandBuffer::initialize(VulkanMisc * vM)
+	{
+		vulkanM = vM;
+		return true;
+	}
+
+	void CommandBuffer::release()
+	{
+
+	}
+
 }

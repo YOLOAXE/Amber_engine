@@ -7,13 +7,10 @@
 #include "imgui-cmake/Header/imgui_impl_vulkan.h"
 #include "imgui-cmake/Header/imgui_impl_glfw.h"
 #include "VulkanMisc.hpp"
-#include "Rendering/ImGui/Caps_Console_HUD.hpp"
 #include <vector>
 
 namespace Ge
 {
-
-
 	class Hud
 	{
 	public:
@@ -41,6 +38,4 @@ namespace Ge
 
 }
 
-
-
-#endif
+#endif//__ENGINE_HUD__

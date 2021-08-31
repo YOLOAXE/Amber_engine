@@ -19,7 +19,7 @@ namespace Ge
         return true;
     }
 
-    I_Camera *CameraManager::createCamera(std::string name = "Camera")
+    I_Camera *CameraManager::createCamera(std::string name)
     {
         Camera * cam = new Camera(vulkanM);
 		m_Camera[(I_Camera *)cam] = cam;

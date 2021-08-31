@@ -6,6 +6,8 @@
 #include "glm/glm.hpp"
 #include <array>
 #include <functional>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/hash.hpp>
 
 struct Vertex
 {

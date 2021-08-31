@@ -12,13 +12,12 @@ namespace Ge
         m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);        
     }
 
-    Descriptor::~Descriptor();
-    {        
-        //destroyVkDescriptorSet(vulkanM,m_DescriptorSets,m_DescriptorPool);
-        destroyVkDescriptorPool(vulkanM,m_DescriptorPool);
-        destroyVkVkDescriptorSetLayout(vulkanM,m_DescriptorSetLayout);
-
-    }
+	Descriptor::~Descriptor()
+	{
+		//destroyVkDescriptorSet(vulkanM,m_DescriptorSets,m_DescriptorPool);
+		destroyVkDescriptorPool(vulkanM, m_DescriptorPool);
+		destroyVkVkDescriptorSetLayout(vulkanM, m_DescriptorSetLayout);
+	}
 
     VkDescriptorSetLayout Descriptor::getDescriptorSetLayout()
     {
