@@ -39,6 +39,8 @@ namespace Ge
 		VkBuffer getlightMatrixShadowUniformBuffers();		
 		void updateUniformBufferLight();
 		void onGUI() override;
+		void setShadow(bool state);
+		bool getShadow();
 		virtual ~Lights();
 
 	protected:

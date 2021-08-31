@@ -20,12 +20,13 @@ namespace Ge
         DirectionalLight *createDirectionalLight(Vector3 direction, Vector3 color, std::string name = "DirectionalLight");
         PointLight *createPointLight(Vector3 position, Vector3 color, std::string name = "PointLight");
         void destroyLight(Light *light);
-        void updateUniformBufferLight();
+        void updateDescriptor();
         void majIndex();
 
     private:
         VulkanMisc *vulkanM;
         std::map<Light *, Lights *> m_mapLights;
+        VmaBuffer m_vmaUniformBuffers;
     public:
         static Descriptor * m_descriptor;
     };

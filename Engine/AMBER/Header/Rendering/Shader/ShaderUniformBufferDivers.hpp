@@ -12,9 +12,8 @@ namespace Ge
     class ShaderUniformBufferDivers
     {
     public:
-        bool initilize(VulkanMisc *vM);
-        void release();
-        VkBuffer getUniformBuffers();
+        bool initialize(VulkanMisc *vM);
+        void release();        
         void updateUniformBufferDiver();
         static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM);
         static VkDescriptorPool createVkDescriptorPool(VulkanMisc *vM);

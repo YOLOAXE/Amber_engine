@@ -21,10 +21,11 @@ namespace Ge
         Model *createModel(ShapeBuffer *buffer, std::string nom = "Model");
         void destroyModel(Model *model);
         void destroyBuffer(ShapeBuffer *buffer);
-
+        void updateDescriptor();
     private:
         std::map<ShapeBuffer *, ModelBuffer *> m_modelBuffers;
         std::map<Shape *, Model *> m_models;
+        VmaBuffer m_vmaUniformBuffers;
         VulkanMisc *vulkanM;
 
     public:

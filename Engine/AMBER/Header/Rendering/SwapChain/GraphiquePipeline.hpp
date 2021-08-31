@@ -10,10 +10,11 @@
 #include "VertexVulkan.hpp"
 #include <algorithm>
 #include "PushConstants.hpp"
+#include "Pipeline.hpp"
 
 namespace Ge
 {
-    class GraphiquePipeline
+    class GraphiquePipeline : Pipeline
     {
     public:
         GraphiquePipeline(VulkanMisc *vM, std::string FragFile, std::string VertFile);

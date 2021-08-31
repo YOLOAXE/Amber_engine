@@ -6,21 +6,23 @@ namespace Ge
     bool ShaderUniformBufferDivers::initialize(VulkanMisc * vM)
 	{
         vulkanM = vM;		
-		if (!BufferManager::createBuffer(sizeof(UniformBufferDiver), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM))
+		if (!BufferManager::createBuffer(sizeof(UniformBufferDiver), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM->str_VulkanDeviceMisc))
 		{
 			Debug::Error("Echec de la creation d'un uniform buffer Diver");
 			return false;
 		}
+		std::vector<VkDescriptorBufferInfo> bufferInfo;
+        VkDescriptorBufferInfo bufferI{};
+        bufferI.buffer = m_vmaUniformBuffer.buffer;
+        bufferI.offset = 0;
+        bufferI.range = sizeof(UniformBufferDiver);
+        bufferInfo.push_back(bufferI);        
+        m_descriptor->updateCount(vM,1,bufferInfo);  		
         Debug::INITSUCCESS("UniformBufferDiver");
 		return true;
 	}
 
-	VkBuffer ShaderUniformBufferDivers::getUniformBuffers()
-	{
-		return m_vmaUniformBuffer.buffer;
-	}
-
-	void ShaderUniformBufferDivers::updateUniformBufferDiver()
+	void ShaderUniformBufferDivers::updateUniformBufferDiver()//TODO update que si il y a un des elements qui change
 	{		
 		m_ubd.maxLight = vulkanM->str_VulkanDescriptor->lightCount;
 		m_ubd.u_time = Time::GetTime();
@@ -32,6 +34,7 @@ namespace Ge
 	void ShaderUniformBufferDivers::release()
 	{
 		BufferManager::destroyBuffer(m_vmaUniformBuffer);
+		delete(m_descriptor);
 		Debug::RELEASESUCCESS("UniformBufferDiver");
 	}
 }

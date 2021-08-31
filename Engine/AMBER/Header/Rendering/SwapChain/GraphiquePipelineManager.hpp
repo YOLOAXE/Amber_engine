@@ -5,6 +5,8 @@
 #include "Debug.hpp"
 #include <vector>
 #include "GraphiquePipeline.hpp"
+#include "ShaderPair.hpp"
+#include <map>
 
 namespace Ge
 {
@@ -13,13 +15,12 @@ namespace Ge
     public:
         bool initialize(VulkanMisc *vM);
         void release();
-        void/*pipeline*/ createPipeline(const std::string & frag,const std::string & vert);
-        void destroyPipeline(/*pipeline*/);
+        Pipeline *  createPipeline(const std::string & frag,const std::string & vert);
+        void destroyPipeline(Pipeline * pipeline);
     private:
-        VulkanMisc *vulkanM;
-        std::vector<std::string> m_fileNameFragShaders; 
-        std::vector<std::string> m_fileNameVertShaders;
-        std::vector<GraphiquePipeline *> m_allPipelines;
+        VulkanMisc *vulkanM;        
+        std::vector<ShaderPair *> m_fileNameShaders;        
+        std::map<Pipeline *,GraphiquePipeline * > m_GraphiquePipeline;
     };
 }
 

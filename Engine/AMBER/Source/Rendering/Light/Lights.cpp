@@ -14,11 +14,13 @@ namespace Ge
 		{
 			Debug::Error("Echec de la creation d'un uniform buffer object");
 		}		
+		updateUniformBufferLight();
 	}
 
 	void Lights::setColors(Vector3 color)
 	{
 		m_ubl.diffuse = glm::vec3(color.x, color.y, color.z);
+		updateUniformBufferLight();
 	}
 
 	Vector3 Lights::getColors()
@@ -29,6 +31,7 @@ namespace Ge
 	void Lights::setSpecular(Vector3 spec)
 	{
 		m_ubl.specular = glm::vec3(spec.x, spec.y, spec.z);
+		updateUniformBufferLight();
 	}
 
 	Vector3 Lights::getSpecular()
@@ -41,6 +44,7 @@ namespace Ge
 		m_ubl.direction = glm::vec3(eul.x, eul.y, eul.z);
 		m_transform.eul = eul;//A changer
 		m_transform.eulerAngles = m_ubl.direction;//A changer	
+		updateUniformBufferLight();//TODO verifier les a changer
 	}
 
 	Vector3 Lights::getEulerAngles()
@@ -58,11 +62,13 @@ namespace Ge
 		m_ubl.position = glm::vec3(position.x, position.y, position.z);
 		m_transform.position = m_ubl.position;
 		m_transform.pos = position;	
+		updateUniformBufferLight();
 	}
 
 	void Lights::setAmbiant(Vector3 ambiant)
 	{
 		m_ubl.ambient = glm::vec3(ambiant.x, ambiant.y, ambiant.z);
+		updateUniformBufferLight();
 	}
 
 	int Lights::getStatus()
@@ -88,6 +94,16 @@ namespace Ge
 	VkBuffer Lights::getUniformBuffers()
 	{
 		return m_vmaUniformBuffer.buffer;
+	}
+
+	void Lights::setShadow(bool state)
+	{
+
+	}
+
+	bool Lights::getShadow()
+	{
+		return false;//TODO réaliser la Shadow
 	}
 
 
@@ -136,8 +152,7 @@ namespace Ge
 	}
 
 	Lights::~Lights()
-	{
-		BufferManager::destroyBuffer(m_vmaOffScreenShadowBuffer);
+	{		
 		BufferManager::destroyBuffer(m_vmaUniformBuffer);
 	}
 }

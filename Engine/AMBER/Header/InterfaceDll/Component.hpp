@@ -4,7 +4,7 @@
 class Component
 {
 public:
-	virtual void OnGUI() = 0;
+	virtual void onGUI() = 0;
 };
 
 #endif //__ENGINE_INTERFACE_COMPONENT__

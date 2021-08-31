@@ -1,0 +1,6 @@
+#ifndef __ENGINE_INTERFACE_PIPELINE__
+#define __ENGINE_INTERFACE_PIPELINE__
+
+class Pipeline{};
+
+#endif//__ENGINE_INTERFACE_PIPELINE__

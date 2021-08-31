@@ -7,15 +7,40 @@ namespace Ge
 {
 	bool ModelManager::initiliaze(VulkanMisc *vM)
 	{
-		vulkanM = vM;
-		//TODO crée un null buffer pour les descriptor set
-		/*if (!BufferManager::createBuffer(8, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffers, vM->str_VulkanDeviceMisc))
+		vulkanM = vM;		
+		if (!BufferManager::createBuffer(sizeof(UniformBufferObject), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffers, vM->str_VulkanDeviceMisc))
 		{
 			Debug::Error("Echec de la creation d'un uniform buffer");
 			return false;
-		}*/
+		}
+		updateDescriptor();
 		Debug::INITSUCCESS("ModelManager");
 		return true;
+	}
+
+	void ModelManager::updateDescriptor()
+	{
+		std::vector<VkDescriptorBufferInfo> bufferInfoModel{};
+		VkDescriptorBufferInfo bufferIM{};
+        for (std::map<Shape *, Model *>::iterator iter = m_models.begin(); iter != m_models.end(); ++iter)
+        {
+            bufferIM.buffer = iter->second->getUniformBuffers();
+			bufferIM.offset = 0;
+			bufferIM.range = sizeof(UniformBufferObject);
+			bufferInfoModel.push_back(bufferIM);
+        }
+		if(m_models.size() == 0)
+		{
+			m_descriptor->updateCount(vulkanM,m_models.size(),bufferInfoModel);
+		}
+		else
+		{
+			bufferIM.buffer = m_vmaUniformBuffers.buffer;
+			bufferIM.offset = 0;
+			bufferIM.range = sizeof(UniformBufferObject);
+			bufferInfoModel.push_back(bufferIM);
+        	m_descriptor->updateCount(vulkanM,1,bufferInfoModel);
+		}
 	}
 
 	void ModelManager::release()
@@ -30,6 +55,7 @@ namespace Ge
 			delete (iter->second);
 		}
 		m_models.clear();
+		BufferManager::destroyBuffer(m_vmaUniformBuffers);
 		delete(m_descriptor);
 		Debug::RELEASESUCCESS("ModelManager");
 	}
@@ -46,6 +72,7 @@ namespace Ge
 		Mesh->setName(nom);
 		m_models[(Model *)Mesh] = Mesh;
 		vulkanM->str_VulkanDescriptor->modelCount = m_models.size();
+		updateDescriptor();
 		return Mesh;
 	}
 
@@ -55,6 +82,7 @@ namespace Ge
         m_models.erase(model);
         delete (m);
 		vulkanM->str_VulkanDescriptor->modelCount = m_models.size();
+		updateDescriptor();
 	}
 
 	void ModelManager::destroyBuffer(ShapeBuffer *buffer)

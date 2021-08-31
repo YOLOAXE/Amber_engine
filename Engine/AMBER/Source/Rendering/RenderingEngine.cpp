@@ -78,6 +78,11 @@ namespace Ge
             Debug::INITFAILED("Framebuffers");
             return false;
         }
+        if(!RenderingEngine::m_cameraManager.initialize(&m_vulkanMisc, p_ptrClass->pi_inputManager))
+        {
+            Debug::INITFAILED("CameraManager");
+            return false;
+        }
         if (!RenderingEngine::m_textureManager.initiliaze(&m_vulkanMisc))
         {
             Debug::INITFAILED("TextureManager");
@@ -98,7 +103,7 @@ namespace Ge
             Debug::INITFAILED("LightManager");
             return false;
         }
-        if (!RenderingEngine::m_shaderUniformBufferDivers.initilize(&m_vulkanMisc))
+        if (!RenderingEngine::m_shaderUniformBufferDivers.initialize(&m_vulkanMisc))
         {
             Debug::INITFAILED("ShaderUniformBufferDivers");
             return false;
@@ -132,6 +137,7 @@ namespace Ge
 
     void RenderingEngine::drawFrame()
     {
+        
     }
 
     VulkanMisc *RenderingEngine::getVulkanMisc()

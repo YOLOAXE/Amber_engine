@@ -14,7 +14,7 @@ namespace Ge
         bufferI.buffer = currentCamera->getUniformBuffer().buffer;
         bufferI.offset = 0;
         bufferI.range = sizeof(UniformBufferCamera);
-        bufferInfo.push_back(bufferI);        
+        bufferInfo.push_back(bufferI);
         m_descriptor->updateCount(vM,1,bufferInfo);               
         return true;
     }
