@@ -21,6 +21,7 @@
 #include "ShaderUniformBufferDivers.hpp"
 #include "LightManager.hpp"
 #include "CameraManager.hpp"
+#include "CommandBuffer.hpp"
 
 namespace Ge
 {
@@ -57,6 +58,7 @@ namespace Ge
         ShaderUniformBufferDivers m_shaderUniformBufferDivers;
         LightManager m_lightManager;
         CameraManager m_cameraManager;
+        CommandBuffer m_commandBuffer;
     };
 }
 

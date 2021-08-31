@@ -108,6 +108,10 @@ namespace Ge
             Debug::INITFAILED("ShaderUniformBufferDivers");
             return false;
         }
+        if (!RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc)) {
+            Debug::INITFAILED("CommandBuffer");
+            return false;
+        }
         Debug::INITSUCCESS("RenderingEngine");
         return true;
     }
