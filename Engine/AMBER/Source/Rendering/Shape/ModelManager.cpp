@@ -31,15 +31,15 @@ namespace Ge
         }
 		if(m_models.size() == 0)
 		{
-			m_descriptor->updateCount(vulkanM,m_models.size(),bufferInfoModel);
-		}
-		else
-		{
 			bufferIM.buffer = m_vmaUniformBuffers.buffer;
 			bufferIM.offset = 0;
 			bufferIM.range = sizeof(UniformBufferObject);
 			bufferInfoModel.push_back(bufferIM);
-        	m_descriptor->updateCount(vulkanM,1,bufferInfoModel);
+			m_descriptor->updateCount(vulkanM, 1, bufferInfoModel);			
+		}
+		else
+		{
+			m_descriptor->updateCount(vulkanM, m_models.size(), bufferInfoModel);
 		}
 	}
 
