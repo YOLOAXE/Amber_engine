@@ -6,9 +6,9 @@ namespace Ge
     {
         vulkanM = vM;
         stbi_uc *pixel = new stbi_uc(3);
-        pixel[0] = 0;
+        pixel[0] = 255;
         pixel[1] = 0;
-        pixel[2] = 255;
+        pixel[2] = 0;
         nullTexture = new Textures(pixel, 1, 1, m_textures.size(), vulkanM);
         m_textures[(Texture *)nullTexture] = nullTexture;
         vulkanM->str_VulkanDescriptor->textureCount = m_textures.size();
