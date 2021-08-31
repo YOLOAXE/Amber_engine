@@ -2,7 +2,7 @@
 #define __ENGINE_SHADER_PAIR__
 
 #include <iostream>
-namespace ge
+namespace Ge
 {
 	class ShaderPair
 	{
@@ -11,7 +11,7 @@ namespace ge
 		ShaderPair();
 		std::string Frag;
 		std::string Vert;
-	}
+	};
 }
 
 #endif //__ENGINE_SHADER_PAIR__
