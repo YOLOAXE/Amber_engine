@@ -2,6 +2,7 @@
 
 namespace Ge
 {
+	static int test = 0;
     Descriptor::Descriptor(VulkanMisc *vM, VkDescriptorType descriptorType, int baseCount)
     {
         m_count = baseCount;                

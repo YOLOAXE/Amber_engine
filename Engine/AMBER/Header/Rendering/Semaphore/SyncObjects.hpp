@@ -23,4 +23,4 @@ namespace Ge
 	};
 }
 
-#endif //
+#endif //__ENGINE_SYNC_OBJECTS__

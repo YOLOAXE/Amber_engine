@@ -7,8 +7,7 @@ namespace Ge
 	std::map<I_Camera *, Camera *> CameraManager::m_Camera;
 
     bool CameraManager::initialize(VulkanMisc *vM, I_InputManager *im)
-    {
-        Debug::INITSUCCESS("CameraManager");
+    {        
         vulkanM = vM;
         m_flyCamera = new FlyCamera(vM, im);        
         m_Camera[(I_Camera *)m_flyCamera] = (Camera *)m_flyCamera;
@@ -20,6 +19,7 @@ namespace Ge
         bufferI.range = sizeof(UniformBufferCamera);
         bufferInfo.push_back(bufferI);
         m_descriptor->updateCount(vM,1,bufferInfo);               
+		Debug::INITSUCCESS("CameraManager");
         return true;
     }
 
@@ -73,6 +73,11 @@ namespace Ge
 
     void CameraManager::release()
     {
+		if (m_flyCamera != nullptr)
+		{
+			m_Camera.erase((I_Camera *)m_flyCamera);
+			delete (m_flyCamera);
+		}
         for (std::map<I_Camera *, Camera *>::iterator iter = m_Camera.begin(); iter != m_Camera.end(); ++iter)
 		{
 			delete (iter->second);

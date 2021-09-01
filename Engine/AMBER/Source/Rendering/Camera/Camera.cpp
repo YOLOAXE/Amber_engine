@@ -35,7 +35,7 @@ namespace Ge
 	}	
 
 	Camera::~Camera()
-	{
+	{		
 		BufferManager::destroyBuffer(m_vmaUniformBuffer);
 	}
 

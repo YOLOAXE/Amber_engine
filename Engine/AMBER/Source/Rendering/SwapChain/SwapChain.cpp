@@ -82,14 +82,14 @@ namespace Ge
 			Debug::INITFAILED("RenderPass");
 			return false;
 		}
+		if (!SwapChain::m_descriptorLayoutManager.initialize(vM))
+		{
+			Debug::INITFAILED("DescriptorLayoutManager");
+			return false;
+		}
 		if (!SwapChain::initPipeline())
 		{
 			Debug::INITFAILED("InitializeLayout");
-			return false;
-		}
-		if(!SwapChain::m_descriptorLayoutManager.initialize(vM))
-		{
-			Debug::INITFAILED("DescriptorLayoutManager");
 			return false;
 		}
 

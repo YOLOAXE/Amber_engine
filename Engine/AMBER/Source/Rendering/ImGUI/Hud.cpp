@@ -108,6 +108,33 @@ namespace Ge
 			return false;
 		}
 
+		VkDescriptorPoolSize pool_sizes[] =
+		{
+			{ VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
+			{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
+			{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
+		};
+
+		VkDescriptorPoolCreateInfo poolInfo{};
+		poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+		poolInfo.poolSizeCount = static_cast<uint32_t>(11);
+		poolInfo.pPoolSizes = pool_sizes;
+		poolInfo.maxSets = static_cast<uint32_t>(vM->str_VulkanSwapChainMisc->str_swapChainImages.size());
+
+		if (vkCreateDescriptorPool(vM->str_VulkanDeviceMisc->str_device, &poolInfo, nullptr, &m_imGuiDescriptorPool) != VK_SUCCESS)
+		{
+			Debug::Error("Echec de la creation d'un descriptor pool pour ImGUI");
+			return false;
+		}
+
 		ImGui_ImplGlfw_InitForVulkan(vM->str_VulkanDeviceMisc->str_window, true);
 		ImGui_ImplVulkan_InitInfo init_info = {};
 		init_info.Instance = vM->str_VulkanDeviceMisc->str_instance;
@@ -116,7 +143,7 @@ namespace Ge
 		init_info.QueueFamily = PhysicalDevices::getCountQueueFamily(vM->str_VulkanDeviceMisc->str_physicalDevice);
 		init_info.Queue = vM->str_VulkanDeviceMisc->str_graphicsQueue;
 		init_info.PipelineCache = VK_NULL_HANDLE;// vM->str_VulkanSwapChainMisc->str_graphicsPipelineCache; //TODO a verifier 
-		init_info.DescriptorPool = VK_NULL_HANDLE;// vM->str_VulkanDescriptor->str_imGUIdescriptorPool;
+		init_info.DescriptorPool = m_imGuiDescriptorPool;
 		init_info.Allocator = nullptr;
 		init_info.MinImageCount = vM->str_VulkanSwapChainMisc->str_imageCount - 1;
 		init_info.ImageCount = vM->str_VulkanSwapChainMisc->str_imageCount;
@@ -226,11 +253,12 @@ namespace Ge
 		vkDestroyRenderPass(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiRenderPass, nullptr);
 		vkFreeCommandBuffers(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, static_cast<uint32_t>(m_imGuiCommandBuffers.size()), m_imGuiCommandBuffers.data());
 		vkDestroyCommandPool(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, nullptr);
+		vkDestroyDescriptorPool(vulkanM->str_VulkanDeviceMisc->str_device,m_imGuiDescriptorPool, nullptr);
 
 		ImGui_ImplVulkan_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
-		Debug::Info("Liberation de ImGUI");
+		Debug::RELEASESUCCESS("ImGUI");
 	}
 
 	void Hud::recreateSwapChain()

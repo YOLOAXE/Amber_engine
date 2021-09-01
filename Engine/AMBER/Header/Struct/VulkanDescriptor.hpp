@@ -6,7 +6,6 @@
 
 struct VulkanDescriptor
 {    
-	VkDescriptorPool str_imGUIdescriptorPool = VK_NULL_HANDLE;	
     int modelCount = 0;
     int textureCount = 0;
     int materialCount = 0;

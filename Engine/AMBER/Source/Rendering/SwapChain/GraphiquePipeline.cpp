@@ -92,7 +92,7 @@ namespace Ge
 
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.size();
+		pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.size());
 		pipelineLayoutInfo.pSetLayouts = vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.data();
 		pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
 		pipelineLayoutInfo.pushConstantRangeCount = 1;

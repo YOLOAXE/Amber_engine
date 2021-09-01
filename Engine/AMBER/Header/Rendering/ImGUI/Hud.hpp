@@ -34,6 +34,7 @@ namespace Ge
 		std::vector<VkFramebuffer> m_imGuiFramebuffer;
 		std::vector<VkCommandBuffer> m_imGuiCommandBuffers;
 		std::array<VkClearValue, 2> m_clearValues{};
+		VkDescriptorPool m_imGuiDescriptorPool;
 		bool isHUDActive;
 		bool m_GlobalGUIActive = true;
 	};

@@ -12,7 +12,7 @@ namespace Ge
 			return false;
 		}
 		vulkanM->str_VulkanDescriptor->lightCount = 0;	
-		updateDescriptor();	
+		Debug::INITSUCCESS("LightManager");
         return true;
     }
 

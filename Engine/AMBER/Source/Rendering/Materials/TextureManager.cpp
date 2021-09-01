@@ -6,7 +6,7 @@ namespace Ge
     bool TextureManager::initiliaze(VulkanMisc *vM)
     {
         vulkanM = vM;
-        stbi_uc *pixel = new stbi_uc(3);
+        stbi_uc *pixel = new stbi_uc[3];
         pixel[0] = 255;
         pixel[1] = 0;
         pixel[2] = 0;

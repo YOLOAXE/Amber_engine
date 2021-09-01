@@ -138,6 +138,7 @@ namespace Ge
         RenderingEngine::m_lightManager.release();
         RenderingEngine::m_materialManager.release();
         RenderingEngine::m_modelManager.release();
+		RenderingEngine::m_cameraManager.release();
         RenderingEngine::m_textureManager.release();
         RenderingEngine::m_frameBuffers.release();
         RenderingEngine::m_depthResources.release();

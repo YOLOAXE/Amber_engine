@@ -1,22 +1,22 @@
 #version 450
 #extension GL_EXT_nonuniform_qualifier : enable
 
-layout(binding = 0, set = 0) uniform UniformBufferCamera 
+layout(set = 0, binding = 0) uniform UniformBufferCamera 
 {
 	vec3 camPos;
     mat4 view;
     mat4 proj;
 } ubc;
 
-layout(binding = 0, set = 1) uniform sampler2D texSampler[];
+layout(set = 1, binding = 0) uniform sampler2D texSampler[];
 
-layout(binding = 0, set = 2) uniform UniformBufferModel
+layout(set = 2, binding = 0) uniform UniformBufferModel
 {
     mat4 model;
 } ubo[];
 
 
-layout(binding = 0, set = 3) uniform UniformBufferMaterial
+layout(set = 3, binding = 0) uniform UniformBufferMaterial
 {
 	vec3  albedo;
 	vec2 offset;
@@ -32,7 +32,7 @@ layout(binding = 0, set = 3) uniform UniformBufferMaterial
 	bool light;
 } ubm[];
 
-layout(binding = 0,set = 4) uniform UniformBufferLight
+layout(set = 4, binding = 0) uniform UniformBufferLight
 {
 	vec3 position;
     vec3 direction;
@@ -50,7 +50,7 @@ layout(binding = 0,set = 4) uniform UniformBufferLight
 	mat4 LightSpaceMatrix;
 } ubl[];
 
-layout(binding = 0, set = 5) uniform UniformBufferDiver
+layout(set = 5, binding = 0) uniform UniformBufferDiver
 {
 	uint maxLight;
 	float u_time;
