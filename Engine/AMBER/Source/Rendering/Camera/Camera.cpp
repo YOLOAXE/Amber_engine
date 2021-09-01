@@ -47,6 +47,11 @@ namespace Ge
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
+	VkBuffer Camera::getUniformBuffer()
+	{
+		return m_vmaUniformBuffer.buffer;
+	}
+
 	void Camera::setFieldOfView(float fov)
 	{
 		m_fov = fov;

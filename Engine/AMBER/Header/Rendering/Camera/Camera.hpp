@@ -36,7 +36,7 @@ namespace Ge
 		float getFar();
 		void mapMemory() override;
 		int getPriority();
-		VmaBuffer getUniformBuffer();
+		VkBuffer getUniformBuffer();
 		glm::mat4 getView();
 		glm::mat4 getProjection();
 	private:

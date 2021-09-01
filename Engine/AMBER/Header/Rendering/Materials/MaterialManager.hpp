@@ -16,9 +16,7 @@ namespace Ge
         void release();
         Material *createMaterial();
         void destroyMaterial(Material *material);
-        static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM);
-        static VkDescriptorPool createVkDescriptorPool(VulkanMisc *vM);
-
+		static void InitDescriptor(VulkanMisc * vM);
     private:
         void updateDescriptor();
 
@@ -26,7 +24,8 @@ namespace Ge
         std::map<Material *, Materials *> m_materials;
         VulkanMisc *vulkanM;
 
-    public:
+    private:
+		friend class Materials;
         static Descriptor *m_descriptor;
     };
 }

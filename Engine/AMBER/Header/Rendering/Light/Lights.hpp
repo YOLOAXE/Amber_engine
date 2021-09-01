@@ -24,8 +24,6 @@ namespace Ge
 		Vector3 getColors();
 		void setSpecular(Vector3 spec);
 		Vector3 getSpecular();
-		Vector3 getDirection();
-		void setDirection(Vector3 direction);
 		void setEulerAngles(Vector3 eul) override;
 		Vector3 getEulerAngles() override;
 		Vector3 getPosition() override;
@@ -36,7 +34,6 @@ namespace Ge
 		int getIndex();
 		void setIndex(int i);
 		VkBuffer getUniformBuffers();
-		VkBuffer getlightMatrixShadowUniformBuffers();		
 		void updateUniformBufferLight();
 		void onGUI() override;
 		void setShadow(bool state);

@@ -3,6 +3,7 @@
 
 namespace Ge
 {
+	Descriptor * ShaderUniformBufferDivers::m_descriptor = nullptr;
     bool ShaderUniformBufferDivers::initialize(VulkanMisc * vM)
 	{
         vulkanM = vM;		
@@ -29,6 +30,11 @@ namespace Ge
 		m_ubd.gamma = 1.0f;//settingM->getGamma(); //TODO ajouter le gamma	
 		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubd, sizeof(m_ubd));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
+	}
+
+	void ShaderUniformBufferDivers::InitDescriptor(VulkanMisc * vM)
+	{
+		ShaderUniformBufferDivers::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
 	}
 
 	void ShaderUniformBufferDivers::release()

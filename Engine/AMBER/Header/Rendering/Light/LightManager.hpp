@@ -22,12 +22,13 @@ namespace Ge
         void destroyLight(Light *light);
         void updateDescriptor();
         void majIndex();
-
+		static void InitDescriptor(VulkanMisc * vM);
     private:
         VulkanMisc *vulkanM;
         std::map<Light *, Lights *> m_mapLights;
         VmaBuffer m_vmaUniformBuffers;
-    public:
+    private:
+		friend class Lights;
         static Descriptor * m_descriptor;
     };
 }

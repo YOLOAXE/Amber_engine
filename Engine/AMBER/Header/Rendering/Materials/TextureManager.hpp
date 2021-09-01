@@ -19,11 +19,13 @@ namespace Ge
     public:
         Texture * createTexture(const char * path);
 		void destroyTexture(Texture * texture);
+		static void InitDescriptor(VulkanMisc * vM);
     private:
         VulkanMisc *vulkanM;
         std::map<Texture *,Textures *> m_textures;
 		Textures * nullTexture;
-    public:
+	private:
+		friend class Textures;
         static Descriptor * m_descriptor;
     };
 }

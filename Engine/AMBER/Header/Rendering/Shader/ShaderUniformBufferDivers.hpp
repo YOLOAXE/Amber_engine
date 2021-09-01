@@ -9,23 +9,20 @@
 
 namespace Ge
 {
-    class ShaderUniformBufferDivers
-    {
-    public:
-        bool initialize(VulkanMisc *vM);
-        void release();        
-        void updateUniformBufferDiver();
-        static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM);
-        static VkDescriptorPool createVkDescriptorPool(VulkanMisc *vM);
+	class ShaderUniformBufferDivers
+	{
+	public:
+		bool initialize(VulkanMisc *vM);
+		void release();
+		void updateUniformBufferDiver();
+		static void InitDescriptor(VulkanMisc * vM);
 
-    private:
-        VulkanMisc *vulkanM;
-        UniformBufferDiver m_ubd;
-        VmaBuffer m_vmaUniformBuffer;
-
-    public:
-        static Descriptor * m_descriptor;
-    };
+	private:
+		VulkanMisc *vulkanM;
+		UniformBufferDiver m_ubd;
+		VmaBuffer m_vmaUniformBuffer;
+		static Descriptor * m_descriptor;
+	};
 }
 
 #endif //__ENGINE_SHADER_UNIFORM_BUFFER_DIVERS__

@@ -2,6 +2,7 @@
 
 namespace Ge
 {
+	Descriptor * LightManager::m_descriptor = nullptr;
     bool LightManager::initialize(VulkanMisc *vM)
     {
         vulkanM = vM;
@@ -20,7 +21,6 @@ namespace Ge
 		LSpot * light = new LSpot(m_mapLights.size(), vulkanM);
 		light->setPosition(position);
 		light->setColors(color);
-		light->setDirection(direction);
 		light->setCutOff(cutOff);
 		light->setOuterCutOff(outerCutOff);
 		light->setName(name);
@@ -34,7 +34,6 @@ namespace Ge
 	{
 		LDirectional * light = new LDirectional(m_mapLights.size(), vulkanM);
 		light->setColors(color);
-		light->setDirection(direction);
 		light->setName(name);		
 		m_mapLights[(Light *)light] = light;        
 		vulkanM->str_VulkanDescriptor->lightCount = m_mapLights.size();
@@ -96,6 +95,11 @@ namespace Ge
 		}
 				
 		m_descriptor->updateCount(vulkanM,m_mapLights.size(),bufferInfoLight);		
+	}
+
+	void LightManager::InitDescriptor(VulkanMisc * vM) 
+	{
+		LightManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
 	}
 
 	void LightManager::majIndex()

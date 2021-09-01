@@ -1,7 +1,8 @@
 #define VMA_IMPLEMENTATION
-#include "BufferManager.hpp"
 #include "vulkan/vulkan.h"
 #include "vulkan/vulkan_core.h"
+#include "BufferManager.hpp"
+
 namespace Ge
 {
 	BufferManager * BufferManager::s_pInstance = nullptr;

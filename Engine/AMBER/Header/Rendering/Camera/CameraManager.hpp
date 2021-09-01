@@ -20,8 +20,10 @@ namespace Ge
         void updateAspectRatio();
         static void updatePriorityCamera();
         I_Camera *getCurrentCamera();
+		static void InitDescriptor(VulkanMisc * vM);
 
-    public:
+    private:
+		friend class Camera;
         static Descriptor *m_descriptor;
 
     private:

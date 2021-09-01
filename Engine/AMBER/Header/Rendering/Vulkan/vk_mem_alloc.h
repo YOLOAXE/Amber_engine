@@ -22,8 +22,7 @@
 
 #ifndef AMD_VULKAN_MEMORY_ALLOCATOR_H
 #define AMD_VULKAN_MEMORY_ALLOCATOR_H
-using namespace std;
-#include <iostream>
+
 /** \mainpage Vulkan Memory Allocator
 
 <b>Version 3.0.0-development</b> (2020-11-03)

@@ -2,6 +2,10 @@
 
 namespace Ge
 {
+	Descriptor * CameraManager::m_descriptor = nullptr;	
+	Camera *CameraManager::currentCamera = nullptr;
+	std::map<I_Camera *, Camera *> CameraManager::m_Camera;
+
     bool CameraManager::initialize(VulkanMisc *vM, I_InputManager *im)
     {
         Debug::INITSUCCESS("CameraManager");
@@ -11,7 +15,7 @@ namespace Ge
         CameraManager::updatePriorityCamera(); 
         std::vector<VkDescriptorBufferInfo> bufferInfo;
         VkDescriptorBufferInfo bufferI{};
-        bufferI.buffer = currentCamera->getUniformBuffer().buffer;
+        bufferI.buffer = currentCamera->getUniformBuffer();
         bufferI.offset = 0;
         bufferI.range = sizeof(UniformBufferCamera);
         bufferInfo.push_back(bufferI);
@@ -56,6 +60,11 @@ namespace Ge
     {
         return currentCamera;
     }
+
+	void CameraManager::InitDescriptor(VulkanMisc * vM)
+	{
+		CameraManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+	}
 
     void CameraManager::release()
     {
