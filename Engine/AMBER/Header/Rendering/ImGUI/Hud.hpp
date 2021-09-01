@@ -7,6 +7,7 @@
 #include "imgui-cmake/Header/imgui_impl_vulkan.h"
 #include "imgui-cmake/Header/imgui_impl_glfw.h"
 #include "VulkanMisc.hpp"
+#include <array>
 #include <vector>
 
 namespace Ge

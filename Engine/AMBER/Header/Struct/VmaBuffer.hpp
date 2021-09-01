@@ -1,8 +1,7 @@
 #ifndef __ENGINE_VMA_BUFFER__
 #define __ENGINE_VMA_BUFFER__
 
-#define VMA_IMPLEMENTATION
-#include "vk_mem_alloc.h"
+#include "VmaBufferImage.hpp"
 
 struct VmaBuffer
 {

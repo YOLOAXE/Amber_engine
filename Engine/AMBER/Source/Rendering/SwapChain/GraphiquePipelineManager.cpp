@@ -39,7 +39,7 @@ namespace Ge
 	void GraphiquePipelineManager::destroyPipeline(Pipeline * pipeline)
 	{
 		GraphiquePipeline * gp = m_GraphiquePipeline[pipeline];
-		m_GraphiquePipeline.erase(gp);
+		m_GraphiquePipeline.erase(pipeline);
 		delete (gp);
 	}
 }
