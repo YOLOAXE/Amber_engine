@@ -27,4 +27,9 @@ namespace Ge
         vkGetDeviceQueue(vM->str_VulkanDeviceMisc->str_device, value, 0, &m_presentQueue);
         vM->str_VulkanDeviceMisc->str_presentQueue = m_presentQueue;
     }
+
+	VkQueue WindowSurface::getPresentQueue()
+	{
+		return m_presentQueue;
+	}
 }

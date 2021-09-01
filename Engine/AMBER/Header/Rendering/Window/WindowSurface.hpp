@@ -12,8 +12,8 @@ namespace Ge
         bool initialize(VulkanMisc *vM);
         void release();
         void SetupPresentQueue(unsigned int value, VulkanMisc *vM);
-
-    private:
+		VkQueue getPresentQueue();
+    private:		
         VulkanMisc *vulkanM;
         VkQueue m_presentQueue;
         VkSurfaceKHR m_surface;

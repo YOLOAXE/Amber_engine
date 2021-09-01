@@ -5,6 +5,7 @@
 #include "VulkanSwapChainMisc.hpp"
 #include "VulkanCommandeBufferMisc.hpp"
 #include "VulkanDescriptor.hpp"
+#include "VulkanSynchronisation.hpp"
 
 struct VulkanMisc
 {
@@ -12,6 +13,7 @@ struct VulkanMisc
     VulkanSwapChainMisc *str_VulkanSwapChainMisc;
     VulkanCommandeBufferMisc *str_VulkanCommandeBufferMisc;
     VulkanDescriptor *str_VulkanDescriptor;
+	VulkanSynchronisation * str_VulkanSynchronisation;
 };
 
 #endif //__ENGINE_VULKAN_MISC____

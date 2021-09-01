@@ -22,6 +22,8 @@
 #include "LightManager.hpp"
 #include "CameraManager.hpp"
 #include "CommandBuffer.hpp"
+#include "Hud.hpp"
+#include "SyncObjects.hpp"
 
 namespace Ge
 {
@@ -39,6 +41,7 @@ namespace Ge
         VulkanSwapChainMisc m_vulkanSwapChainMisc;
         VulkanDescriptor m_VulkanDescriptor;
         VulkanCommandeBufferMisc m_VulkanCommandeBufferMisc;
+		VulkanSynchronisation m_VulkanSynchronisation;
 
         Window m_window;
         ValidationLayer m_validationLayer;
@@ -59,6 +62,9 @@ namespace Ge
         LightManager m_lightManager;
         CameraManager m_cameraManager;
         CommandBuffer m_commandBuffer;
+		Hud m_hud;
+		SyncObjects m_syncObjects;
+		size_t m_currentFrame = 0;
     };
 }
 

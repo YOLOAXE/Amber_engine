@@ -16,17 +16,18 @@ namespace Ge
 	{
 	public:
 		friend class RenderingEngine;
-		bool Init_HUD(VulkanMisc* vM);
-		void ReleaseHUD(VkDevice device);
-		void RecreateSwapChain(VulkanMisc* vM);
-		void Render(VulkanMisc* vM, uint32_t currentframe);
+		bool initialize(VulkanMisc* vM);
+		void release();
+		void recreateSwapChain();
+		void render(uint32_t currentframe);
 		static void check_vk_result(VkResult err);
 	private:
 		bool createCommandPool(VkCommandPool* commandPool, VkCommandPoolCreateFlags flags, VulkanDeviceMisc* vM);
 		bool createCommandBuffers(VkCommandBuffer* commandBuffer, uint32_t commandBufferCount, VkCommandPool& commandPool, VulkanDeviceMisc* vM);
-		void ImGuiRender(VulkanMisc* vM);
+		void imGuiRender();
 	private:
 		friend class RenderingEngine;
+		VulkanMisc* vulkanM;
 		VkRenderPass m_imGuiRenderPass;
 		ImGui_ImplVulkanH_Window* m_vWindow;
 		VkCommandPool m_imGuiCommandPools;

@@ -7,11 +7,11 @@
 namespace Ge
 {
 
-	bool Hud::Init_HUD(VulkanMisc* vM)
+	bool Hud::initialize(VulkanMisc* vM)
 	{
 		IMGUI_CHECKVERSION();
 		isHUDActive = true;
-
+		vulkanM = vM;
 		//vulkanM = vM;
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -217,15 +217,15 @@ namespace Ge
 		return true;
 	}
 
-	void Hud::ReleaseHUD(VkDevice device)
+	void Hud::release()
 	{
 		for (auto framebuffer : m_imGuiFramebuffer)
 		{
-			vkDestroyFramebuffer(device, framebuffer, nullptr);
+			vkDestroyFramebuffer(vulkanM->str_VulkanDeviceMisc->str_device, framebuffer, nullptr);
 		}
-		vkDestroyRenderPass(device, m_imGuiRenderPass, nullptr);
-		vkFreeCommandBuffers(device, m_imGuiCommandPools, static_cast<uint32_t>(m_imGuiCommandBuffers.size()), m_imGuiCommandBuffers.data());
-		vkDestroyCommandPool(device, m_imGuiCommandPools, nullptr);
+		vkDestroyRenderPass(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiRenderPass, nullptr);
+		vkFreeCommandBuffers(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, static_cast<uint32_t>(m_imGuiCommandBuffers.size()), m_imGuiCommandBuffers.data());
+		vkDestroyCommandPool(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, nullptr);
 
 		ImGui_ImplVulkan_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
@@ -233,28 +233,28 @@ namespace Ge
 		Debug::Info("Liberation de ImGUI");
 	}
 
-	void Hud::RecreateSwapChain(VulkanMisc* vM)
+	void Hud::recreateSwapChain()
 	{
-		ReleaseHUD(vM->str_VulkanDeviceMisc->str_device);
-		Init_HUD(vM);
+		release();
+		initialize(vulkanM);
 	}
 
-	void Hud::Render(VulkanMisc* vM, uint32_t currentframe)
+	void Hud::render(uint32_t currentframe)
 	{
 		//vkResetCommandPool(vM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, 0);
 		VkCommandBufferBeginInfo info = {};
 		info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 		vkBeginCommandBuffer(m_imGuiCommandBuffers[currentframe], &info);
-		Hud::ImGuiRender(vM);
+		Hud::imGuiRender();
 		ImGui::Render();
 
 		VkRenderPassBeginInfo binfo = {};
 		binfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 		binfo.renderPass = m_imGuiRenderPass;
 		binfo.framebuffer = m_imGuiFramebuffer[currentframe];
-		binfo.renderArea.extent.width = vM->str_VulkanSwapChainMisc->str_swapChainExtent.width;
-		binfo.renderArea.extent.height = vM->str_VulkanSwapChainMisc->str_swapChainExtent.height;
+		binfo.renderArea.extent.width = vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.width;
+		binfo.renderArea.extent.height = vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height;
 		binfo.clearValueCount = static_cast<uint32_t>(m_clearValues.size());
 		binfo.pClearValues = m_clearValues.data();
 		vkCmdBeginRenderPass(m_imGuiCommandBuffers[currentframe], &binfo, VK_SUBPASS_CONTENTS_INLINE);
@@ -265,7 +265,7 @@ namespace Ge
 		vkEndCommandBuffer(m_imGuiCommandBuffers[currentframe]);
 
 	}
-	void Hud::ImGuiRender(VulkanMisc* vM)
+	void Hud::imGuiRender()
 	{
 		bool openInfo = true;
 
