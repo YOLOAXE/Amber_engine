@@ -15,12 +15,14 @@ namespace Ge
     public:
         bool initialize(VulkanMisc *vM);
         void release();
-        Pipeline *  createPipeline(const std::string & frag,const std::string & vert);
+        Pipeline * createPipeline(const std::string & frag,const std::string & vert);
         void destroyPipeline(Pipeline * pipeline);
+		static std::map<Pipeline *, GraphiquePipeline * > GetPipeline();
     private:
         VulkanMisc *vulkanM;        
         std::vector<ShaderPair *> m_fileNameShaders;        
-        std::map<Pipeline *,GraphiquePipeline * > m_GraphiquePipeline;
+        static std::map<Pipeline *,GraphiquePipeline * > m_GraphiquePipeline;
+
     };
 }
 

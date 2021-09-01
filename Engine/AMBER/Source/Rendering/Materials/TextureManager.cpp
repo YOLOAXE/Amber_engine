@@ -50,6 +50,10 @@ namespace Ge
 		TextureManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1);
 	}
 
+	Descriptor* TextureManager::GetDescriptor()
+	{
+		return TextureManager::m_descriptor;
+	}
 
     Texture *TextureManager::createTexture(const char *path)
     {

@@ -21,17 +21,15 @@ namespace Ge
 		BufferManager::destroyBuffer(m_vmaUniformBuffer);
 	}
 
-	void Model::render(VkCommandBuffer CmdBuffer, VkDescriptorSet pDescriptorSets, VkPipelineLayout pipelineLayout, VkShaderStageFlags pushConstantShaderFlags)
+	void Model::render(VkCommandBuffer CmdBuffer, std::vector<VkDescriptorSet> descriptorSets, VkPipelineLayout pipelineLayout, VkShaderStageFlags pushConstantShaderFlags)
 	{
-		//TODO bind sur le bon pipeline dans le command buffer par packet
-		//vkCmdBindPipeline(CmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(CmdBuffer, 0, 1, m_buffer->getVertexBuffer(), offsets);
 
 		vkCmdBindIndexBuffer(CmdBuffer, m_buffer->getIndexBuffer(), 0, VK_INDEX_TYPE_UINT32);
 
-		vkCmdBindDescriptorSets(CmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &pDescriptorSets, 0, nullptr);
-		//TODO bind tous les descriptor disponible
+		vkCmdBindDescriptorSets(CmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, static_cast<uint32_t>(descriptorSets.size()), descriptorSets.data(), 0, nullptr);
+
 		vkCmdPushConstants(
 			CmdBuffer,
 			pipelineLayout,
@@ -50,6 +48,17 @@ namespace Ge
 
 		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubo, sizeof(m_ubo));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
+	}
+
+	void Model::setMaterial(Material * m)
+	{
+		m_material = m;
+		m_index.material = m_material->getIndex();
+	}
+
+	Material * Model::getMaterial()
+	{
+		return m_material;
 	}
 
 	VkBuffer Model::getUniformBuffers()

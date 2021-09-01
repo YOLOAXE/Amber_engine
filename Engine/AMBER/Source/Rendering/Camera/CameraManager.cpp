@@ -66,6 +66,11 @@ namespace Ge
 		CameraManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
 	}
 
+	Descriptor* CameraManager::GetDescriptor()
+	{
+		return CameraManager::m_descriptor;
+	}
+
     void CameraManager::release()
     {
         for (std::map<I_Camera *, Camera *>::iterator iter = m_Camera.begin(); iter != m_Camera.end(); ++iter)

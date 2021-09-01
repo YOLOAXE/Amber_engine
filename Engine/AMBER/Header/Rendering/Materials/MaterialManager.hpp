@@ -17,6 +17,7 @@ namespace Ge
         Material *createMaterial();
         void destroyMaterial(Material *material);
 		static void InitDescriptor(VulkanMisc * vM);
+		static Descriptor* GetDescriptor();
     private:
         void updateDescriptor();
 

@@ -2,6 +2,8 @@
 #define __ENGINE_COMMAND_BUFFER__
 
 #include "VulkanMisc.hpp"
+#include "BufferManager.hpp"
+#include <array>
 
 namespace Ge
 {
@@ -13,6 +15,7 @@ namespace Ge
         void release();
     private:
         VulkanMisc * vulkanM;
+		std::vector<VkCommandBuffer> m_commandBuffers;
     };
 }
 

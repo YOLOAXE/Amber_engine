@@ -27,7 +27,7 @@ namespace Ge
 		{
 			Debug::Error("Echec de la creation d'un uniform buffer object");
 		}
-
+		m_pipelineIndex = 0;
 		m_index = index;
 	}
 
@@ -57,6 +57,16 @@ namespace Ge
 	void Materials::setOclusion(float ao)
 	{
 		m_ubm.ao = ao;
+	}
+
+	void Materials::setPipeline(Pipeline * p)
+	{
+		m_pipelineIndex = p->getIndex();
+	}
+
+	int Materials::getPipelineIndex()
+	{
+		return m_pipelineIndex;
 	}
 
 	void Materials::setAlbedoTexture(Texture * albedo)

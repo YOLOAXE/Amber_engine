@@ -16,6 +16,7 @@ namespace Ge
 		void release();
 		void updateUniformBufferDiver();
 		static void InitDescriptor(VulkanMisc * vM);
+		static Descriptor* GetDescriptor();
 
 	private:
 		VulkanMisc *vulkanM;

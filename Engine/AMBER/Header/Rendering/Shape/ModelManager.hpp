@@ -23,9 +23,11 @@ namespace Ge
         void destroyBuffer(ShapeBuffer *buffer);
         void updateDescriptor();
 		static void InitDescriptor(VulkanMisc * vM);
+		static Descriptor* GetDescriptor();
+		static std::map<Shape *, Model *> GetModels();
     private:
         std::map<ShapeBuffer *, ModelBuffer *> m_modelBuffers;
-        std::map<Shape *, Model *> m_models;
+        static std::map<Shape *, Model *> m_models;
         VmaBuffer m_vmaUniformBuffers;
         VulkanMisc *vulkanM;
 

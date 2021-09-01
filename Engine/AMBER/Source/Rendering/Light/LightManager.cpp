@@ -102,6 +102,11 @@ namespace Ge
 		LightManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
 	}
 
+	Descriptor* LightManager::GetDescriptor()
+	{
+		return LightManager::m_descriptor;
+	}
+
 	void LightManager::majIndex()
 	{
         int i = 0;

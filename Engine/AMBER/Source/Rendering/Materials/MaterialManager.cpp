@@ -58,4 +58,9 @@ namespace Ge
 	{
 		MaterialManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
 	}
+
+	Descriptor* MaterialManager::GetDescriptor()
+	{
+		return MaterialManager::m_descriptor;
+	}
 }

@@ -46,6 +46,8 @@ namespace Ge
 		void setLightActive(bool state);
 		Vector2 getOffset();
 		void setOffset(Vector2 off);
+		void setPipeline(Pipeline * p);
+		int getPipelineIndex();
 		void onGUI();
 		~Materials();
 	private:
@@ -57,6 +59,7 @@ namespace Ge
 		Texture * m_metallicMap;
 		Texture * m_hdrMap;
 		Texture * m_aoMap;
+		int m_pipelineIndex;
 		float m_color[3];
 		float m_offset[2];
 		int m_index = 0;

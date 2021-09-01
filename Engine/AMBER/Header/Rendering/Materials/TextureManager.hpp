@@ -20,6 +20,7 @@ namespace Ge
         Texture * createTexture(const char * path);
 		void destroyTexture(Texture * texture);
 		static void InitDescriptor(VulkanMisc * vM);
+		static Descriptor* GetDescriptor();
     private:
         VulkanMisc *vulkanM;
         std::map<Texture *,Textures *> m_textures;

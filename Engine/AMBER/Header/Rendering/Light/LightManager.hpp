@@ -23,6 +23,7 @@ namespace Ge
         void updateDescriptor();
         void majIndex();
 		static void InitDescriptor(VulkanMisc * vM);
+		static Descriptor* GetDescriptor();
     private:
         VulkanMisc *vulkanM;
         std::map<Light *, Lights *> m_mapLights;

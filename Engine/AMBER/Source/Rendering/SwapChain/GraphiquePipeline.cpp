@@ -138,7 +138,13 @@ namespace Ge
 
 		DestroyShaderElement(vM->str_VulkanDeviceMisc->str_device, VertShader);
 		DestroyShaderElement(vM->str_VulkanDeviceMisc->str_device, FragShader);
-		vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.push_back(&m_graphiquePipelineElement);
+		m_index = vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.size();
+		vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.push_back(&m_graphiquePipelineElement);		
+	}
+
+	int GraphiquePipeline::getIndex()
+	{
+		return m_index;
 	}
 
 	GraphiquePipeline::~GraphiquePipeline()

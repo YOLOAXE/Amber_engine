@@ -6,6 +6,7 @@
 namespace Ge
 {
 	Descriptor * ModelManager::m_descriptor = nullptr;
+	std::map<Shape *, Model *> ModelManager::m_models;
 	bool ModelManager::initiliaze(VulkanMisc *vM)
 	{
 		vulkanM = vM;		
@@ -94,9 +95,19 @@ namespace Ge
 		//TODO detruire les models Lier au buffer
 	}
 
+	std::map<Shape *, Model *> ModelManager::GetModels()
+	{
+		return m_models;
+	}
+
 	void ModelManager::InitDescriptor(VulkanMisc * vM)
 	{
 		ModelManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+	}
+
+	Descriptor* ModelManager::GetDescriptor()
+	{
+		return ModelManager::m_descriptor;
 	}
 
 	ShapeBuffer *ModelManager::allocateBuffer(const char *path)

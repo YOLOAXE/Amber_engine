@@ -3,6 +3,7 @@
 
 namespace Ge
 {
+	std::map<Pipeline *, GraphiquePipeline * > GraphiquePipelineManager::m_GraphiquePipeline;
 	bool GraphiquePipelineManager::initialize(VulkanMisc *vM)
 	{
 		vulkanM = vM;
@@ -34,6 +35,11 @@ namespace Ge
 		ShaderPair * sp = new ShaderPair(frag, vert);
 		m_fileNameShaders.push_back(sp);
 		return p;
+	}
+
+	std::map<Pipeline *, GraphiquePipeline * > GraphiquePipelineManager::GetPipeline()
+	{
+		return m_GraphiquePipeline;
 	}
 
 	void GraphiquePipelineManager::destroyPipeline(Pipeline * pipeline)

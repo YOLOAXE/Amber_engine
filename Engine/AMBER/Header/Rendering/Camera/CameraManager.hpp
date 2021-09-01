@@ -21,7 +21,7 @@ namespace Ge
         static void updatePriorityCamera();
         I_Camera *getCurrentCamera();
 		static void InitDescriptor(VulkanMisc * vM);
-
+		static Descriptor* GetDescriptor();
     private:
 		friend class Camera;
         static Descriptor *m_descriptor;

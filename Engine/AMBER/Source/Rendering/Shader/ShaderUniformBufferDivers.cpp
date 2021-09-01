@@ -37,6 +37,11 @@ namespace Ge
 		ShaderUniformBufferDivers::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
 	}
 
+	Descriptor* ShaderUniformBufferDivers::GetDescriptor()
+	{
+		return ShaderUniformBufferDivers::m_descriptor;
+	}
+
 	void ShaderUniformBufferDivers::release()
 	{
 		BufferManager::destroyBuffer(m_vmaUniformBuffer);

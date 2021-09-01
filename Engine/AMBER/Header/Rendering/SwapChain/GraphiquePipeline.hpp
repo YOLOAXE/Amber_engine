@@ -27,8 +27,10 @@ namespace Ge
         static VkShaderModule createShaderModule(const std::vector<char> &code, VkDevice device);
     public:
         GraphiquePipelineElement m_graphiquePipelineElement;
+		int getIndex();
     private:
         VulkanMisc *vulkanM;
+		int m_index;
     };
 }
 
