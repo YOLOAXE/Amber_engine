@@ -2,21 +2,19 @@
 
 namespace Ge
 {
+	GameEngine::GameEngine()
+	{
+		m_pointeurClass.settingManager = &m_settingManager;
+		m_pointeurClass.inputManager = &m_inputManager;
+	}
+
+	ptrClass GameEngine::getPtrClass()
+	{
+		return m_pointeurClass;
+	}
+
     bool GameEngine::initialize()
     {
-        if(!m_debug.initialize())
-        {
-            Debug::INITFAILED("Debug");
-            return false;
-        }
-        if(!m_settingManager.initialize())
-        {
-            Debug::INITFAILED("SettingManager");
-            return false;
-        }
-        m_pointeurClass.pi_debug = &m_debug;
-        m_pointeurClass.pi_settingManager = &m_settingManager;
-        m_pointeurClass.pi_inputManager = &m_inputManager;
         if(!m_renderingEngine.initialize(&m_pointeurClass))
         {
             Debug::INITFAILED("RenderingEngine");
@@ -34,8 +32,6 @@ namespace Ge
     void GameEngine::release()
     {        
 		m_renderingEngine.release();
-        m_settingManager.release();
-        m_debug.release();
         m_time.release();
         m_inputManager.release();
         Debug::RELEASESUCCESS("GameEngine");

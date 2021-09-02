@@ -14,8 +14,8 @@ namespace Ge
 	{
 		vulkanM = vM;
 		std::vector<VkFramebuffer> swapChainFramebuffers = vM->str_VulkanCommandeBufferMisc->str_swapChainFramebuffers;
-		std::map<Pipeline *, GraphiquePipeline * > all_pipeline = GraphiquePipelineManager::GetPipeline();
-		std::map<Shape *, Model *> all_models = ModelManager::GetModels();
+		std::vector< GraphiquePipeline * > all_pipeline = GraphiquePipelineManager::GetPipelines();
+		std::vector<Model *> all_models = ModelManager::GetModels();
 		std::vector<std::vector<VkDescriptorSet>> tab_Descriptor;
 		tab_Descriptor.resize(vM->str_VulkanSwapChainMisc->str_swapChainImages.size());
 		for (int i = 0; i < vM->str_VulkanSwapChainMisc->str_swapChainImages.size(); i++)
@@ -69,14 +69,14 @@ namespace Ge
 
 			vkCmdBeginRenderPass(m_commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-			for (std::map<Pipeline *, GraphiquePipeline *>::iterator iterp = all_pipeline.begin(); iterp != all_pipeline.end(); ++iterp)
+			for (int p = 0; p < all_pipeline.size();p++)
 			{
-				vkCmdBindPipeline(m_commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, iterp->second->m_graphiquePipelineElement.m_graphicsPipeline);
-				for (std::map<Shape *, Model *>::iterator iterm = all_models.begin(); iterm != all_models.end(); ++iterm)
+				vkCmdBindPipeline(m_commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, all_pipeline[p]->m_graphiquePipelineElement.m_graphicsPipeline);
+				for (int m = 0; m < all_models.size();m++)
 				{
-					if (iterm->second->getMaterial()->getPipelineIndex() == iterp->second->getIndex())
+					if (all_models[m]->getMaterial()->getPipelineIndex() == all_pipeline[p]->getIndex())
 					{
-						iterm->second->render(m_commandBuffers[i], tab_Descriptor[i], iterp->second->m_graphiquePipelineElement.m_pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT);
+						all_models[m]->render(m_commandBuffers[i], tab_Descriptor[i], all_pipeline[p]->m_graphiquePipelineElement.m_pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT);
 						//all_models.erase(iterm->second); //TODO a verifier si on ne peut pas erase les model pour pas repasser dessus attention il y a 3 command buffer
 					}
 				}

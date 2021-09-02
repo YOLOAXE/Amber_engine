@@ -6,7 +6,7 @@
 namespace Ge
 {
 	Descriptor * ModelManager::m_descriptor = nullptr;
-	std::map<Shape *, Model *> ModelManager::m_models;
+	std::vector<Model *> ModelManager::m_models;
 	bool ModelManager::initiliaze(VulkanMisc *vM)
 	{
 		vulkanM = vM;		
@@ -24,9 +24,9 @@ namespace Ge
 	{
 		std::vector<VkDescriptorBufferInfo> bufferInfoModel{};
 		VkDescriptorBufferInfo bufferIM{};
-        for (std::map<Shape *, Model *>::iterator iter = m_models.begin(); iter != m_models.end(); ++iter)
+        for (int i = 0 ; i < m_models.size();i++)
         {
-            bufferIM.buffer = iter->second->getUniformBuffers();
+            bufferIM.buffer = m_models[i]->getUniformBuffers();
 			bufferIM.offset = 0;
 			bufferIM.range = sizeof(UniformBufferObject);
 			bufferInfoModel.push_back(bufferIM);
@@ -47,14 +47,14 @@ namespace Ge
 
 	void ModelManager::release()
 	{
-		for (std::map<ShapeBuffer *, ModelBuffer *>::iterator iter = m_modelBuffers.begin(); iter != m_modelBuffers.end(); ++iter)
+		for (int i = 0; i < m_shapeBuffers.size();i++)
 		{
-			delete (iter->second);
+			delete (m_shapeBuffers[i]);
 		}
-		m_modelBuffers.clear();
-		for (std::map<Shape *, Model *>::iterator iter = m_models.begin(); iter != m_models.end(); ++iter)
+		m_shapeBuffers.clear();
+		for (int i = 0; i < m_models.size(); i++)
 		{
-			delete (iter->second);
+			delete (m_models[i]);
 		}
 		m_models.clear();
 		BufferManager::destroyBuffer(m_vmaUniformBuffers);
@@ -64,15 +64,14 @@ namespace Ge
 
 	Model * ModelManager::createModel(ShapeBuffer *buffer, std::string nom)
 	{
-		ModelBuffer * mb = m_modelBuffers[buffer];
-		if (!mb)
+		if (buffer == nullptr)
 		{
 			Debug::Warn("Le buffer n'existe pas");
 			return nullptr;
 		}
-		Model * Mesh = new Model(mb, m_models.size(), vulkanM);
+		Model * Mesh = new Model(buffer, m_models.size(), vulkanM);
 		Mesh->setName(nom);
-		m_models[(Model *)Mesh] = Mesh;
+		m_models.push_back(Mesh);
 		vulkanM->str_VulkanDescriptor->modelCount = m_models.size();
 		updateDescriptor();
 		return Mesh;
@@ -80,22 +79,21 @@ namespace Ge
 
 	void ModelManager::destroyModel(Model *model)
 	{
-		Model * m = m_models[model];
-        m_models.erase(model);
-        delete (m);
+		m_models.erase(std::remove(m_models.begin(), m_models.end(), model), m_models.end());
+        delete (model);
 		vulkanM->str_VulkanDescriptor->modelCount = m_models.size();
 		updateDescriptor();
 	}
 
 	void ModelManager::destroyBuffer(ShapeBuffer *buffer)
 	{
-		ModelBuffer * mb = m_modelBuffers[buffer];
-        m_modelBuffers.erase(buffer);
-        delete (mb);
+		m_shapeBuffers.erase(std::remove(m_shapeBuffers.begin(), m_shapeBuffers.end(), buffer), m_shapeBuffers.end());
+        delete (buffer);
 		//TODO detruire les models Lier au buffer
+		updateDescriptor();
 	}
 
-	std::map<Shape *, Model *> ModelManager::GetModels()
+	std::vector<Model *> ModelManager::GetModels()
 	{
 		return m_models;
 	}
@@ -158,8 +156,8 @@ namespace Ge
 			}
 		}
 
-		ModelBuffer *buffer = new ModelBuffer(vertices, indices, vulkanM);
-		m_modelBuffers[(ShapeBuffer *)buffer] = buffer;
+		ShapeBuffer *buffer = new ShapeBuffer(vertices, indices, vulkanM);
+		m_shapeBuffers.push_back(buffer);
 		return buffer;
 	}
 }

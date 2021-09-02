@@ -5,8 +5,8 @@
 
 struct UniformBufferMaterial
 {
-    alignas(16) glm::vec3 albedo;
-    alignas(16) glm::vec2 offset;
+    alignas(glm::vec3) glm::vec3 albedo;
+    alignas(glm::vec2) glm::vec2 offset;
     alignas(float) float metallic;
     alignas(float) float hdr;
     alignas(float) float normal;

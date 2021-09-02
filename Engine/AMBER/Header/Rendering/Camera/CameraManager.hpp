@@ -13,21 +13,18 @@ namespace Ge
     class CameraManager
     {
     public:
-        bool initialize(VulkanMisc *vM, I_InputManager *input);
+        bool initialize(VulkanMisc *vM, InputManager *input);
         void release();
-        I_Camera *createCamera(std::string name = "Camera");
-        void releaseCamera(I_Camera *camera);
+        Camera *createCamera(std::string name = "Camera");
+        void releaseCamera(Camera *camera);
         void updateAspectRatio();
         static void updatePriorityCamera();
-        I_Camera *getCurrentCamera();
+        Camera *getCurrentCamera();
 		static void InitDescriptor(VulkanMisc * vM);
-		static Descriptor* GetDescriptor();
+		static Descriptor* GetDescriptor();        
     private:
-		friend class Camera;
-        static Descriptor *m_descriptor;
-
-    private:
-        static std::map<I_Camera *, Camera *> m_Camera;
+		static Descriptor * m_descriptor;
+        static std::vector<Camera *> m_cameras;
         static Camera *currentCamera;
         VulkanMisc * vulkanM;        
         FlyCamera * m_flyCamera;

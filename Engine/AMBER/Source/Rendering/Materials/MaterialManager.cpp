@@ -11,20 +11,19 @@ namespace Ge
         return true;
     }
 
-    Material * MaterialManager::createMaterial()
+    Materials * MaterialManager::createMaterial()
     {     
 		Materials * material = new Materials(m_materials.size(), vulkanM);		
-		m_materials[(Material *)material] = material;
+		m_materials.push_back(material);
 		vulkanM->str_VulkanDescriptor->materialCount = m_materials.size();
         updateDescriptor();
-		return (Material *)material;           
+		return material;
     }
 
-    void MaterialManager::destroyMaterial(Material *material)
+    void MaterialManager::destroyMaterial(Materials *material)
     {
-        Materials * mat = m_materials[material];
-        m_materials.erase(mat);
-        delete(mat);
+		m_materials.erase(std::remove(m_materials.begin(), m_materials.end(), material), m_materials.end());
+        delete(material);
         vulkanM->str_VulkanDescriptor->materialCount = m_materials.size();
         updateDescriptor();
     }
@@ -33,9 +32,9 @@ namespace Ge
     {
         std::vector<VkDescriptorBufferInfo> bufferInfoMaterial{};
 		VkDescriptorBufferInfo bufferIM{};
-        for (std::map<Material *, Materials *>::iterator iter = m_materials.begin(); iter != m_materials.end(); ++iter)
-        {
-            bufferIM.buffer = iter->second->getUniformBuffers();
+		for (int i = 0; i < m_materials.size(); i++)
+		{
+            bufferIM.buffer = m_materials[i]->getUniformBuffers();
 			bufferIM.offset = 0;
 			bufferIM.range = sizeof(UniformBufferMaterial);
 			bufferInfoMaterial.push_back(bufferIM);
@@ -45,9 +44,9 @@ namespace Ge
 
     void MaterialManager::release()
     {
-        for (std::map<Material *, Materials *>::iterator iter = m_materials.begin(); iter != m_materials.end(); ++iter)
+        for (int i = 0; i < m_materials.size();i++)
 		{
-			delete (iter->second);
+			delete (m_materials[i]);
 		}
 		m_materials.clear();
         delete (m_descriptor);

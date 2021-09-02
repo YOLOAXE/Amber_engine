@@ -2,7 +2,7 @@
 
 namespace Ge
 {
-	Model::Model(ModelBuffer * buffer, int indexubo, VulkanMisc * vM) : GObject()
+	Model::Model(ShapeBuffer * buffer, int indexubo, VulkanMisc * vM) : GObject()
 	{
 		vulkanM = vM;
 		m_buffer = buffer;
@@ -50,13 +50,13 @@ namespace Ge
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
-	void Model::setMaterial(Material * m)
+	void Model::setMaterial(Materials * m)
 	{
 		m_material = m;
 		m_index.material = m_material->getIndex();
 	}
 
-	Material * Model::getMaterial()
+	Materials * Model::getMaterial()
 	{
 		return m_material;
 	}
@@ -66,7 +66,7 @@ namespace Ge
 		return m_vmaUniformBuffer.buffer;
 	}
 
-	ModelBuffer * Model::getModelBuffer()
+	ShapeBuffer * Model::getShapeBuffer()
 	{
 		return m_buffer;
 	}

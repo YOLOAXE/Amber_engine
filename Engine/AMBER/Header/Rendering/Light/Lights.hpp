@@ -1,8 +1,6 @@
 #ifndef __ENGINE_LIGHT__
 #define __ENGINE_LIGHT__
 
-#include "Light.hpp"
-#include "Vector3.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/quaternion.hpp"
 #include "glm/gtx/euler_angles.hpp"
@@ -12,25 +10,20 @@
 #include "VulkanMisc.hpp"
 #include "BufferManager.hpp"
 #include "GObject.hpp"
-#include "ImGUiUBL.hpp"
 
 namespace Ge
 {
-	class Lights : virtual public Light, public GObject
+	class Lights : public GObject
 	{
 	public:
 		Lights(int index, VulkanMisc *vM);
-		void setColors(Vector3 color);
-		Vector3 getColors();
-		void setSpecular(Vector3 spec);
-		Vector3 getSpecular();
-		void setEulerAngles(Vector3 eul) override;
-		Vector3 getEulerAngles() override;
-		Vector3 getPosition() override;
-		void setPosition(Vector3 pos) override;
-		void setAmbiant(Vector3 ambiant);
-		int getStatus();
-		Vector3 getAmbiant();
+		void setColors(glm::vec3 color);
+		glm::vec3 getColors();
+		void setSpecular(glm::vec3 spec);
+		glm::vec3 getSpecular();
+		void setAmbiant(glm::vec3 ambiant);
+		glm::vec3 getAmbiant();
+		int getStatus(); //Statut directional spotlight pointlight
 		int getIndex();
 		void setIndex(int i);
 		VkBuffer getUniformBuffers();
@@ -42,7 +35,6 @@ namespace Ge
 
 	protected:
 		UniformBufferLight m_ubl{};
-		ImGUiUBL m_imGUiUBL{};
 		VulkanMisc *vMisc;
 		VmaBuffer m_vmaUniformBuffer;
 		VmaBuffer m_vmaOffScreenShadowBuffer;

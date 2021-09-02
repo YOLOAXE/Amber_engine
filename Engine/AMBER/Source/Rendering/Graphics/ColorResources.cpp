@@ -82,6 +82,6 @@ namespace Ge
 			}
 		}
 
-		Debug::Error("CAPS n'a pas reussi a trouver un type de memoire approprie");
+		Debug::Error("L'Engine n'a pas reussi a trouver un type de memoire approprie");
 	}
 }

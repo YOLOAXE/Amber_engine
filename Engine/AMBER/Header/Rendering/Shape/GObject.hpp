@@ -2,47 +2,45 @@
 #define __ENGINE_GRAPHIC_OBJECT__
 
 #include "Transform.hpp"
-#include "GraphicsObject.hpp"
 #include "Debug.hpp"
 #include "Component.hpp"
-#include "TransformImgui.hpp"
 #include "imgui-cmake/Header/imgui.h"
 #include <vector>
 #include <string> 
 
 namespace Ge
 {
-	class GObject : virtual public GraphicsObject
+	class GObject
 	{
 	public:
 		GObject(bool inverse = false);
 		void setName(std::string nom);
 		std::string * getName();
-		virtual void setPosition(Vector3 pos);
-		virtual void setRotation(Vector4 rot);
-		virtual void setEulerAngles(Vector3 eul);
-		virtual void setScale(Vector3 scale);
-		virtual void setTarget(Vector3 target);
-		virtual Vector3 getPosition();
-		virtual Vector4 getRotation();
-		virtual Vector3 getEulerAngles();
-		virtual Vector3 getScale();
-		virtual void mapMemory();
-		Vector3 transformDirectionAxeX();
-		Vector3 transformDirectionAxeY();
-		Vector3 transformDirectionAxeZ();
-		Vector3 transformDirectionAxe(Vector3 dir);
+		void setPosition(glm::vec3 pos);
+		void setRotation(glm::quat rot);
+		void setEulerAngles(glm::vec3 eul);
+		void setScale(glm::vec3 scale);
+		void setTarget(glm::vec3 target);
+		glm::vec3 getPosition();
+		glm::quat getRotation();
+		glm::vec3 getEulerAngles();
+		glm::vec3 getScale();
+		virtual void mapMemory(); // map matrice pour les exporter dans les descriptors
+		glm::vec3 transformDirectionAxeX();
+		glm::vec3 transformDirectionAxeY();
+		glm::vec3 transformDirectionAxeZ();
+		glm::vec3 transformDirectionAxe(glm::vec3 dir);
 		bool getFlipY();
 		void setFlipY(bool state);
 		void addComponent(Component * c);
 		void removeComponent(Component * c);
 		virtual void onGUI();
 	protected:
+		std::vector<GObject *> m_childs;//implementer
 		std::string m_nom;
 		bool m_flipY = false;
 		bool m_inversePos = true;
 		Transform m_transform{};
-		TransformImgui m_transformImgui{};
 		std::vector<Component *> m_Component;
 	};
 }

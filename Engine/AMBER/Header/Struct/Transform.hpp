@@ -10,9 +10,6 @@
 #include "glm/gtx/quaternion.hpp"
 #include "glm/gtx/euler_angles.hpp"
 #include "glm/common.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
 
 struct Transform
 {
@@ -24,11 +21,6 @@ struct Transform
     glm::quat rotation;
     glm::vec3 eulerAngles;
     glm::vec3 scale;
-    Vector3 pos;
-    Vector4 rot;
-    Vector3 eul;
-    Vector3 dir;
-    Vector3 size;
 };
 
 #endif //__ENGINE_TRANSFORM__

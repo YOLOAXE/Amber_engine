@@ -19,12 +19,12 @@ namespace Ge
             return false;
         }
         Debug::Info("Initialisation du moteur de rendu");
-        if (!RenderingEngine::m_window.initialize(p_ptrClass->pi_settingManager->getWindowWidth(), p_ptrClass->pi_settingManager->getWindowHeight(), p_ptrClass->pi_settingManager->getName(), &m_vulkanMisc))
+        if (!RenderingEngine::m_window.initialize(p_ptrClass->settingManager->getWindowWidth(), p_ptrClass->settingManager->getWindowHeight(), p_ptrClass->settingManager->getName(), &m_vulkanMisc))
         {
             Debug::INITFAILED("Window");
             return false;
         }
-        if (!RenderingEngine::m_instanceVulkan.initialize(p_ptrClass->pi_settingManager->getName(), p_ptrClass->pi_settingManager->getVersion(), &m_vulkanMisc))
+        if (!RenderingEngine::m_instanceVulkan.initialize(p_ptrClass->settingManager->getName(), p_ptrClass->settingManager->getVersion(), &m_vulkanMisc))
         {
             Debug::INITFAILED("InstanceVulkan");
             return false;
@@ -79,7 +79,7 @@ namespace Ge
             Debug::INITFAILED("Framebuffers");
             return false;
         }
-        if(!RenderingEngine::m_cameraManager.initialize(&m_vulkanMisc, p_ptrClass->pi_inputManager))
+        if(!RenderingEngine::m_cameraManager.initialize(&m_vulkanMisc, p_ptrClass->inputManager))
         {
             Debug::INITFAILED("CameraManager");
             return false;

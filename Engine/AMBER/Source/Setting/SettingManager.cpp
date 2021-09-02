@@ -2,17 +2,6 @@
 
 namespace Ge
 {
-    bool SettingManager::initialize()
-    {
-        m_settingInfo.m_gamma = 1.0f;
-        Debug::INITSUCCESS("SettingManager");
-        return true;
-    }
-    void SettingManager::release()
-    {
-        Debug::RELEASESUCCESS("SettingManager");
-    }
-
     double SettingManager::getFps()
     {
 
@@ -57,12 +46,11 @@ namespace Ge
 
         m_settingInfo.m_sizeWidthWindow = Width;
     }
-    Vector3 SettingManager::getGravity()
+	glm::vec3 SettingManager::getGravity()
     {
-
         return m_settingInfo.m_gravity;
     }
-    void SettingManager::setGravity(Vector3 gravity)
+    void SettingManager::setGravity(glm::vec3 gravity)
     {
 
         m_settingInfo.m_gravity = gravity;
@@ -78,12 +66,12 @@ namespace Ge
         return m_settingInfo.m_version;
     }
 
-    void SettingManager::setClearColor(Vector4 color)
+    void SettingManager::setClearColor(glm::vec4 color)
     {
         m_settingInfo.m_clearColor = color;
     }
 
-    Vector4 SettingManager::getClearColor()
+	glm::vec4 SettingManager::getClearColor()
     {
         return m_settingInfo.m_clearColor;
     }

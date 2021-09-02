@@ -9,8 +9,6 @@
 #include <glm/gtc/quaternion.hpp> 
 #include <glm/gtx/quaternion.hpp>
 #include <glm/common.hpp>
-#include "Vector3.hpp"
-#include "I_Camera.hpp"
 #include "UniformBufferCamera.hpp"
 #include "VulkanMisc.hpp"
 #include "GObject.hpp"
@@ -18,7 +16,7 @@
 
 namespace Ge
 {
-	class Camera : public I_Camera, public virtual GObject
+	class Camera : public GObject
 	{
 	private:
 		friend class CameraManager;

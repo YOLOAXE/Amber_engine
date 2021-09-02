@@ -4,7 +4,7 @@
 #include "VulkanMisc.hpp"
 #include "Debug.hpp"
 #include <map>
-#include "ModelBuffer.hpp"
+#include "ShapeBuffer.hpp"
 #include "Model.hpp"
 #include <unordered_map>
 #include "Descriptor.hpp"
@@ -24,15 +24,12 @@ namespace Ge
         void updateDescriptor();
 		static void InitDescriptor(VulkanMisc * vM);
 		static Descriptor* GetDescriptor();
-		static std::map<Shape *, Model *> GetModels();
+		static std::vector<Model *> GetModels();
     private:
-        std::map<ShapeBuffer *, ModelBuffer *> m_modelBuffers;
-        static std::map<Shape *, Model *> m_models;
+		static std::vector<Model *> m_models;
+        std::vector<ShapeBuffer *> m_shapeBuffers;        
         VmaBuffer m_vmaUniformBuffers;
         VulkanMisc *vulkanM;
-
-    private:
-		friend class Model;
         static Descriptor *m_descriptor;
     };
 }

@@ -11,7 +11,7 @@ namespace Ge
         pixel[1] = 0;
         pixel[2] = 0;
         nullTexture = new Textures(pixel, 1, 1, m_textures.size(), vulkanM);
-        m_textures[(Texture *)nullTexture] = nullTexture;
+        m_textures.push_back(nullTexture);
         vulkanM->str_VulkanDescriptor->textureCount = m_textures.size();
         delete (pixel);  
         updateDescriptor();      
@@ -23,11 +23,11 @@ namespace Ge
     {
         std::vector<VkDescriptorImageInfo> imageInfo{};        
         VkDescriptorImageInfo imageI{};
-        for (std::map<Texture *, Textures *>::iterator iter = m_textures.begin(); iter != m_textures.end(); ++iter)
+        for (int i = 0; i < m_textures.size();i++)
         {
             imageI.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-            imageI.imageView = iter->second->getVkImageView();
-            imageI.sampler = iter->second->getVkSampler();
+            imageI.imageView = m_textures[i]->getVkImageView();
+            imageI.sampler = m_textures[i]->getVkSampler();
             imageInfo.push_back(imageI);
         }
         m_descriptor->updateCount(vulkanM, vulkanM->str_VulkanDescriptor->textureCount, imageInfo);
@@ -35,9 +35,9 @@ namespace Ge
 
     void TextureManager::release()
     {
-        for (std::map<Texture *, Textures *>::iterator iter = m_textures.begin(); iter != m_textures.end(); ++iter)
-        {
-            delete (iter->second);
+		for (int i = 0; i < m_textures.size(); i++)
+		{
+            delete (m_textures[i]);
         }
         m_textures.clear();
         vulkanM->str_VulkanDescriptor->textureCount = 0;
@@ -55,7 +55,7 @@ namespace Ge
 		return TextureManager::m_descriptor;
 	}
 
-    Texture *TextureManager::createTexture(const char *path)
+    Textures *TextureManager::createTexture(const char *path)
     {
         int tw, th, tc;
         stbi_uc *pixel = stbi_load(path, &tw, &th, &tc, STBI_rgb_alpha);
@@ -65,18 +65,17 @@ namespace Ge
             return nullptr;
         }
         Textures *texture = new Textures(pixel, tw, th, m_textures.size(), vulkanM);
-        m_textures[(Texture *)texture] = texture;
+        m_textures.push_back(texture);
         stbi_image_free(pixel);
         vulkanM->str_VulkanDescriptor->textureCount = m_textures.size();
         updateDescriptor();
-        return (Texture *)texture;
+        return texture;
     }
 
-    void TextureManager::destroyTexture(Texture *texture)
+    void TextureManager::destroyTexture(Textures *texture)
     {
-        Textures *t = m_textures[texture];
-        m_textures.erase(texture);
-        delete (t);
+		m_textures.erase(std::remove(m_textures.begin(), m_textures.end(), texture), m_textures.end());
+        delete (texture);
         vulkanM->str_VulkanDescriptor->textureCount = m_textures.size();
         updateDescriptor();
     }

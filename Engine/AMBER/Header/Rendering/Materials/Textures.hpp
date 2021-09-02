@@ -4,13 +4,12 @@
 #include "stb-cmake/stb_image.h"
 #include "VulkanMisc.hpp"
 #include "BufferManager.hpp"
-#include "Texture.hpp"
 #include <cmath>
 #include <cstring>
 
 namespace Ge
 {
-	class Textures : public Texture
+	class Textures
 	{
 	public:
 		Textures(stbi_uc* pc, int Width,int Height,int ind, VulkanMisc * vM);

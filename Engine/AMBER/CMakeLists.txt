@@ -8,7 +8,6 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/Struct)
 #User
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/User)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/User/Input)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/InterfaceDll)
 
 #Rendue
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/Rendering)
@@ -50,7 +49,9 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ThirdParty/Bullet3/src)
 FILE(GLOB_RECURSE ENGINE_SOURCES *.cpp *.c)
 FILE(GLOB_RECURSE ENGINE_HEADERS *.hpp *.h *.inl)
 
-ADD_EXECUTABLE(AMBER ${ENGINE_SOURCES} ${ENGINE_HEADERS})
+#ADD_EXECUTABLE(AMBER ${ENGINE_SOURCES} ${ENGINE_HEADERS})
+ADD_LIBRARY(AMBER STATIC ${ENGINE_SOURCES} ${ENGINE_HEADERS})
+
 FIND_PACKAGE(Vulkan)
 
 IF (VULKAN_FOUND)
@@ -59,7 +60,7 @@ IF (VULKAN_FOUND)
 	ELSEIF(UNIX)
 		TARGET_INCLUDE_DIRECTORIES(AMBER PRIVATE $ENV{Vulkan_INCLUDE_DIRS})
 	ENDIF()
-    TARGET_LINK_LIBRARIES(AMBER PRIVATE glfw glfw3 termcolor tinyobjloader stb glm OpenAL ImGUI BulletDynamics BulletCollision LinearMath BulletSoftBody BulletDynamics BulletCollision LinearMath ${Vulkan_LIBRARIES})
+    TARGET_LINK_LIBRARIES(AMBER PRIVATE glfw glfw3 termcolor tinyobjloader stb glm OpenAL ImGUI BulletDynamics BulletCollision LinearMath BulletSoftBody BulletDynamics BulletCollision LinearMath ${Vulkan_LIBRARIES})	
 ELSE ()
     MESSAGE(FATAL_ERROR "Impossible de trouver Vulkan")
 ENDIF ()

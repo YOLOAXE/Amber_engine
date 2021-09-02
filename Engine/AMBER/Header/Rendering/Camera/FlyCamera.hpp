@@ -2,17 +2,17 @@
 #define __ENGINE_FLY_CAMERA__
 
 #include "Camera.hpp"
-#include "I_InputManager.hpp"
+#include "InputManager.hpp"
 
 namespace Ge
 {
 	class FlyCamera : Camera
 	{
 	public:
-		FlyCamera(VulkanMisc * vM, I_InputManager * input);
+		FlyCamera(VulkanMisc * vM, InputManager * input);
 		void updateCamera();
 	private:	
-		I_InputManager * m_im; 
+		InputManager * m_im;
 		float m_angleX;
 		float m_angleY;
 		float m_maxSpeed = 10.0f;

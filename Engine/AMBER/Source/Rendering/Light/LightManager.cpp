@@ -16,59 +16,59 @@ namespace Ge
         return true;
     }
 
-    SpotLight * LightManager::createSpotLight(Vector3 position, Vector3 color, Vector3 direction, float cutOff, float outerCutOff, std::string name)
+    SpotLight * LightManager::createSpotLight(glm::vec3 position, glm::vec3 color, glm::vec3 direction, float cutOff, float outerCutOff, std::string name)
 	{
-		LSpot * light = new LSpot(m_mapLights.size(), vulkanM);
+		SpotLight * light = new SpotLight(m_lights.size(), vulkanM);
 		light->setPosition(position);
 		light->setColors(color);
 		light->setCutOff(cutOff);
 		light->setOuterCutOff(outerCutOff);
 		light->setName(name);
-		m_mapLights[(Light *)light] = light;    
-		vulkanM->str_VulkanDescriptor->lightCount = m_mapLights.size();
+		m_lights.push_back(light);
+		vulkanM->str_VulkanDescriptor->lightCount = m_lights.size();
 		updateDescriptor();
 		return (SpotLight *)light;
 	}
 
-	DirectionalLight * LightManager::createDirectionalLight(Vector3 direction, Vector3 color, std::string name)
+	DirectionalLight * LightManager::createDirectionalLight(glm::vec3 direction, glm::vec3 color, std::string name)
 	{
-		LDirectional * light = new LDirectional(m_mapLights.size(), vulkanM);
+		DirectionalLight * light = new DirectionalLight(m_lights.size(), vulkanM);
 		light->setColors(color);
 		light->setName(name);		
-		m_mapLights[(Light *)light] = light;        
-		vulkanM->str_VulkanDescriptor->lightCount = m_mapLights.size();
+		m_lights.push_back(light);
+		vulkanM->str_VulkanDescriptor->lightCount = m_lights.size();
 		updateDescriptor();
 		return (DirectionalLight *)light;
 	}
 
-	PointLight * LightManager::createPointLight(Vector3 position, Vector3 color, std::string name)
+	PointLight * LightManager::createPointLight(glm::vec3 position, glm::vec3 color, std::string name)
 	{
-		LPoint * light = new LPoint(m_mapLights.size(), vulkanM);
+		PointLight * light = new PointLight(m_lights.size(), vulkanM);
 		light->setPosition(position);
 		light->setColors(color);	
 		light->setName(name);		
-		m_mapLights[(Light *)light] = light;
-		vulkanM->str_VulkanDescriptor->lightCount = m_mapLights.size();
+		m_lights.push_back(light);
+		vulkanM->str_VulkanDescriptor->lightCount = m_lights.size();
 		updateDescriptor();
 		return (PointLight *)light;
 	}
 
-	void LightManager::destroyLight(Light * light)
+	void LightManager::destroyLight(Lights * light)
 	{
-		Lights * li = m_mapLights[light];
-        m_mapLights.erase(li);
-        delete(li);
-		vulkanM->str_VulkanDescriptor->lightCount = m_mapLights.size();		
+		m_lights.erase(std::remove(m_lights.begin(), m_lights.end(), light), m_lights.end());
+        delete(light);
+		vulkanM->str_VulkanDescriptor->lightCount = m_lights.size();
 		updateDescriptor();
+		majIndex();
 	}
 
 	void LightManager::release()
 	{
-        for (std::map<Light *, Lights *>::iterator iter = m_mapLights.begin(); iter != m_mapLights.end(); ++iter)
+        for (int i = 0 ; i < m_lights.size();i++)
 		{
-			delete (iter->second);
+			delete(m_lights[i]);
 		}
-		m_mapLights.clear();
+		m_lights.clear();
         vulkanM->str_VulkanDescriptor->lightCount = 0;
 		BufferManager::destroyBuffer(m_vmaUniformBuffers);
 		delete(m_descriptor);
@@ -79,9 +79,9 @@ namespace Ge
 	{
 		std::vector<VkDescriptorBufferInfo> bufferInfoLight{};
 		VkDescriptorBufferInfo bufferIL{};
-        for (std::map<Light *, Lights *>::iterator iter = m_mapLights.begin(); iter != m_mapLights.end(); ++iter)
-        {
-            bufferIL.buffer = iter->second->getUniformBuffers();
+		for (int i = 0; i < m_lights.size(); i++)
+		{
+            bufferIL.buffer = m_lights[i]->getUniformBuffers();
 			bufferIL.offset = 0;
 			bufferIL.range = sizeof(UniformBufferLight);
 			bufferInfoLight.push_back(bufferIL);
@@ -94,7 +94,7 @@ namespace Ge
 			bufferInfoLight.push_back(bufferIL);
 		}
 				
-		m_descriptor->updateCount(vulkanM,m_mapLights.size(),bufferInfoLight);		
+		m_descriptor->updateCount(vulkanM, m_lights.size(),bufferInfoLight);
 	}
 
 	void LightManager::InitDescriptor(VulkanMisc * vM) 
@@ -109,10 +109,9 @@ namespace Ge
 
 	void LightManager::majIndex()
 	{
-        int i = 0;
-        for (std::map<Light *, Lights *>::iterator iter = m_mapLights.begin(); iter != m_mapLights.end(); ++iter)
+		for (int i = 0; i < m_lights.size(); i++)
 		{
-			iter->second->setIndex(i++);
+			m_lights[i]->setIndex(i);
 		}		
 	}
 }

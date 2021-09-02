@@ -2,12 +2,11 @@
 #define __ENGINE_TIME__
 
 #include "Debug.hpp"
-#include "I_Time.hpp"
 #include <chrono>
 
 namespace Ge
 {
-	class Time : public I_Time
+	class Time
 	{
 	private:
 		friend class GameEngine;

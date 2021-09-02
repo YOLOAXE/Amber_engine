@@ -4,11 +4,10 @@
 #include "Initializer.hpp"
 #include "Debug.hpp"
 #include "SettingInfo.hpp"
-#include "I_SettingManager.hpp"
 
 namespace Ge
 {
-    class SettingManager : public I_SettingManager, Initializer
+    class SettingManager
     {
     public:
         double getFps();
@@ -19,16 +18,14 @@ namespace Ge
         void setWindowHeight(double height);
         double getWindowWidth();
         void setWindowWidth(double Width);
-        Vector3 getGravity();
-        void setGravity(Vector3 gravity);
+        glm::vec3 getGravity();
+        void setGravity(glm::vec3 gravity);
         void setVersion(Version v);
         Version getVersion();
-        void setClearColor(Vector4 color);
-        Vector4 getClearColor();
+        void setClearColor(glm::vec4 color);
+		glm::vec4 getClearColor();
         void setGamma(float gamma);
         float getGamma();
-        bool initialize();
-        void release();
 
     private:
         SettingInfo m_settingInfo;

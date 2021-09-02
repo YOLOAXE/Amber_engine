@@ -14,11 +14,13 @@ namespace Ge
     class GameEngine : Initializer
     {
     public:
+		GameEngine();
+		ptrClass getPtrClass();
         bool initialize();
         void release();
         void start();
+	private:
         void update();
-
     private:
         VulkanMisc * m_VulkanMisc;
         RenderingEngine m_renderingEngine;

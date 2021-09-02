@@ -3,7 +3,7 @@
 
 namespace Ge
 {
-	FlyCamera::FlyCamera(VulkanMisc * vM, I_InputManager * input) : Camera(vM)
+	FlyCamera::FlyCamera(VulkanMisc * vM, InputManager * input) : Camera(vM)
 	{
 		m_im = input;
 		m_angleY = 0.0f;
@@ -50,12 +50,12 @@ namespace Ge
 
 		if (m_im->getKey(341))
 		{
-			setPosition(getPosition() - Vector3(0, 1, 0) * m_moveSpeed);
+			setPosition(getPosition() - glm::vec3(0, 1, 0) * m_moveSpeed);
 		}
 		else if (m_im->getKey(32))
 		{
-			setPosition(getPosition() - Vector3(0, -1, 0) * m_moveSpeed);
+			setPosition(getPosition() - glm::vec3(0, -1, 0) * m_moveSpeed);
 		}
-		setEulerAngles(Vector3(m_angleY, m_angleX, 0.0f));
+		setEulerAngles(glm::vec3(m_angleY, m_angleX, 0.0f));
 	}
 }

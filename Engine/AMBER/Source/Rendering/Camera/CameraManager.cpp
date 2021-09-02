@@ -4,13 +4,13 @@ namespace Ge
 {
 	Descriptor * CameraManager::m_descriptor = nullptr;	
 	Camera *CameraManager::currentCamera = nullptr;
-	std::map<I_Camera *, Camera *> CameraManager::m_Camera;
+	std::vector<Camera *> CameraManager::m_cameras;
 
-    bool CameraManager::initialize(VulkanMisc *vM, I_InputManager *im)
+    bool CameraManager::initialize(VulkanMisc *vM, InputManager *im)
     {        
         vulkanM = vM;
         m_flyCamera = new FlyCamera(vM, im);        
-        m_Camera[(I_Camera *)m_flyCamera] = (Camera *)m_flyCamera;
+		m_cameras.push_back((Camera *)m_flyCamera);
         CameraManager::updatePriorityCamera(); 
         std::vector<VkDescriptorBufferInfo> bufferInfo;
         VkDescriptorBufferInfo bufferI{};
@@ -23,20 +23,19 @@ namespace Ge
         return true;
     }
 
-    I_Camera *CameraManager::createCamera(std::string name)
+    Camera *CameraManager::createCamera(std::string name)
     {
         Camera * cam = new Camera(vulkanM);
-		m_Camera[(I_Camera *)cam] = cam;
+		m_cameras.push_back(cam);
 		cam->setName(name);
 		CameraManager::updatePriorityCamera();
 		return cam;
     }
     
-    void CameraManager::releaseCamera(I_Camera *camera)
+    void CameraManager::releaseCamera(Camera *camera)
     {
-        Camera * cam = m_Camera[camera];
-        m_Camera.erase(camera);
-        delete (cam);				
+		m_cameras.erase(std::remove(m_cameras.begin(), m_cameras.end(), camera), m_cameras.end());
+        delete (camera);
         CameraManager::updatePriorityCamera();
     }
     void CameraManager::updateAspectRatio()
@@ -46,17 +45,18 @@ namespace Ge
     void CameraManager::updatePriorityCamera()
     {
         int minimum = INT_MAX;
-        for (std::map<I_Camera *, Camera *>::iterator iter = m_Camera.begin(); iter != m_Camera.end(); ++iter)
+        for (int i = 0 ; i < m_cameras.size();i++)
 		{
-		   	if (iter->second->getPriority() < minimum)
+		   	if (m_cameras[i]->getPriority() < minimum)
 			{
-				minimum = iter->second->getPriority();
-				currentCamera = iter->second;
+				minimum = m_cameras[i]->getPriority();
+				currentCamera = m_cameras[i];
 			}
 		}
         currentCamera->updatePerspective();        
     }
-    I_Camera *CameraManager::getCurrentCamera()
+
+    Camera *CameraManager::getCurrentCamera()
     {
         return currentCamera;
     }
@@ -75,14 +75,14 @@ namespace Ge
     {
 		if (m_flyCamera != nullptr)
 		{
-			m_Camera.erase((I_Camera *)m_flyCamera);
+			m_cameras.erase(std::remove(m_cameras.begin(), m_cameras.end(), (Camera *)m_flyCamera), m_cameras.end());
 			delete (m_flyCamera);
 		}
-        for (std::map<I_Camera *, Camera *>::iterator iter = m_Camera.begin(); iter != m_Camera.end(); ++iter)
+		for (int i = 0; i < m_cameras.size(); i++)
 		{
-			delete (iter->second);
+			delete(m_cameras[i]);
 		}
-		m_Camera.clear();
+		m_cameras.clear();
         delete (m_descriptor);
         Debug::RELEASESUCCESS("CameraManager");
     }

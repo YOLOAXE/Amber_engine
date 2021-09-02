@@ -5,13 +5,11 @@
 #include "GLFW/glfw3.h"
 #include <map>
 #include "Debug.hpp"
-#include "I_InputManager.hpp"
 #include "glm/glm.hpp"
-#include "RenderingEngine.hpp"
 
 namespace Ge
 {
-	class InputManager : public I_InputManager
+	class InputManager
 	{
 	private:
 		friend class GameEngine;

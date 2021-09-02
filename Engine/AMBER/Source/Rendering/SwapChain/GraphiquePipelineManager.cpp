@@ -3,7 +3,7 @@
 
 namespace Ge
 {
-	std::map<Pipeline *, GraphiquePipeline * > GraphiquePipelineManager::m_GraphiquePipeline;
+	std::vector<GraphiquePipeline *> GraphiquePipelineManager::m_graphiquePipeline;
 	bool GraphiquePipelineManager::initialize(VulkanMisc *vM)
 	{
 		vulkanM = vM;
@@ -20,32 +20,31 @@ namespace Ge
 
 	void GraphiquePipelineManager::release()
 	{
-		for (std::map<Pipeline *, GraphiquePipeline *>::iterator iter = m_GraphiquePipeline.begin(); iter != m_GraphiquePipeline.end(); ++iter)
+		for (int i = 0; i < m_graphiquePipeline.size();i++)
 		{
-			delete (iter->second);
+			delete (m_graphiquePipeline[i]);
 		}
-		m_GraphiquePipeline.clear();
+		m_graphiquePipeline.clear();
 	}
 
-	Pipeline * GraphiquePipelineManager::createPipeline(const std::string &frag, const std::string &vert)
+	GraphiquePipeline * GraphiquePipelineManager::createPipeline(const std::string &frag, const std::string &vert)
 	{
-		GraphiquePipeline * gp = new GraphiquePipeline(vulkanM, frag, vert);
-		Pipeline * p = (Pipeline *)gp;
-		m_GraphiquePipeline[p] = gp;
 		ShaderPair * sp = new ShaderPair(frag, vert);
+		GraphiquePipeline * gp = new GraphiquePipeline(vulkanM, frag, vert);
+		m_graphiquePipeline.push_back(gp);		
 		m_fileNameShaders.push_back(sp);
-		return p;
+		return gp;
 	}
 
-	std::map<Pipeline *, GraphiquePipeline * > GraphiquePipelineManager::GetPipeline()
+	std::vector<GraphiquePipeline *> GraphiquePipelineManager::GetPipelines()
 	{
-		return m_GraphiquePipeline;
+		return m_graphiquePipeline;
 	}
 
-	void GraphiquePipelineManager::destroyPipeline(Pipeline * pipeline)
+	void GraphiquePipelineManager::destroyPipeline(GraphiquePipeline * pipeline)
 	{
-		GraphiquePipeline * gp = m_GraphiquePipeline[pipeline];
-		m_GraphiquePipeline.erase(pipeline);
-		delete (gp);
+		m_graphiquePipeline.erase(std::remove(m_graphiquePipeline.begin(), m_graphiquePipeline.end(), pipeline), m_graphiquePipeline.end());
+		//TODO suprimer les shader pair
+		delete (pipeline);
 	}
 }

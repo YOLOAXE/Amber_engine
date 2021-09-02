@@ -17,57 +17,31 @@ namespace Ge
 		updateUniformBufferLight();
 	}
 
-	void Lights::setColors(Vector3 color)
+	void Lights::setColors(glm::vec3 color)
 	{
-		m_ubl.diffuse = glm::vec3(color.x, color.y, color.z);
+		m_ubl.diffuse = color;
 		updateUniformBufferLight();
 	}
 
-	Vector3 Lights::getColors()
+	glm::vec3 Lights::getColors()
 	{
-		return Vector3(m_ubl.diffuse.x, m_ubl.diffuse.y, m_ubl.diffuse.z);
+		return m_ubl.diffuse;
 	}
 
-	void Lights::setSpecular(Vector3 spec)
+	void Lights::setSpecular(glm::vec3 spec)
 	{
-		m_ubl.specular = glm::vec3(spec.x, spec.y, spec.z);
+		m_ubl.specular = spec;
 		updateUniformBufferLight();
 	}
 
-	Vector3 Lights::getSpecular()
+	glm::vec3 Lights::getSpecular()
 	{
-		return Vector3(m_ubl.specular.x, m_ubl.specular.y, m_ubl.specular.z);
+		return m_ubl.specular;
 	}
 
-	void Lights::setEulerAngles(Vector3 eul)
+	void Lights::setAmbiant(glm::vec3 ambiant)
 	{
-		m_ubl.direction = glm::vec3(eul.x, eul.y, eul.z);
-		m_transform.eul = eul;//A changer
-		m_transform.eulerAngles = m_ubl.direction;//A changer	
-		updateUniformBufferLight();//TODO verifier les a changer
-	}
-
-	Vector3 Lights::getEulerAngles()
-	{
-		return m_transform.eul;
-	}
-
-	Vector3 Lights::getPosition()
-	{
-		return Vector3(m_ubl.position.x, m_ubl.position.y, m_ubl.position.z);
-	}
-
-	void Lights::setPosition(Vector3 position)
-	{
-		m_ubl.position = glm::vec3(position.x, position.y, position.z);
-		m_transform.position = m_ubl.position;
-		m_transform.pos = position;	
-		updateUniformBufferLight();
-	}
-
-	void Lights::setAmbiant(Vector3 ambiant)
-	{
-		m_ubl.ambient = glm::vec3(ambiant.x, ambiant.y, ambiant.z);
+		m_ubl.ambient = ambiant;
 		updateUniformBufferLight();
 	}
 
@@ -76,9 +50,9 @@ namespace Ge
 		return m_ubl.status;
 	}
 
-	Vector3 Lights::getAmbiant()
+	glm::vec3 Lights::getAmbiant()
 	{
-		return Vector3(m_ubl.ambient.x, m_ubl.ambient.y, m_ubl.ambient.z);
+		return m_ubl.ambient;
 	}
 
 	int Lights::getIndex()
@@ -115,31 +89,19 @@ namespace Ge
 
 	void Lights::onGUI()
 	{
-		m_imGUiUBL.ambient[0] = m_ubl.ambient.x;
-		m_imGUiUBL.ambient[1] = m_ubl.ambient.y;
-		m_imGUiUBL.ambient[2] = m_ubl.ambient.z;
-
-		m_imGUiUBL.diffuse[0] = m_ubl.diffuse.x;
-		m_imGUiUBL.diffuse[1] = m_ubl.diffuse.y;
-		m_imGUiUBL.diffuse[2] = m_ubl.diffuse.z;
-
-		m_imGUiUBL.specular[0] = m_ubl.specular.x;
-		m_imGUiUBL.specular[1] = m_ubl.specular.y;
-		m_imGUiUBL.specular[2] = m_ubl.specular.z;
-
 		GObject::onGUI();
 		ImGui::TextColored(ImVec4(0.2f, 1, 0.2f, 1), "Light\n");
-		if (ImGui::ColorEdit3("Color", m_imGUiUBL.diffuse))
+		if (ImGui::ColorEdit3("Color", (float *)&m_ubl.diffuse))
 		{
-			setColors(Vector3(m_imGUiUBL.diffuse[0], m_imGUiUBL.diffuse[1], m_imGUiUBL.diffuse[2]));
+			setColors(m_ubl.diffuse);
 		}
-		if (ImGui::ColorEdit3("Ambiant", m_imGUiUBL.ambient))
+		if (ImGui::ColorEdit3("Ambiant", (float *)&m_ubl.ambient))
 		{
-			setAmbiant(Vector3(m_imGUiUBL.ambient[0], m_imGUiUBL.ambient[1], m_imGUiUBL.ambient[2]));
+			setAmbiant(m_ubl.ambient);
 		}
-		if (ImGui::ColorEdit3("Specular", m_imGUiUBL.specular))
+		if (ImGui::ColorEdit3("Specular", (float *)&m_ubl.specular))
 		{
-			setSpecular(Vector3(m_imGUiUBL.specular[0], m_imGUiUBL.specular[1], m_imGUiUBL.specular[2]));
+			setSpecular(m_ubl.specular);
 		}
 		ImGui::DragFloat("Quadratic", &m_ubl.quadratic,0.1f);
 		ImGui::DragFloat("Constant", &m_ubl.constant,0.1f);

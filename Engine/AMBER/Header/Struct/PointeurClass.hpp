@@ -1,15 +1,14 @@
 #ifndef __ENGINE_POINTEUR_CLASS__
 #define __ENGINE_POINTEUR_CLASS__
 
-#include "I_Debug.hpp"
-#include "I_SettingManager.hpp"
-#include "I_InputManager.hpp"
+#include "SettingManager.hpp"
+#include "InputManager.hpp"
+using namespace Ge;
 
 struct ptrClass
 {
-    I_Debug * pi_debug;
-    I_SettingManager * pi_settingManager;
-    I_InputManager * pi_inputManager;
+	SettingManager * settingManager;
+    InputManager * inputManager;	
 };
 
 #endif //__ENGINE_POINTEUR_CLASS__

@@ -5,7 +5,6 @@
 #include "termcolor/termcolor.hpp"
 #include <iostream>
 #include <cstdarg>
-#include "I_Debug.hpp"
 
 #ifdef NDEBUG
 #if defined(_WIN32) || defined(_WIN64)
@@ -22,7 +21,7 @@
 
 namespace Ge
 {
-    class Debug : public I_Debug, Initializer
+    class Debug
     {
         public:            
             static void Log(const char *format, ...);
@@ -33,12 +32,6 @@ namespace Ge
             static void INITSUCCESS(const char * format);
             static void INITFAILED(const char * format);
             static void RELEASESUCCESS(const char * format);
-            void log(const char *format, ...);
-            void error(const char *format, ...);
-            void warn(const char *format, ...);
-            void info(const char *format, ...);
-            bool initialize();
-            void release();
     };
 }
 

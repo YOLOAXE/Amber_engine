@@ -17,16 +17,14 @@ namespace Ge
         void release();   
         void updateDescriptor();     
     public:
-        Texture * createTexture(const char * path);
-		void destroyTexture(Texture * texture);
+        Textures * createTexture(const char * path);
+		void destroyTexture(Textures * texture);
 		static void InitDescriptor(VulkanMisc * vM);
 		static Descriptor* GetDescriptor();
     private:
         VulkanMisc *vulkanM;
-        std::map<Texture *,Textures *> m_textures;
+        std::vector<Textures *> m_textures;
 		Textures * nullTexture;
-	private:
-		friend class Textures;
         static Descriptor * m_descriptor;
     };
 }

@@ -29,14 +29,13 @@ namespace Ge
 		}
 		m_pipelineIndex = 0;
 		m_index = index;
+		updateUniformBufferMaterial();
 	}
 
-	void Materials::setColor(Vector3 color)
+	void Materials::setColor(glm::vec3 color)
 	{
-		m_color[0] = color.x;
-		m_color[1] = color.y;
-		m_color[2] = color.z;
-		m_ubm.albedo = glm::vec3(color.x, color.y, color.z);
+		m_ubm.albedo = color;
+		updateUniformBufferMaterial();
 	}
 
 	void Materials::setMetallic(float metal)
@@ -59,7 +58,7 @@ namespace Ge
 		m_ubm.ao = ao;
 	}
 
-	void Materials::setPipeline(Pipeline * p)
+	void Materials::setPipeline(GraphiquePipeline * p)
 	{
 		m_pipelineIndex = p->getIndex();
 	}
@@ -69,54 +68,44 @@ namespace Ge
 		return m_pipelineIndex;
 	}
 
-	void Materials::setAlbedoTexture(Texture * albedo)
+	void Materials::setAlbedoTexture(Textures * albedo)
 	{
-		if (albedo)
-		{
-			m_ubm.albedoMap = albedo->getIndex();
-			m_albedoMap = albedo;
-		}		
+		m_ubm.albedoMap = albedo->getIndex();
+		m_albedoMap = albedo;
+		updateUniformBufferMaterial();
 	}
 
-	void Materials::setNormalTexture(Texture * normal)
+	void Materials::setNormalTexture(Textures * normal)
 	{
-		if (normal)
-		{
 			m_ubm.normalMap = normal->getIndex();
 			m_normalMap = normal;
-		}
+			updateUniformBufferMaterial();
 	}
 
-	void Materials::setMetallicTexture(Texture * metal)
+	void Materials::setMetallicTexture(Textures * metal)
 	{
-		if (metal)
-		{
 			m_ubm.metallicMap = metal->getIndex();
 			m_metallicMap = metal;
-		}
+		updateUniformBufferMaterial();
 	}
 
-	void Materials::setHDRTexture(Texture * hdr)
+	void Materials::setHDRTexture(Textures * hdr)
 	{
-		if (hdr)
-		{
 			m_ubm.hdr = hdr->getIndex();
 			m_hdrMap = hdr;
-		}
+			updateUniformBufferMaterial();
 	}
 
-	void Materials::setOclusionTexture(Texture * oclu)
+	void Materials::setOclusionTexture(Textures * oclu)
 	{
-		if (oclu)
-		{
 			m_ubm.aoMap = oclu->getIndex();
 			m_aoMap = oclu;
-		}
+			updateUniformBufferMaterial();
 	}
 
-	Vector3 Materials::getColor()
+	glm::vec3 Materials::getColor()
 	{
-		return Vector3(m_ubm.albedo.x, m_ubm.albedo.y, m_ubm.albedo.z);
+		return m_ubm.albedo;
 	}
 
 	float Materials::getMetallic()
@@ -139,27 +128,27 @@ namespace Ge
 		return m_ubm.ao;
 	}
 
-	Texture * Materials::getAlbedoTexture()
+	Textures * Materials::getAlbedoTexture()
 	{
 		return m_albedoMap;
 	}
 
-	Texture * Materials::getNormalTexture()
+	Textures * Materials::getNormalTexture()
 	{
 		return m_normalMap;
 	}
 
-	Texture * Materials::getMetallicTexture()
+	Textures * Materials::getMetallicTexture()
 	{
 		return m_metallicMap;
 	}
 
-	Texture * Materials::getHDRTexture()
+	Textures * Materials::getHDRTexture()
 	{
 		return m_hdrMap;
 	}
 
-	Texture * Materials::getOclusionTexture()
+	Textures * Materials::getOclusionTexture()
 	{
 		return m_aoMap;
 	}
@@ -206,6 +195,7 @@ namespace Ge
 		{
 			m_ubm.aoMap = m_aoMap->getIndex();
 		}
+		updateUniformBufferMaterial();
 	}
 
 	bool Materials::getLightActive()
@@ -216,31 +206,30 @@ namespace Ge
 	void Materials::setLightActive(bool state)
 	{
 		m_ubm.light = state;
+		updateUniformBufferMaterial();
 	}
 
-	Vector2 Materials::getOffset()
+	glm::vec2 Materials::getOffset()
 	{
-		return Vector2(m_ubm.offset.x, m_ubm.offset.y);
+		return m_ubm.offset;
 	}
 
-	void Materials::setOffset(Vector2 off)
+	void Materials::setOffset(glm::vec2 off)
 	{
-		m_ubm.offset.x = off.x;
-		m_ubm.offset.y = off.y;
-		m_offset[0] = m_ubm.offset.x;
-		m_offset[1] = m_ubm.offset.y;
+		m_ubm.offset = off;
+		updateUniformBufferMaterial();
 	}
 
 	void Materials::onGUI()
 	{
 		ImGui::TextColored(ImVec4(0.2f, 1, 0.2f, 1), "Material\n");
-		if (ImGui::ColorEdit3("Albedo", m_color))
+		if (ImGui::ColorEdit3("Albedo", (float *)&m_ubm.albedo))
 		{
-			setColor(Vector3(m_color[0], m_color[1], m_color[2]));
+			updateUniformBufferMaterial();
 		}
-		if (ImGui::DragFloat2("Offset", m_offset,0.2f))
+		if (ImGui::DragFloat2("Offset", (float *)&m_ubm.offset,0.2f))
 		{
-			setOffset(Vector2(m_offset[0], m_offset[1]));
+			updateUniformBufferMaterial();
 		}
 		ImGui::DragFloat("Specular", &m_ubm.metallic,0.2f);
 		ImGui::DragFloat("Normal", &m_ubm.normal, 0.2f);

@@ -14,19 +14,16 @@ namespace Ge
     public:
         bool initialize(VulkanMisc *vM);
         void release();
-        Material *createMaterial();
-        void destroyMaterial(Material *material);
+        Materials *createMaterial();
+        void destroyMaterial(Materials *material);
 		static void InitDescriptor(VulkanMisc * vM);
 		static Descriptor* GetDescriptor();
     private:
         void updateDescriptor();
 
     private:
-        std::map<Material *, Materials *> m_materials;
+        std::vector<Materials *> m_materials;
         VulkanMisc *vulkanM;
-
-    private:
-		friend class Materials;
         static Descriptor *m_descriptor;
     };
 }
