@@ -5,7 +5,6 @@
 
 namespace Ge
 {
-	Descriptor * ModelManager::m_descriptor = nullptr;
 	std::vector<Model *> ModelManager::m_models;
 	bool ModelManager::initiliaze(VulkanMisc *vM)
 	{
@@ -87,9 +86,18 @@ namespace Ge
 
 	void ModelManager::destroyBuffer(ShapeBuffer *buffer)
 	{
+		for (int i = 0; i < m_models.size(); i++)
+		{
+			if (m_models[i]->getShapeBuffer() == buffer)
+			{
+				Model * m = m_models[i];
+				m_models.erase(std::remove(m_models.begin(), m_models.end(), m), m_models.end());
+				delete (m);
+				i--;
+			}
+		}
 		m_shapeBuffers.erase(std::remove(m_shapeBuffers.begin(), m_shapeBuffers.end(), buffer), m_shapeBuffers.end());
-        delete (buffer);
-		//TODO detruire les models Lier au buffer
+        delete (buffer);		
 		updateDescriptor();
 	}
 
@@ -98,14 +106,12 @@ namespace Ge
 		return m_models;
 	}
 
-	void ModelManager::InitDescriptor(VulkanMisc * vM)
+	void ModelManager::initDescriptor(VulkanMisc * vM)
 	{
-		ModelManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
-	}
-
-	Descriptor* ModelManager::GetDescriptor()
-	{
-		return ModelManager::m_descriptor;
+		if (m_descriptor == nullptr)
+		{
+			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+		}
 	}
 
 	ShapeBuffer *ModelManager::allocateBuffer(const char *path)

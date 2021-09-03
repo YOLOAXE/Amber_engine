@@ -17,7 +17,14 @@ namespace Ge
         {
             Debug::Error("ptrClass nullptr RenderingEngine");
             return false;
-        }
+        }		
+		m_ptrClass = p_ptrClass;
+		p_ptrClass->cameraManager = &m_cameraManager;		
+		p_ptrClass->lightManager = &m_lightManager;
+		p_ptrClass->materialManager = &m_materialManager;
+		p_ptrClass->modelManager = &m_modelManager;
+		p_ptrClass->textureManager = &m_textureManager;
+		p_ptrClass->hud = &m_hud;
         Debug::Info("Initialisation du moteur de rendu");
         if (!RenderingEngine::m_window.initialize(p_ptrClass->settingManager->getWindowWidth(), p_ptrClass->settingManager->getWindowHeight(), p_ptrClass->settingManager->getName(), &m_vulkanMisc))
         {
@@ -59,11 +66,12 @@ namespace Ge
             Debug::INITFAILED("BufferManager");
             return false;
         }
-        if (!RenderingEngine::m_swapChain.initialize(&m_vulkanMisc))
+        if (!RenderingEngine::m_swapChain.initialize(&m_vulkanMisc, p_ptrClass,&m_shaderUniformBufferDivers))
         {
             Debug::INITFAILED("SwapChain");
             return false;
         }
+		m_vulkanMisc.str_VulkanSwapChainMisc->swapChainRecreate = &m_swapChain;
         if (!RenderingEngine::m_colorResources.initialize(&m_vulkanMisc))
         {
             Debug::INITFAILED("ColorResources");
@@ -104,12 +112,12 @@ namespace Ge
             Debug::INITFAILED("LightManager");
             return false;
         }
-        if (!RenderingEngine::m_shaderUniformBufferDivers.initialize(&m_vulkanMisc))
+        if (!RenderingEngine::m_shaderUniformBufferDivers.initialize(&m_vulkanMisc, p_ptrClass->settingManager))
         {
             Debug::INITFAILED("ShaderUniformBufferDivers");
             return false;
         }
-        if (!RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc)) 
+        if (!RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, p_ptrClass, &m_shaderUniformBufferDivers))
 		{
             Debug::INITFAILED("CommandBuffer");
             return false;
@@ -155,8 +163,35 @@ namespace Ge
         Debug::RELEASESUCCESS("RenderingEngine");
     }
 
+	void RenderingEngine::recreateSwapChain()
+	{
+		int width = 0, height = 0;
+		glfwGetFramebufferSize(m_vulkanDeviceMisc.str_window, &width, &height);
+		while (width == 0 || height == 0)
+		{
+			glfwGetFramebufferSize(m_vulkanDeviceMisc.str_window, &width, &height);
+			glfwWaitEvents();
+		}
+		m_ptrClass->settingManager->setWindowHeight(height);
+		m_ptrClass->settingManager->setWindowWidth(width);
+		vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);
+		RenderingEngine::m_commandBuffer.release();
+		RenderingEngine::m_frameBuffers.release();
+		RenderingEngine::m_depthResources.release();
+		RenderingEngine::m_colorResources.release();
+		m_swapChain.release();
+		m_swapChain.initialize(&m_vulkanMisc, m_ptrClass, &m_shaderUniformBufferDivers);
+		RenderingEngine::m_colorResources.initialize(&m_vulkanMisc);
+		RenderingEngine::m_depthResources.initialize(&m_vulkanMisc);
+		RenderingEngine::m_frameBuffers.initialize(&m_vulkanMisc);
+		RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass, &m_shaderUniformBufferDivers);
+		m_hud.recreateSwapChain();
+	}
+
     void RenderingEngine::drawFrame()
     {
+		m_cameraManager.updateFlyCam();
+		m_shaderUniformBufferDivers.updateUniformBufferDiver();
 		vkWaitForFences(m_vulkanDeviceMisc.str_device, 1, &m_syncObjects.m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
 
 		uint32_t imageIndex;
@@ -164,19 +199,13 @@ namespace Ge
 
 		if (result == VK_ERROR_OUT_OF_DATE_KHR)
 		{
-			//TODO recreate Swap chain
+			RenderingEngine::recreateSwapChain();
 			return;
 		}
 		else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 		{
 			Debug::Error("Echec l'or de l'optention d'une image de la swap chain");
-		}
-
-		//TODO update la fly camera ?
-		//TODO maj model ?
-		//TODO maj Material ubo ?
-		//TODO maj shaderDiver ubo ?
-		//TODO maj light ubo ?
+		}		
 				
 		if (m_syncObjects.m_imagesInFlight[imageIndex] != VK_NULL_HANDLE)
 		{
@@ -221,7 +250,6 @@ namespace Ge
 		VkSwapchainKHR swapChains[] = { m_vulkanSwapChainMisc.str_swapChain };
 		presentInfo.swapchainCount = 1;
 		presentInfo.pSwapchains = swapChains;
-
 		presentInfo.pImageIndices = &imageIndex;
 
 		result = vkQueuePresentKHR(m_windowSurface.getPresentQueue(), &presentInfo);
@@ -229,7 +257,7 @@ namespace Ge
 		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || m_window.framebufferResized)
 		{
 			m_window.framebufferResized = false;
-			//TODO recreate swapChain
+			RenderingEngine::recreateSwapChain();
 		}
 		else if (result != VK_SUCCESS)
 		{

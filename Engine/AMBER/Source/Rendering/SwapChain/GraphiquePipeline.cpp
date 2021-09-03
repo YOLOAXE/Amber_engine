@@ -2,11 +2,12 @@
 
 namespace Ge
 {
-	GraphiquePipeline::GraphiquePipeline(VulkanMisc *vM, std::string FragFile, std::string VertFile)
+	GraphiquePipeline::GraphiquePipeline(VulkanMisc *vM, ShaderPair * sp)
 	{
 		vulkanM = vM;
-		ShaderElement VertShader = LoadShader(VertFile, "main", vM->str_VulkanDeviceMisc->str_device, true,vM);
-		ShaderElement FragShader = LoadShader(FragFile, "main", vM->str_VulkanDeviceMisc->str_device, false,vM);
+		m_sahderPair = sp;
+		ShaderElement VertShader = LoadShader(sp->Vert, "main", vM->str_VulkanDeviceMisc->str_device, true,vM);
+		ShaderElement FragShader = LoadShader(sp->Frag, "main", vM->str_VulkanDeviceMisc->str_device, false,vM);
 		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
 		shaderStages[0] = VertShader.shaderStageCreateInfo;
 		shaderStages[1] = FragShader.shaderStageCreateInfo;
@@ -145,6 +146,11 @@ namespace Ge
 	int GraphiquePipeline::getIndex()
 	{
 		return m_index;
+	}
+
+	ShaderPair * GraphiquePipeline::getShaderPair()
+	{
+		return m_sahderPair;
 	}
 
 	GraphiquePipeline::~GraphiquePipeline()

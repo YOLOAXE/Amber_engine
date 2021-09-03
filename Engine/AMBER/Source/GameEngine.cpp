@@ -6,6 +6,7 @@ namespace Ge
 	{
 		m_pointeurClass.settingManager = &m_settingManager;
 		m_pointeurClass.inputManager = &m_inputManager;
+		m_pointeurClass.time = &m_time;
 	}
 
 	ptrClass GameEngine::getPtrClass()

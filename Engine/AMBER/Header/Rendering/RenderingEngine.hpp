@@ -34,6 +34,7 @@ namespace Ge
         bool initialize(ptrClass * p_ptrClass);
         void release();
         void drawFrame();
+		void recreateSwapChain();
         VulkanMisc * getVulkanMisc();
     private:
         VulkanMisc m_vulkanMisc;
@@ -42,6 +43,7 @@ namespace Ge
         VulkanDescriptor m_VulkanDescriptor;
         VulkanCommandeBufferMisc m_VulkanCommandeBufferMisc;
 		VulkanSynchronisation m_VulkanSynchronisation;
+		ptrClass * m_ptrClass;
 
         Window m_window;
         ValidationLayer m_validationLayer;

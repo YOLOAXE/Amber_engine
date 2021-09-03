@@ -17,11 +17,11 @@ namespace Ge
         void release();
 		GraphiquePipeline * createPipeline(const std::string & frag,const std::string & vert);
         void destroyPipeline(GraphiquePipeline * pipeline);
-		static std::vector<GraphiquePipeline * > GetPipelines();
+		static std::vector<GraphiquePipeline *> GetPipelines();
     private:
         VulkanMisc *vulkanM;        
         std::vector<ShaderPair *> m_fileNameShaders;        
-        static std::vector<GraphiquePipeline * > m_graphiquePipeline;
+        static std::vector<GraphiquePipeline *> m_graphiquePipeline;
 
     };
 }

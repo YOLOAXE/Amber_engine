@@ -17,10 +17,7 @@
 namespace Ge
 {
 	class Camera : public GObject
-	{
-	private:
-		friend class CameraManager;
-		void updatePerspective();
+	{		
 	public:
 		Camera(VulkanMisc * vM);
 		~Camera();
@@ -37,6 +34,8 @@ namespace Ge
 		VkBuffer getUniformBuffer();
 		glm::mat4 getView();
 		glm::mat4 getProjection();
+	private:
+		void updatePerspective();
 	private:
 		VulkanMisc * vulkanM;
 		UniformBufferCamera m_uniformBufferCamera;

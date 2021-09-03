@@ -2,7 +2,6 @@
 
 namespace Ge
 {
-	Descriptor * TextureManager::m_descriptor = nullptr;
     bool TextureManager::initiliaze(VulkanMisc *vM)
     {
         vulkanM = vM;
@@ -45,14 +44,12 @@ namespace Ge
         Debug::RELEASESUCCESS("TextureManager");
     }
 
-	void TextureManager::InitDescriptor(VulkanMisc * vM)
+	void TextureManager::initDescriptor(VulkanMisc * vM)
 	{
-		TextureManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1);
-	}
-
-	Descriptor* TextureManager::GetDescriptor()
-	{
-		return TextureManager::m_descriptor;
+		if (m_descriptor == nullptr)
+		{
+			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1);
+		}
 	}
 
     Textures *TextureManager::createTexture(const char *path)

@@ -3,43 +3,46 @@
 
 namespace Ge
 {
-	Descriptor * ShaderUniformBufferDivers::m_descriptor = nullptr;
-    bool ShaderUniformBufferDivers::initialize(VulkanMisc * vM)
+    bool ShaderUniformBufferDivers::initialize(VulkanMisc * vM, SettingManager * sM)
 	{
         vulkanM = vM;		
+		settingM = sM;
 		if (!BufferManager::createBuffer(sizeof(UniformBufferDiver), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM->str_VulkanDeviceMisc))
 		{
 			Debug::Error("Echec de la creation d'un uniform buffer Diver");
 			return false;
 		}
-		std::vector<VkDescriptorBufferInfo> bufferInfo;
-        VkDescriptorBufferInfo bufferI{};
-        bufferI.buffer = m_vmaUniformBuffer.buffer;
-        bufferI.offset = 0;
-        bufferI.range = sizeof(UniformBufferDiver);
-        bufferInfo.push_back(bufferI);        
-        m_descriptor->updateCount(vM,1,bufferInfo);  		
+		updateDescriptor();
         Debug::INITSUCCESS("UniformBufferDiver");
 		return true;
 	}
 
-	void ShaderUniformBufferDivers::updateUniformBufferDiver()//TODO update que si il y a un des elements qui change
+	void ShaderUniformBufferDivers::updateUniformBufferDiver()
 	{		
 		m_ubd.maxLight = vulkanM->str_VulkanDescriptor->lightCount;
 		m_ubd.u_time = Time::GetTime();
-		m_ubd.gamma = 1.0f;//settingM->getGamma(); //TODO ajouter le gamma	
+		m_ubd.gamma = settingM->getGamma();
 		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubd, sizeof(m_ubd));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
-	void ShaderUniformBufferDivers::InitDescriptor(VulkanMisc * vM)
+	void ShaderUniformBufferDivers::initDescriptor(VulkanMisc * vM)
 	{
-		ShaderUniformBufferDivers::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+		if (m_descriptor == nullptr)
+		{
+			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+		}
 	}
 
-	Descriptor* ShaderUniformBufferDivers::GetDescriptor()
-	{
-		return ShaderUniformBufferDivers::m_descriptor;
+	void ShaderUniformBufferDivers::updateDescriptor()
+	{ 
+		std::vector<VkDescriptorBufferInfo> bufferInfo;
+		VkDescriptorBufferInfo bufferI{};
+		bufferI.buffer = m_vmaUniformBuffer.buffer;
+		bufferI.offset = 0;
+		bufferI.range = sizeof(UniformBufferDiver);
+		bufferInfo.push_back(bufferI);
+		m_descriptor->updateCount(vulkanM, 1, bufferInfo);
 	}
 
 	void ShaderUniformBufferDivers::release()

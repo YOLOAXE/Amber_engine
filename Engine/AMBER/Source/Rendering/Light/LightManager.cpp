@@ -2,7 +2,6 @@
 
 namespace Ge
 {
-	Descriptor * LightManager::m_descriptor = nullptr;
     bool LightManager::initialize(VulkanMisc *vM)
     {
         vulkanM = vM;
@@ -55,6 +54,7 @@ namespace Ge
 
 	void LightManager::destroyLight(Lights * light)
 	{
+		//TODO faire la conversion si erreur
 		m_lights.erase(std::remove(m_lights.begin(), m_lights.end(), light), m_lights.end());
         delete(light);
 		vulkanM->str_VulkanDescriptor->lightCount = m_lights.size();
@@ -97,14 +97,12 @@ namespace Ge
 		m_descriptor->updateCount(vulkanM, m_lights.size(),bufferInfoLight);
 	}
 
-	void LightManager::InitDescriptor(VulkanMisc * vM) 
+	void LightManager::initDescriptor(VulkanMisc * vM) 
 	{
-		LightManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
-	}
-
-	Descriptor* LightManager::GetDescriptor()
-	{
-		return LightManager::m_descriptor;
+		if (m_descriptor == nullptr)
+		{
+			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+		}
 	}
 
 	void LightManager::majIndex()

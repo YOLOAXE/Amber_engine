@@ -41,7 +41,7 @@ namespace Ge
 		bool m_flipY = false;
 		bool m_inversePos = true;
 		Transform m_transform{};
-		std::vector<Component *> m_Component;
+		std::vector<Component *> m_component;
 	};
 }
 

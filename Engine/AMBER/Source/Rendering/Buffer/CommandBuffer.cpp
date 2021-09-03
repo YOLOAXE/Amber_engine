@@ -1,16 +1,10 @@
 #include "CommandBuffer.hpp"
 #include "GraphiquePipelineManager.hpp"
-#include "CameraManager.hpp"
-#include "TextureManager.hpp"
-#include "ModelManager.hpp"
-#include "MaterialManager.hpp"
-#include "LightManager.hpp"
-#include "ShaderUniformBufferDivers.hpp"
 
 namespace Ge
 {
 
-	bool CommandBuffer::initialize(VulkanMisc * vM)
+	bool CommandBuffer::initialize(VulkanMisc * vM,ptrClass * ptrC, ShaderUniformBufferDivers * sUBD)
 	{
 		vulkanM = vM;
 		std::vector<VkFramebuffer> swapChainFramebuffers = vM->str_VulkanCommandeBufferMisc->str_swapChainFramebuffers;
@@ -20,12 +14,12 @@ namespace Ge
 		tab_Descriptor.resize(vM->str_VulkanSwapChainMisc->str_swapChainImages.size());
 		for (int i = 0; i < vM->str_VulkanSwapChainMisc->str_swapChainImages.size(); i++)
 		{
-			tab_Descriptor[i].push_back(CameraManager::GetDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(TextureManager::GetDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(ModelManager::GetDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(MaterialManager::GetDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(LightManager::GetDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(ShaderUniformBufferDivers::GetDescriptor()->getDescriptorSets()[i]);
+			tab_Descriptor[i].push_back(ptrC->cameraManager->getDescriptor()->getDescriptorSets()[i]);
+			tab_Descriptor[i].push_back(ptrC->textureManager->getDescriptor()->getDescriptorSets()[i]);
+			tab_Descriptor[i].push_back(ptrC->modelManager->getDescriptor()->getDescriptorSets()[i]);
+			tab_Descriptor[i].push_back(ptrC->materialManager->getDescriptor()->getDescriptorSets()[i]);
+			tab_Descriptor[i].push_back(ptrC->lightManager->getDescriptor()->getDescriptorSets()[i]);
+			tab_Descriptor[i].push_back(sUBD->getDescriptor()->getDescriptorSets()[i]);
 		}
 		m_commandBuffers.resize(swapChainFramebuffers.size());
 
@@ -45,7 +39,7 @@ namespace Ge
 		{
 			VkCommandBufferBeginInfo beginInfo{};
 			beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-
+			std::vector<Model *> all_models = ModelManager::GetModels();
 			if (vkBeginCommandBuffer(m_commandBuffers[i], &beginInfo) != VK_SUCCESS)
 			{
 				Debug::Error("Echec de l'enregistrer du commande buffer");

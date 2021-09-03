@@ -4,6 +4,8 @@
 #include "VulkanMisc.hpp"
 #include "BufferManager.hpp"
 #include <array>
+#include "PointeurClass.hpp"
+#include "ShaderUniformBufferDivers.hpp"
 
 namespace Ge
 {
@@ -11,7 +13,7 @@ namespace Ge
     {
     private:
         friend class RenderingEngine;
-        bool initialize(VulkanMisc * vM);
+        bool initialize(VulkanMisc * vM,ptrClass * ptrC, ShaderUniformBufferDivers * sUBD);
         void release();
     private:
         VulkanMisc * vulkanM;

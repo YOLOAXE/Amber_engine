@@ -1,4 +1,3 @@
-
 #include "GraphiquePipelineManager.hpp"
 
 namespace Ge
@@ -22,6 +21,7 @@ namespace Ge
 	{
 		for (int i = 0; i < m_graphiquePipeline.size();i++)
 		{
+			m_fileNameShaders.push_back(m_graphiquePipeline[i]->getShaderPair());
 			delete (m_graphiquePipeline[i]);
 		}
 		m_graphiquePipeline.clear();
@@ -30,9 +30,8 @@ namespace Ge
 	GraphiquePipeline * GraphiquePipelineManager::createPipeline(const std::string &frag, const std::string &vert)
 	{
 		ShaderPair * sp = new ShaderPair(frag, vert);
-		GraphiquePipeline * gp = new GraphiquePipeline(vulkanM, frag, vert);
-		m_graphiquePipeline.push_back(gp);		
-		m_fileNameShaders.push_back(sp);
+		GraphiquePipeline * gp = new GraphiquePipeline(vulkanM, sp);
+		m_graphiquePipeline.push_back(gp);				
 		return gp;
 	}
 
@@ -44,7 +43,6 @@ namespace Ge
 	void GraphiquePipelineManager::destroyPipeline(GraphiquePipeline * pipeline)
 	{
 		m_graphiquePipeline.erase(std::remove(m_graphiquePipeline.begin(), m_graphiquePipeline.end(), pipeline), m_graphiquePipeline.end());
-		//TODO suprimer les shader pair
 		delete (pipeline);
 	}
 }

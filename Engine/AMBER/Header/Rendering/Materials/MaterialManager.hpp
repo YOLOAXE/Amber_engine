@@ -3,28 +3,24 @@
 
 #include "Debug.hpp"
 #include "VulkanMisc.hpp"
-#include "Descriptor.hpp"
+#include "Manager.hpp"
 #include "Materials.hpp"
 #include <map>
 
 namespace Ge
 {
-    class MaterialManager
+    class MaterialManager : public Manager
     {
     public:
         bool initialize(VulkanMisc *vM);
         void release();
         Materials *createMaterial();
         void destroyMaterial(Materials *material);
-		static void InitDescriptor(VulkanMisc * vM);
-		static Descriptor* GetDescriptor();
-    private:
-        void updateDescriptor();
-
+		void initDescriptor(VulkanMisc * vM);
+		void updateDescriptor();            
     private:
         std::vector<Materials *> m_materials;
-        VulkanMisc *vulkanM;
-        static Descriptor *m_descriptor;
+        VulkanMisc *vulkanM;        
     };
 }
 

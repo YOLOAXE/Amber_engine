@@ -3,12 +3,26 @@
 
 #include "SettingManager.hpp"
 #include "InputManager.hpp"
+#include "Time.hpp"
+#include "ModelManager.hpp"
+#include "TextureManager.hpp"
+#include "LightManager.hpp"
+#include "CameraManager.hpp"
+#include "MaterialManager.hpp"
+#include "Hud.hpp"
 using namespace Ge;
 
 struct ptrClass
 {
 	SettingManager * settingManager;
     InputManager * inputManager;	
+	Time * time;
+	ModelManager * modelManager;
+	TextureManager * textureManager;
+	LightManager * lightManager;
+	CameraManager * cameraManager;
+	MaterialManager * materialManager;
+	Hud * hud;	
 };
 
 #endif //__ENGINE_POINTEUR_CLASS__

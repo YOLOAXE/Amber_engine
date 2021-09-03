@@ -6,11 +6,11 @@
 #include "PointLight.hpp"
 #include "SpotLight.hpp"
 #include "DirectionalLight.hpp"
-#include "Descriptor.hpp"
+#include "Manager.hpp"
 
 namespace Ge
 {
-    class LightManager
+    class LightManager : public Manager
     {
     public:
         bool initialize(VulkanMisc *vM);
@@ -21,13 +21,11 @@ namespace Ge
         void destroyLight(Lights *light);
         void updateDescriptor();
         void majIndex();
-		static void InitDescriptor(VulkanMisc * vM);
-		static Descriptor* GetDescriptor();
+		void initDescriptor(VulkanMisc * vM);
     private:
         VulkanMisc *vulkanM;
         std::vector<Lights *> m_lights;
         VmaBuffer m_vmaUniformBuffers;
-        static Descriptor * m_descriptor;
     };
 }
 

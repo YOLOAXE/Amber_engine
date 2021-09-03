@@ -9,25 +9,27 @@
 #include "ShaderElement.hpp"
 #include "VertexVulkan.hpp"
 #include <algorithm>
-#include "PushConstants.hpp"
+#include "PushConstants.hpp"        
+#include "ShaderPair.hpp"
 
 namespace Ge
 {
     class GraphiquePipeline
     {
     public:
-        GraphiquePipeline(VulkanMisc *vM, std::string FragFile, std::string VertFile);
+        GraphiquePipeline(VulkanMisc *vM, ShaderPair * sp);
         ~GraphiquePipeline();
-
+		int getIndex();
+		ShaderPair * getShaderPair();
     private:
         static ShaderElement LoadShader(const std::string &filename, const char *entry, VkDevice device, bool isVertex,VulkanMisc * vM);
         static void DestroyShaderElement(VkDevice device, ShaderElement se);
         static std::vector<char> readFile(const std::string &filename);
         static VkShaderModule createShaderModule(const std::vector<char> &code, VkDevice device);
     public:
-        GraphiquePipelineElement m_graphiquePipelineElement;
-		int getIndex();
+        GraphiquePipelineElement m_graphiquePipelineElement;		
     private:
+		ShaderPair * m_sahderPair;
         VulkanMisc *vulkanM;
 		int m_index;
     };

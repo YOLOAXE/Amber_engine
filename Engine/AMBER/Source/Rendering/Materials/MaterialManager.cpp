@@ -2,7 +2,6 @@
 
 namespace Ge
 {
-	Descriptor * MaterialManager::m_descriptor = nullptr;
     bool MaterialManager::initialize(VulkanMisc *vM)
     {
         vulkanM = vM;
@@ -53,13 +52,12 @@ namespace Ge
         Debug::RELEASESUCCESS("MaterialManager");
     }
 
-	void MaterialManager::InitDescriptor(VulkanMisc * vM)
+	void MaterialManager::initDescriptor(VulkanMisc * vM)
 	{
-		MaterialManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+		if (m_descriptor == nullptr)
+		{
+			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+		}
 	}
 
-	Descriptor* MaterialManager::GetDescriptor()
-	{
-		return MaterialManager::m_descriptor;
-	}
 }

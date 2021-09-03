@@ -5,24 +5,24 @@
 #include "VulkanMisc.hpp"
 #include "UniformBufferDiver.hpp"
 #include "BufferManager.hpp"
-#include "Descriptor.hpp"
+#include "Manager.hpp"
+#include "SettingManager.hpp"
 
 namespace Ge
 {
-	class ShaderUniformBufferDivers
+	class ShaderUniformBufferDivers : public Manager
 	{
 	public:
-		bool initialize(VulkanMisc *vM);
+		bool initialize(VulkanMisc *vM, SettingManager * sM);
 		void release();
 		void updateUniformBufferDiver();
-		static void InitDescriptor(VulkanMisc * vM);
-		static Descriptor* GetDescriptor();
-
+		void initDescriptor(VulkanMisc * vM);
+		void updateDescriptor();
 	private:
-		VulkanMisc *vulkanM;
+		SettingManager * settingM;
+		VulkanMisc * vulkanM;
 		UniformBufferDiver m_ubd;
 		VmaBuffer m_vmaUniformBuffer;
-		static Descriptor * m_descriptor;
 	};
 }
 

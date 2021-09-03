@@ -3,27 +3,26 @@
 
 #include "VulkanMisc.hpp"
 #include "Debug.hpp"
-#include "Descriptor.hpp"
+#include "Manager.hpp"
 #include "UniformBufferCamera.hpp"
 #include "FlyCamera.hpp"
 #include <map>
 
 namespace Ge
 {
-    class CameraManager
+    class CameraManager : public Manager
     {
     public:
         bool initialize(VulkanMisc *vM, InputManager *input);
         void release();
         Camera *createCamera(std::string name = "Camera");
-        void releaseCamera(Camera *camera);
-        void updateAspectRatio();
-        static void updatePriorityCamera();
+        void releaseCamera(Camera *camera);      
         Camera *getCurrentCamera();
-		static void InitDescriptor(VulkanMisc * vM);
-		static Descriptor* GetDescriptor();        
-    private:
-		static Descriptor * m_descriptor;
+		void updateFlyCam();
+		void initDescriptor(VulkanMisc * vM);
+		void updateDescriptor();
+		static void updatePriorityCamera();
+    private:		
         static std::vector<Camera *> m_cameras;
         static Camera *currentCamera;
         VulkanMisc * vulkanM;        

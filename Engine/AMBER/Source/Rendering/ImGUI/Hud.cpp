@@ -142,7 +142,7 @@ namespace Ge
 		init_info.Device = vM->str_VulkanDeviceMisc->str_device;
 		init_info.QueueFamily = PhysicalDevices::getCountQueueFamily(vM->str_VulkanDeviceMisc->str_physicalDevice);
 		init_info.Queue = vM->str_VulkanDeviceMisc->str_graphicsQueue;
-		init_info.PipelineCache = VK_NULL_HANDLE;// vM->str_VulkanSwapChainMisc->str_graphicsPipelineCache; //TODO a verifier 
+		init_info.PipelineCache = VK_NULL_HANDLE;
 		init_info.DescriptorPool = m_imGuiDescriptorPool;
 		init_info.Allocator = nullptr;
 		init_info.MinImageCount = vM->str_VulkanSwapChainMisc->str_imageCount - 1;

@@ -7,12 +7,12 @@
 #include "ShapeBuffer.hpp"
 #include "Model.hpp"
 #include <unordered_map>
-#include "Descriptor.hpp"
+#include "Manager.hpp"
 #include "UniformBufferObject.hpp"
 
 namespace Ge
 {
-    class ModelManager
+    class ModelManager : public Manager
     {
     public:
         bool initiliaze(VulkanMisc *vM);
@@ -22,15 +22,13 @@ namespace Ge
         void destroyModel(Model *model);
         void destroyBuffer(ShapeBuffer *buffer);
         void updateDescriptor();
-		static void InitDescriptor(VulkanMisc * vM);
-		static Descriptor* GetDescriptor();
+		void initDescriptor(VulkanMisc * vM) override;
 		static std::vector<Model *> GetModels();
     private:
 		static std::vector<Model *> m_models;
         std::vector<ShapeBuffer *> m_shapeBuffers;        
         VmaBuffer m_vmaUniformBuffers;
         VulkanMisc *vulkanM;
-        static Descriptor *m_descriptor;
     };
 }
 

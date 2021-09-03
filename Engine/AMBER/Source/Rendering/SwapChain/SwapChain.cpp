@@ -3,7 +3,7 @@
 
 namespace Ge
 {
-	bool SwapChain::initialize(VulkanMisc *vM)
+	bool SwapChain::initialize(VulkanMisc *vM, ptrClass * ptrC, ShaderUniformBufferDivers * sUBD)
 	{
 		vulkanM = vM;
 		VkPhysicalDevice physicalDevice = vM->str_VulkanDeviceMisc->str_physicalDevice;								//On recupere le PhysicalDevices
@@ -18,7 +18,6 @@ namespace Ge
 			m_imageCount = swapChainSupport.capabilities.maxImageCount;
 		}
 		VkSurfaceKHR surfaceKHRW = vM->str_VulkanDeviceMisc->str_surface;
-		VkSwapchainCreateInfoKHR createInfo{}; // creation de la structure de donner pour la SwapchainKHR
 		createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		createInfo.surface = surfaceKHRW;
 
@@ -82,17 +81,17 @@ namespace Ge
 			Debug::INITFAILED("RenderPass");
 			return false;
 		}
-		if (!SwapChain::m_descriptorLayoutManager.initialize(vM))
-		{
-			Debug::INITFAILED("DescriptorLayoutManager");
-			return false;
-		}
+		ptrC->cameraManager->initDescriptor(vM);
+		ptrC->textureManager->initDescriptor(vM);
+		ptrC->modelManager->initDescriptor(vM);
+		ptrC->materialManager->initDescriptor(vM);
+		ptrC->lightManager->initDescriptor(vM);
+		sUBD->initDescriptor(vM);
 		if (!SwapChain::initPipeline())
 		{
 			Debug::INITFAILED("InitializeLayout");
 			return false;
 		}
-
 		Debug::INITSUCCESS("SwapChain");
 		return true;
 	}
@@ -105,6 +104,12 @@ namespace Ge
 			return false;
 		}
 		return true;
+	}
+
+	void SwapChain::recreatePipeline()
+	{
+		m_graphiquePipelineManager.release();
+		m_graphiquePipelineManager.initialize(vulkanM);
 	}
 
 	void SwapChain::releasePipeline()
@@ -121,6 +126,7 @@ namespace Ge
 			delete (m_swapChainImagesView[i]);
 		}
 		m_swapChainImagesView.clear();
+		vulkanM->str_VulkanSwapChainMisc->str_swapChainImageViews.clear();
 		vkDestroySwapchainKHR(vulkanM->str_VulkanDeviceMisc->str_device, m_swapChain, nullptr);
 		Debug::RELEASESUCCESS("SwapChain");
 	}

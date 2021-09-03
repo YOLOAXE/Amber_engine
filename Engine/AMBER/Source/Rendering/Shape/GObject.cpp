@@ -155,11 +155,12 @@ namespace Ge
 
 	void GObject::addComponent(Component *c)
 	{
-		//TODO Component
+		m_component.push_back(c);
 	}
 
 	void GObject::removeComponent(Component *c)
 	{
+		//m_component.erase(std::remove(m_component.begin(), m_component.end(), c), m_component.end()); //TODO  wtf
 	}
 
 	void GObject::onGUI()
@@ -184,12 +185,9 @@ namespace Ge
 			setScale(m_transform.scale);
 		}
 
-		if (m_Component.size() > 0)
+		for (Component *comp : m_component)
 		{
-			for (Component *comp : m_Component)
-			{
-				comp->onGUI();
-			}
+			comp->onGUI();
 		}
 	}
 }

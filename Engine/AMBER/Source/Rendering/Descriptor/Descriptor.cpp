@@ -2,13 +2,12 @@
 
 namespace Ge
 {
-	static int test = 0;
     Descriptor::Descriptor(VulkanMisc *vM, VkDescriptorType descriptorType, int baseCount)
     {
         m_count = baseCount;                
         vulkanM = vM;
         m_descriptorType = descriptorType;
-        m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,baseCount,descriptorType);
+        m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,baseCount,descriptorType); //TODO swapchain image X3 a verifier si X1 fonctionne 
         m_DescriptorPool = createVkDescriptorPool(vM,baseCount,descriptorType); 
         m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);        
     }
@@ -64,12 +63,13 @@ namespace Ge
     {
         if(m_count != count)
         {
+			destroyVkDescriptorSet(vulkanM, m_DescriptorSets, m_DescriptorPool);
             destroyVkDescriptorPool(vulkanM,m_DescriptorPool);
             destroyVkVkDescriptorSetLayout(vulkanM,m_DescriptorSetLayout);
             m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,count,m_descriptorType);
             m_DescriptorPool = createVkDescriptorPool(vM,count,m_descriptorType);
             m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool); 
-            //TODO Update le GraphiquePipeline              
+			vM->str_VulkanSwapChainMisc->swapChainRecreate->recreatePipeline();
         }
         m_count = count;
         VkWriteDescriptorSet descriptorWrites{};

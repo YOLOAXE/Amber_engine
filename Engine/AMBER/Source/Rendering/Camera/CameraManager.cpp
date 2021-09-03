@@ -2,23 +2,15 @@
 
 namespace Ge
 {
-	Descriptor * CameraManager::m_descriptor = nullptr;	
-	Camera *CameraManager::currentCamera = nullptr;
 	std::vector<Camera *> CameraManager::m_cameras;
-
+	Camera *CameraManager::currentCamera = nullptr;
     bool CameraManager::initialize(VulkanMisc *vM, InputManager *im)
     {        
         vulkanM = vM;
         m_flyCamera = new FlyCamera(vM, im);        
 		m_cameras.push_back((Camera *)m_flyCamera);
         CameraManager::updatePriorityCamera(); 
-        std::vector<VkDescriptorBufferInfo> bufferInfo;
-        VkDescriptorBufferInfo bufferI{};
-        bufferI.buffer = currentCamera->getUniformBuffer();
-        bufferI.offset = 0;
-        bufferI.range = sizeof(UniformBufferCamera);
-        bufferInfo.push_back(bufferI);
-        m_descriptor->updateCount(vM,1,bufferInfo);               
+		updateDescriptor();
 		Debug::INITSUCCESS("CameraManager");
         return true;
     }
@@ -31,6 +23,14 @@ namespace Ge
 		CameraManager::updatePriorityCamera();
 		return cam;
     }
+
+	void CameraManager::updateFlyCam()
+	{
+		if (currentCamera == (Camera *)m_flyCamera)
+		{
+			m_flyCamera->updateCamera();
+		}
+	}
     
     void CameraManager::releaseCamera(Camera *camera)
     {
@@ -38,10 +38,7 @@ namespace Ge
         delete (camera);
         CameraManager::updatePriorityCamera();
     }
-    void CameraManager::updateAspectRatio()
-    {
-        currentCamera->updatePerspective();
-    }
+
     void CameraManager::updatePriorityCamera()
     {
         int minimum = INT_MAX;
@@ -52,8 +49,7 @@ namespace Ge
 				minimum = m_cameras[i]->getPriority();
 				currentCamera = m_cameras[i];
 			}
-		}
-        currentCamera->updatePerspective();        
+		}    
     }
 
     Camera *CameraManager::getCurrentCamera()
@@ -61,14 +57,23 @@ namespace Ge
         return currentCamera;
     }
 
-	void CameraManager::InitDescriptor(VulkanMisc * vM)
+	void CameraManager::initDescriptor(VulkanMisc * vM)
 	{
-		CameraManager::m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+		if (m_descriptor == nullptr)
+		{
+			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+		}
 	}
 
-	Descriptor* CameraManager::GetDescriptor()
+	void CameraManager::updateDescriptor()
 	{
-		return CameraManager::m_descriptor;
+		std::vector<VkDescriptorBufferInfo> bufferInfo;
+		VkDescriptorBufferInfo bufferI{};
+		bufferI.buffer = currentCamera->getUniformBuffer();
+		bufferI.offset = 0;
+		bufferI.range = sizeof(UniformBufferCamera);
+		bufferInfo.push_back(bufferI);
+		m_descriptor->updateCount(vulkanM, 1, bufferInfo);
 	}
 
     void CameraManager::release()

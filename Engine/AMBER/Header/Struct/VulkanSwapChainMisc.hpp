@@ -6,6 +6,7 @@
 #include <vector>
 #include "GraphiquePipelineElement.hpp"
 #include <map>
+#include "SwapChainRecreate.hpp"
 
 struct VulkanSwapChainMisc
 {
@@ -22,6 +23,7 @@ struct VulkanSwapChainMisc
     VkSurfaceFormatKHR str_surfaceFormatKHR;
     VkPresentModeKHR str_presentModeKHR;
     uint32_t str_imageCount;
+	SwapChainRecreate * swapChainRecreate;
 };
 
 #endif //__ENGINE_VULKAN_SWAP_CHAIN_MISC__
