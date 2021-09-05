@@ -7,6 +7,9 @@
 #include "imgui-cmake/Header/imgui_impl_vulkan.h"
 #include "imgui-cmake/Header/imgui_impl_glfw.h"
 #include "VulkanMisc.hpp"
+#include "EngineInfo.hpp"
+#include "Hiearchy.hpp"
+#include "Console.hpp"
 #include <array>
 #include <vector>
 
@@ -14,6 +17,8 @@ namespace Ge
 {
 	class Hud
 	{
+	public:
+		Hud();
 	public:
 		friend class RenderingEngine;
 		bool initialize(VulkanMisc* vM);
@@ -31,6 +36,10 @@ namespace Ge
 		VkRenderPass m_imGuiRenderPass;
 		ImGui_ImplVulkanH_Window* m_vWindow;
 		VkCommandPool m_imGuiCommandPools;
+		EngineInfo m_engineInfo;
+		Hiearchy m_hiearchy;
+		Console m_console;
+		std::vector<ImguiBlock *> m_imguiBlock;
 		std::vector<VkFramebuffer> m_imGuiFramebuffer;
 		std::vector<VkCommandBuffer> m_imGuiCommandBuffers;
 		std::array<VkClearValue, 2> m_clearValues{};

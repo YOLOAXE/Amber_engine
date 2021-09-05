@@ -18,6 +18,7 @@ namespace Ge
 			m_imageCount = swapChainSupport.capabilities.maxImageCount;
 		}
 		VkSurfaceKHR surfaceKHRW = vM->str_VulkanDeviceMisc->str_surface;
+		VkSwapchainCreateInfoKHR createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		createInfo.surface = surfaceKHRW;
 

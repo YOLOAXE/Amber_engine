@@ -1,4 +1,5 @@
 #include "Debug.hpp"
+#include "Console.hpp"
 
 namespace Ge
 {
@@ -19,6 +20,11 @@ namespace Ge
                 va_end(argList);
 
                 std::cout << buffer2;
+				if (Console::IsInit())
+				{
+					Console::GetConsole()->setBaseColor(ImColor(1.0f, 1.0f, 1.0f, 1.0f));
+					Console::GetConsole()->AddLog("%s", buffer2);
+				}
         }
 
         void Debug::Error(const char *format, ...)
@@ -38,6 +44,11 @@ namespace Ge
                 va_end(argList);
 
                 std::cerr << termcolor::red << buffer2 << termcolor::reset;
+				if (Console::IsInit())
+				{
+					Console::GetConsole()->setBaseColor(ImColor(0.5f, 0.0f, 0.0f, 1.0f));
+					Console::GetConsole()->AddLog("%s", buffer2);
+				}
                 std::cin.ignore();
         }
 
@@ -73,6 +84,11 @@ namespace Ge
                 va_end(argList);
 
                 std::cout << termcolor::yellow << buffer2 << termcolor::reset;
+				if (Console::GetConsole() != nullptr)
+				{
+					Console::GetConsole()->setBaseColor(ImColor(0.5f, 0.5f, 0.0f, 1.0f));
+					Console::GetConsole()->AddLog("%s", buffer2);
+				}
         }
 
         void Debug::Info(const char *format, ...)
@@ -92,6 +108,11 @@ namespace Ge
                 va_end(argList);
 
                 std::cout << termcolor::cyan << buffer2 << termcolor::reset;
+				if (Console::IsInit())
+				{
+					Console::GetConsole()->setBaseColor(ImColor(0.0f, 0.4f, 0.4f, 1.0f));
+					Console::GetConsole()->AddLog("%s", buffer2);
+				}
         }
 
         void Debug::VLayer(const char *format, ...)
@@ -111,5 +132,10 @@ namespace Ge
                 va_end(argList);
 
                 std::cout << termcolor::magenta << buffer2 << termcolor::reset;
+				if (Console::IsInit())
+				{
+					Console::GetConsole()->setBaseColor(ImColor(0.25f, 0.0f, 0.5f, 1.0f));
+					Console::GetConsole()->AddLog("%s", buffer2);
+				}
         }
 }

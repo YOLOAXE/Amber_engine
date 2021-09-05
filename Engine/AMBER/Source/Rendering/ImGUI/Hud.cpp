@@ -6,6 +6,12 @@
 
 namespace Ge
 {
+	Hud::Hud()
+	{		
+		m_imguiBlock.push_back(&m_engineInfo);
+		m_imguiBlock.push_back(&m_console);
+		m_imguiBlock.push_back(&m_hiearchy);
+	}
 
 	bool Hud::initialize(VulkanMisc* vM)
 	{
@@ -253,7 +259,7 @@ namespace Ge
 		vkDestroyRenderPass(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiRenderPass, nullptr);
 		vkFreeCommandBuffers(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, static_cast<uint32_t>(m_imGuiCommandBuffers.size()), m_imGuiCommandBuffers.data());
 		vkDestroyCommandPool(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, nullptr);
-		vkDestroyDescriptorPool(vulkanM->str_VulkanDeviceMisc->str_device,m_imGuiDescriptorPool, nullptr);
+		vkDestroyDescriptorPool(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiDescriptorPool, nullptr);
 
 		ImGui_ImplVulkan_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
@@ -305,7 +311,11 @@ namespace Ge
 		{
 			if (m_hudActive)
 			{
-				ImGui::ShowDemoWindow();
+				//ImGui::ShowDemoWindow();
+				for (int i = 0; i < m_imguiBlock.size(); i++)
+				{					
+					m_imguiBlock[i]->render(vulkanM);
+				}
 			}
 		}
 	}

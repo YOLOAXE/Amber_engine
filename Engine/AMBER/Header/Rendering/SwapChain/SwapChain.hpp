@@ -32,7 +32,6 @@ namespace Ge
 	private:
 		VkExtent2D m_swapChainExtent;
 		VkFormat m_swapChainImageFormat;
-		VkSwapchainCreateInfoKHR createInfo;
 		std::vector<VkImage> m_swapChainImages;
 		std::vector<ImageViewSwapChains *> m_swapChainImagesView;
 		RenderPass m_renderPass;
