@@ -3,12 +3,13 @@
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/gtc/quaternion.hpp> 
-#include <glm/gtx/quaternion.hpp>
-#include <glm/common.hpp>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/transform.hpp"
+#include "glm/gtc/quaternion.hpp" 
+#include "glm/gtx/quaternion.hpp"
+#include "glm/gtx/euler_angles.hpp"
+#include "glm/common.hpp"
 #include "UniformBufferCamera.hpp"
 #include "VulkanMisc.hpp"
 #include "GObject.hpp"
@@ -32,8 +33,6 @@ namespace Ge
 		void mapMemory() override;
 		int getPriority();
 		VkBuffer getUniformBuffer();
-		glm::mat4 getView();
-		glm::mat4 getProjection();
 	private:
 		void updatePerspective();
 	private:

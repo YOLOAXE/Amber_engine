@@ -192,6 +192,13 @@ namespace Ge
     {
 		m_cameraManager.updateFlyCam();
 		m_shaderUniformBufferDivers.updateUniformBufferDiver();
+		if (m_VulkanDescriptor.recreateCommandBuffer)
+		{
+			vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);
+			RenderingEngine::m_commandBuffer.release();
+			RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass, &m_shaderUniformBufferDivers);
+			m_VulkanDescriptor.recreateCommandBuffer = false;
+		}
 		vkWaitForFences(m_vulkanDeviceMisc.str_device, 1, &m_syncObjects.m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
 
 		uint32_t imageIndex;

@@ -1,4 +1,5 @@
 #include "Model.hpp"
+#include <glm/gtx/string_cast.hpp>
 
 namespace Ge
 {
@@ -14,6 +15,9 @@ namespace Ge
 		}
 		m_index.ubo = indexubo;
 		m_index.material = 0;
+		setPosition(glm::vec3(0.0f));
+		setEulerAngles(glm::vec3(0.0f));
+		setScale(glm::vec3(1.0f));
 	}
 
 	Model::~Model()

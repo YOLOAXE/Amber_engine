@@ -2,11 +2,14 @@
 
 namespace Ge
 {
+	ptrClass GameEngine::m_pointeurClass;
 	GameEngine::GameEngine()
 	{
 		m_pointeurClass.settingManager = &m_settingManager;
 		m_pointeurClass.inputManager = &m_inputManager;
 		m_pointeurClass.time = &m_time;
+		m_pointeurClass.behaviourManager = &m_behaviourManager;
+		m_pointeurClass.sceneManager = &m_sceneManager;
 	}
 
 	ptrClass GameEngine::getPtrClass()
@@ -42,6 +45,7 @@ namespace Ge
     {
         Debug::Info("Moteur Start");
         m_time.startTime();
+		m_sceneManager.loadEntryScene();
         GameEngine::update();
     }
     
@@ -52,9 +56,12 @@ namespace Ge
 			glfwPollEvents();/*event de recuperation*/
             m_time.fixedUpdateTime();
 			m_lag += m_time.getFixedDeltaTime();						
+			m_behaviourManager.fixedUpdate();
 			if (m_lag >= 1/m_settingManager.getFps())
 			{
-				m_time.updateTime();				
+				m_time.updateTime();		
+				m_inputManager.updateAxis();
+				m_behaviourManager.update();
 				m_renderingEngine.drawFrame();
 				m_lag -= 1/m_settingManager.getFps();
 			}

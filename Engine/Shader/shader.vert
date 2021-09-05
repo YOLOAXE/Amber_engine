@@ -29,7 +29,7 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
 	uint metallicMap;
 	uint hdrMap;
 	uint aoMap;
-	bool light;
+	uint light;
 } ubm[];
 
 layout(set = 4, binding = 0) uniform UniformBufferLight

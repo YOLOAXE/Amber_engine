@@ -1,16 +1,11 @@
 #include "GObject.hpp"
-#include "Debug.hpp"
 
 namespace Ge
 {
 	GObject::GObject(bool inverse)
 	{
 		m_inversePos = inverse;
-		m_transform.position = glm::vec3(0.0f);
-		m_transform.eulerAngles = glm::vec3(0.0f);
-		setPosition(glm::vec3(0.0f));
-		setEulerAngles(glm::vec3(0.0f));
-		setScale(glm::vec3(1.0f));
+		m_flipY = false;
 		m_nom = "NoName";		
 	}
 
@@ -32,7 +27,7 @@ namespace Ge
 		{
 			m_transform.position.y *= -1.0f;
 			m_transform.translateMatrix = glm::translate(glm::mat4(1.0f), m_transform.position);
-			m_transform.position = pos;
+			m_transform.position = pos * inv;
 		}
 		else
 		{
@@ -44,10 +39,16 @@ namespace Ge
 	void GObject::setEulerAngles(glm::vec3 eul)
 	{
 		m_transform.eulerAngles = eul;
-		m_transform.rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_transform.eulerAngles.x * (m_flipY ? -1.0f : 1.0f)), glm::vec3(1.0f, 0.0f, 0.0f));
-		m_transform.rotationMatrix = glm::rotate(m_transform.rotationMatrix, glm::radians(m_transform.eulerAngles.y), glm::vec3(0.0f, 1.0f, 0.0f));
-		m_transform.rotationMatrix = glm::rotate(m_transform.rotationMatrix, glm::radians(m_transform.eulerAngles.z), glm::vec3(0.0f, 0.0f, 1.0f));
+		float yaw = glm::radians(m_transform.eulerAngles.x * (m_flipY ? -1.0f : 1.0f));
+		float pitch = glm::radians(m_transform.eulerAngles.y);
+		float roll = glm::radians(m_transform.eulerAngles.z);
+		m_transform.rotationMatrix = glm::rotate(glm::mat4(1.0f), yaw, glm::vec3(1.0f, 0.0f, 0.0f));
+		m_transform.rotationMatrix = glm::rotate(m_transform.rotationMatrix, pitch, glm::vec3(0.0f, 1.0f, 0.0f));
+		m_transform.rotationMatrix = glm::rotate(m_transform.rotationMatrix, roll, glm::vec3(0.0f, 0.0f, 1.0f));
 		m_transform.rotation = toQuat(m_transform.rotationMatrix);
+		m_transform.direction.x = sin(yaw);
+		m_transform.direction.y = -(sin(pitch)*cos(yaw));
+		m_transform.direction.z = -(cos(pitch)*cos(yaw));
 		mapMemory();
 	}
 
@@ -56,7 +57,10 @@ namespace Ge
 		m_transform.rotation = rot;
 		m_transform.rotationMatrix = toMat4(m_transform.rotation);
 		extractEulerAngleXYZ(m_transform.rotationMatrix, m_transform.eulerAngles.x, m_transform.eulerAngles.y, m_transform.eulerAngles.z);
-		//TODO attention degrée ou radian
+		m_transform.direction.x = sin(m_transform.eulerAngles.x);
+		m_transform.direction.y = -(sin(m_transform.eulerAngles.y)*cos(m_transform.eulerAngles.x));
+		m_transform.direction.z = -(cos(m_transform.eulerAngles.y)*cos(m_transform.eulerAngles.x));
+		m_transform.eulerAngles = glm::degrees(m_transform.eulerAngles);
 		mapMemory();
 	}
 
@@ -151,8 +155,6 @@ namespace Ge
 		setRotation(getRotation());
 	}
 
-	void GObject::mapMemory(){}
-
 	void GObject::addComponent(Component *c)
 	{
 		m_component.push_back(c);
@@ -160,7 +162,7 @@ namespace Ge
 
 	void GObject::removeComponent(Component *c)
 	{
-		//m_component.erase(std::remove(m_component.begin(), m_component.end(), c), m_component.end()); //TODO  wtf
+		m_component.erase(std::remove(m_component.begin(), m_component.end(), c), m_component.end());
 	}
 
 	void GObject::onGUI()
@@ -181,6 +183,11 @@ namespace Ge
 		}
 
 		if (ImGui::DragFloat3("Scale", (float *)&m_transform.scale, 0.2f))
+		{
+			setScale(m_transform.scale);
+		}
+
+		if (ImGui::DragFloat3("Direction", (float *)&m_transform.direction, 0.2f))
 		{
 			setScale(m_transform.scale);
 		}

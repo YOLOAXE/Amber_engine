@@ -1,6 +1,15 @@
 #ifndef __ENGINE_MODEL_SHAPE__
 #define __ENGINE_MODEL_SHAPE__
 
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/transform.hpp"
+#include "glm/gtc/quaternion.hpp" 
+#include "glm/gtx/quaternion.hpp"
+#include "glm/gtx/euler_angles.hpp"
+#include "glm/common.hpp"
 #include "Debug.hpp"
 #include "VulkanMisc.hpp"
 #include "ShapeBuffer.hpp"

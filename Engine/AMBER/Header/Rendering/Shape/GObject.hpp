@@ -1,12 +1,22 @@
 #ifndef __ENGINE_GRAPHIC_OBJECT__
 #define __ENGINE_GRAPHIC_OBJECT__
 
-#include "Transform.hpp"
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/transform.hpp"
+#include "glm/gtc/quaternion.hpp"
+#include "glm/gtx/quaternion.hpp"
+#include "glm/gtx/euler_angles.hpp"
+#include "glm/common.hpp"
 #include "Debug.hpp"
 #include "Component.hpp"
 #include "imgui-cmake/Header/imgui.h"
+#include "Transform.hpp"
 #include <vector>
 #include <string> 
+#include <algorithm>
 
 namespace Ge
 {
@@ -25,7 +35,7 @@ namespace Ge
 		glm::quat getRotation();
 		glm::vec3 getEulerAngles();
 		glm::vec3 getScale();
-		virtual void mapMemory(); // map matrice pour les exporter dans les descriptors
+		virtual void mapMemory() = 0;
 		glm::vec3 transformDirectionAxeX();
 		glm::vec3 transformDirectionAxeY();
 		glm::vec3 transformDirectionAxeZ();
@@ -39,7 +49,7 @@ namespace Ge
 		std::vector<GObject *> m_childs;//implementer
 		std::string m_nom;
 		bool m_flipY = false;
-		bool m_inversePos = true;
+		bool m_inversePos = false;
 		Transform m_transform{};
 		std::vector<Component *> m_component;
 	};

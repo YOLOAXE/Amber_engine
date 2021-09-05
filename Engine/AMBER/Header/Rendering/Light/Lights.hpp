@@ -1,6 +1,8 @@
 #ifndef __ENGINE_LIGHT__
 #define __ENGINE_LIGHT__
 
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include "glm/glm.hpp"
 #include "glm/gtc/quaternion.hpp"
 #include "glm/gtx/euler_angles.hpp"
@@ -28,6 +30,7 @@ namespace Ge
 		void setIndex(int i);
 		VkBuffer getUniformBuffers();
 		void updateUniformBufferLight();
+		void mapMemory();
 		void onGUI() override;
 		void setShadow(bool state);
 		bool getShadow();

@@ -2,13 +2,19 @@
 
 namespace Ge
 {
+	Materials * MaterialManager::defaultMaterial = nullptr;
     bool MaterialManager::initialize(VulkanMisc *vM)
     {
         vulkanM = vM;
-        createMaterial();
+		defaultMaterial = createMaterial();
         Debug::INITSUCCESS("MaterialManager");
         return true;
     }
+
+	Materials * MaterialManager::getDefaultMaterial()
+	{
+		return defaultMaterial;
+	}
 
     Materials * MaterialManager::createMaterial()
     {     

@@ -10,6 +10,9 @@
 #include "CameraManager.hpp"
 #include "MaterialManager.hpp"
 #include "Hud.hpp"
+#include "BehaviourManager.hpp"
+#include "SceneManager.hpp"
+
 using namespace Ge;
 
 struct ptrClass
@@ -22,6 +25,8 @@ struct ptrClass
 	LightManager * lightManager;
 	CameraManager * cameraManager;
 	MaterialManager * materialManager;
+	BehaviourManager * behaviourManager;
+	SceneManager * sceneManager;
 	Hud * hud;	
 };
 

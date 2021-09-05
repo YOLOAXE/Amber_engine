@@ -5,19 +5,19 @@
 
 struct UniformBufferLight
 {
-    alignas(16) glm::vec3 position;
+    glm::vec3 position;
     alignas(16) glm::vec3 direction;
-    alignas(float) float cutOff;
-    alignas(float) float outerCutOff;
+	alignas(16) float cutOff;
+    float outerCutOff;
 
-    alignas(float) float constant;
-    alignas(float) float linear;
-    alignas(float) float quadratic;
+    float constant;
+    float linear;
+    float quadratic;
 
-    alignas(16) glm::vec3 ambient;
+    glm::vec3 ambient;
     alignas(16) glm::vec3 diffuse;
     alignas(16) glm::vec3 specular;
-    alignas(int) int status; //DirLight = 0 ; PointLight = 1 ; SpotLight = 2
+	alignas(16) int status; //DirLight = 0 ; PointLight = 1 ; SpotLight = 2
 };
 
 #endif //__ENGINE_UNIFORM_BUFFER_LIGHT__

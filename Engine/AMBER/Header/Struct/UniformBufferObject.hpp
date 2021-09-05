@@ -5,7 +5,7 @@
 
 struct UniformBufferObject
 {
-    alignas(16) glm::mat4 model;
+	alignas(16) glm::mat4 model;
 };
 
 #endif //__ENGINE_UNIFORM_BUFFER_OBJECTS__

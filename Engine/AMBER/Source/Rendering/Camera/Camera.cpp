@@ -14,7 +14,7 @@ namespace Ge
 			m_uniformBufferCamera.proj = glm::perspective(glm::radians(m_fov), vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height/ (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height, m_near, m_far);
 		}
 		m_uniformBufferCamera.proj[1][1] *= -1;
-		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(m_uniformBufferCamera));
+		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(UniformBufferCamera));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
@@ -29,9 +29,13 @@ namespace Ge
 		m_near = 0.1f;
 		m_priority = 0;
 		vulkanM = vM;
+		m_ortho = false;
 		m_uniformBufferCamera.camPos = m_transform.position;
 		m_uniformBufferCamera.view = m_transform.rotationMatrix * m_transform.translateMatrix;
-		Camera::updatePerspective();
+		Camera::updatePerspective();	
+		setPosition(glm::vec3(0.0f));
+		setEulerAngles(glm::vec3(0.0f));
+		setScale(glm::vec3(1.0f));
 	}	
 
 	Camera::~Camera()
@@ -43,7 +47,7 @@ namespace Ge
 	{		
 		m_uniformBufferCamera.camPos = m_transform.position;
 		m_uniformBufferCamera.view = m_transform.rotationMatrix * m_transform.translateMatrix;
-		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(m_uniformBufferCamera));
+		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(UniformBufferCamera));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
@@ -100,16 +104,5 @@ namespace Ge
 	int Camera::getPriority()
 	{
 		return m_priority;
-	}
-
-	glm::mat4 Camera::getView()
-	{
-		m_uniformBufferCamera.view = m_transform.rotationMatrix * m_transform.translateMatrix;
-		return m_uniformBufferCamera.view;
-	}
-
-	glm::mat4 Camera::getProjection()
-	{
-		return m_uniformBufferCamera.proj;
 	}
 }

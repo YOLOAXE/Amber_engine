@@ -5,18 +5,18 @@
 
 struct UniformBufferMaterial
 {
-    alignas(glm::vec3) glm::vec3 albedo;
-    alignas(glm::vec2) glm::vec2 offset;
-    alignas(float) float metallic;
-    alignas(float) float hdr;
-    alignas(float) float normal;
-    alignas(float) float ao;
-    alignas(int) int albedoMap;
-    alignas(int) int normalMap;
-    alignas(int) int metallicMap;
-    alignas(int) int hdrMap;
-    alignas(int) int aoMap;
-    alignas(bool) bool light;
+    glm::vec3 albedo;
+	alignas(16) glm::vec2 offset;
+    float metallic;
+    float hdr;
+    float normal;
+    float ao;
+    int albedoMap;
+    int normalMap;
+    int metallicMap;
+    int hdrMap;
+    int aoMap;
+    int light;
 };
 
 #endif //__ENGINE_UNIFORM_BUFFER_MATERIAL__

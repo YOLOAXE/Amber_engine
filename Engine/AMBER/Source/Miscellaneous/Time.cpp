@@ -4,12 +4,17 @@ namespace Ge
 {
 	Time * Time::s_pInstance = nullptr;
 
+	Time::Time()
+	{
+		Time::s_pInstance = this;
+		m_time = 0.0f;
+	}
+
 	void Time::startTime()
 	{
 		m_startTime = std::chrono::high_resolution_clock::now();
 		m_currentTime = std::chrono::high_resolution_clock::now();
 		m_currentTimeF = std::chrono::high_resolution_clock::now();
-		Time::s_pInstance = this;
 	}
 
 	void Time::fixedUpdateTime()

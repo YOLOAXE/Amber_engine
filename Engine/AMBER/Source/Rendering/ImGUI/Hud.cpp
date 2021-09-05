@@ -10,7 +10,7 @@ namespace Ge
 	bool Hud::initialize(VulkanMisc* vM)
 	{
 		IMGUI_CHECKVERSION();
-		isHUDActive = true;
+		m_hudActive = true;
 		vulkanM = vM;
 		//vulkanM = vM;
 		ImGui::CreateContext();
@@ -301,14 +301,13 @@ namespace Ge
 		ImGui_ImplVulkan_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		if (m_GlobalGUIActive)
+		if (m_globalUI)
 		{
-			if (isHUDActive)
+			if (m_hudActive)
 			{
 				ImGui::ShowDemoWindow();
 			}
 		}
-
 	}
 }
 

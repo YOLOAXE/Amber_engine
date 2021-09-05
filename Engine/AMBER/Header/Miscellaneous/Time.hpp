@@ -9,12 +9,13 @@ namespace Ge
 	class Time
 	{
 	private:
-		friend class GameEngine;
+		friend class GameEngine;		
 		void startTime();
 		void fixedUpdateTime();
 		void updateTime();
 		void release();
 	public:
+		Time();
 		float getDeltaTime();
 		float getFixedDeltaTime();
 		float getTime();

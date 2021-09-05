@@ -17,8 +17,10 @@ namespace Ge
         Materials *createMaterial();
         void destroyMaterial(Materials *material);
 		void initDescriptor(VulkanMisc * vM);
-		void updateDescriptor();            
+		void updateDescriptor();    
+		static Materials * getDefaultMaterial();
     private:
+		static Materials * defaultMaterial;
         std::vector<Materials *> m_materials;
         VulkanMisc *vulkanM;        
     };

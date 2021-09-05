@@ -6,6 +6,7 @@
 
 struct VulkanDescriptor
 {    
+	bool recreateCommandBuffer = false;
     int modelCount = 0;
     int textureCount = 0;
     int materialCount = 0;

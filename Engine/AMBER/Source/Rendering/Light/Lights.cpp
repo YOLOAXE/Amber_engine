@@ -15,6 +15,16 @@ namespace Ge
 			Debug::Error("Echec de la creation d'un uniform buffer object");
 		}		
 		updateUniformBufferLight();
+		setPosition(glm::vec3(0.0f));
+		setEulerAngles(glm::vec3(0.0f));
+		setScale(glm::vec3(1.0f));
+	}
+
+	void Lights::mapMemory()
+	{
+		m_ubl.position = m_transform.position;
+		m_ubl.direction = glm::vec3(0, 0, 0);//todo ajouter la direction
+		updateUniformBufferLight();
 	}
 
 	void Lights::setColors(glm::vec3 color)

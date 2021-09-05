@@ -28,6 +28,7 @@ namespace Ge
 		{
 			m_angleY += m_im->axisMouseY() * m_maxSpeedRotate;
 			m_angleX += m_im->axisMouseX() * m_maxSpeedRotate;
+			setEulerAngles(glm::vec3(m_angleY, m_angleX, 0.0f));
 		}
 
 		if (m_im->getKey(87))
@@ -55,7 +56,6 @@ namespace Ge
 		else if (m_im->getKey(32))
 		{
 			setPosition(getPosition() - glm::vec3(0, -1, 0) * m_moveSpeed);
-		}
-		setEulerAngles(glm::vec3(m_angleY, m_angleX, 0.0f));
+		}		
 	}
 }

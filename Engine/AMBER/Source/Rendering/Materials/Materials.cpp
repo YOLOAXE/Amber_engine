@@ -9,7 +9,7 @@ namespace Ge
 		m_color[0] = m_ubm.albedo.x;
 		m_color[1] = m_ubm.albedo.y;
 		m_color[2] = m_ubm.albedo.z;
-		m_ubm.metallic = 8.0f;
+		m_ubm.metallic = 1.0f;
 		m_ubm.normal = 1.0f;
 		m_ubm.hdr = 1.0f;
 		m_ubm.ao = 1.0f;
@@ -77,9 +77,9 @@ namespace Ge
 
 	void Materials::setNormalTexture(Textures * normal)
 	{
-			m_ubm.normalMap = normal->getIndex();
-			m_normalMap = normal;
-			updateUniformBufferMaterial();
+		m_ubm.normalMap = normal->getIndex();
+		m_normalMap = normal;
+		updateUniformBufferMaterial();
 	}
 
 	void Materials::setMetallicTexture(Textures * metal)
@@ -160,7 +160,7 @@ namespace Ge
 
 	void Materials::updateUniformBufferMaterial()
 	{
-		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubm, sizeof(m_ubm));
+		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubm, sizeof(UniformBufferMaterial));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 

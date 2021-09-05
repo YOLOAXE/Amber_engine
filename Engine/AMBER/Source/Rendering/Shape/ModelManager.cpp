@@ -2,6 +2,7 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tinyobjloader/tiny_obj_loader.h"
 #include <glm/gtx/normal.hpp>
+#include "MaterialManager.hpp"
 
 namespace Ge
 {
@@ -70,6 +71,7 @@ namespace Ge
 		}
 		Model * Mesh = new Model(buffer, m_models.size(), vulkanM);
 		Mesh->setName(nom);
+		Mesh->setMaterial(MaterialManager::getDefaultMaterial());
 		m_models.push_back(Mesh);
 		vulkanM->str_VulkanDescriptor->modelCount = m_models.size();
 		updateDescriptor();
@@ -129,7 +131,7 @@ namespace Ge
 			Debug::Warn("%s  %s", nullptr, warn.c_str(), err.c_str());
 			return nullptr;
 		}
-
+		
 		std::unordered_map<Vertex, uint32_t> uniqueVertices{};
 
 		for (const auto &shape : shapes)
@@ -161,7 +163,6 @@ namespace Ge
 				indices.push_back(uniqueVertices[vertex]);
 			}
 		}
-
 		ShapeBuffer *buffer = new ShapeBuffer(vertices, indices, vulkanM);
 		m_shapeBuffers.push_back(buffer);
 		return buffer;

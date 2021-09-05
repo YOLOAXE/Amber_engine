@@ -3,9 +3,9 @@
 
 struct UniformBufferDiver
 {
-    alignas(int) int maxLight;
-    alignas(float) float u_time;
-    alignas(float) float gamma;
+    int maxLight;
+    float u_time;
+    float gamma;
 };
 
 #endif //__ENGINE_UNIFORM_BUFFER_DIVER__

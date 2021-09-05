@@ -26,7 +26,7 @@ namespace Ge
         {
             imageI.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
             imageI.imageView = m_textures[i]->getVkImageView();
-            imageI.sampler = m_textures[i]->getVkSampler();
+            imageI.sampler = m_textures[i]->getVkSampler();			
             imageInfo.push_back(imageI);
         }
         m_descriptor->updateCount(vulkanM, vulkanM->str_VulkanDescriptor->textureCount, imageInfo);

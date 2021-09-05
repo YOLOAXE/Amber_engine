@@ -15,20 +15,22 @@ namespace Ge
     {
     public:
 		GameEngine();
-		ptrClass getPtrClass();
+		static ptrClass getPtrClass();
         bool initialize();
         void release();
         void start();
 	private:
         void update();
     private:
+		static ptrClass m_pointeurClass;
         VulkanMisc * m_VulkanMisc;
         RenderingEngine m_renderingEngine;
         Debug m_debug;
-        SettingManager m_settingManager;
-        ptrClass m_pointeurClass; 
+        SettingManager m_settingManager;        
         Time m_time;
         InputManager m_inputManager;
+		BehaviourManager m_behaviourManager;
+		SceneManager m_sceneManager;
         float m_lag = 0.0f;
     };
 }

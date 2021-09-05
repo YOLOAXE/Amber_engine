@@ -2,14 +2,17 @@
 
 namespace Ge
 {
+	int Descriptor::countDescriptor = 0;
     Descriptor::Descriptor(VulkanMisc *vM, VkDescriptorType descriptorType, int baseCount)
     {
         m_count = baseCount;                
         vulkanM = vM;
+		m_countDescriptor = countDescriptor;
+		countDescriptor++;
         m_descriptorType = descriptorType;
-        m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,baseCount,descriptorType); //TODO swapchain image X3 a verifier si X1 fonctionne 
+        m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,baseCount,descriptorType, m_countDescriptor); //TODO swapchain image X3 a verifier si X1 fonctionne 
         m_DescriptorPool = createVkDescriptorPool(vM,baseCount,descriptorType); 
-        m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);        
+        m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);     		
     }
 
 	Descriptor::~Descriptor()
@@ -40,9 +43,10 @@ namespace Ge
         {
             destroyVkDescriptorPool(vulkanM,m_DescriptorPool);
             destroyVkVkDescriptorSetLayout(vulkanM,m_DescriptorSetLayout);
-            m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,count,m_descriptorType);
+            m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,count,m_descriptorType, m_countDescriptor);
             m_DescriptorPool = createVkDescriptorPool(vM,count,m_descriptorType);
-            m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);               
+            m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);   
+			vM->str_VulkanSwapChainMisc->swapChainRecreate->recreatePipeline();			
         }
         m_count = count;
         VkWriteDescriptorSet descriptorWrites{};
@@ -57,19 +61,20 @@ namespace Ge
 			descriptorWrites.pBufferInfo = bufferInfo.data();
             vkUpdateDescriptorSets(vM->str_VulkanDeviceMisc->str_device, static_cast<uint32_t>(1), &descriptorWrites, 0, nullptr);
         }
+		vM->str_VulkanDescriptor->recreateCommandBuffer = true;
     }
 
     void Descriptor::updateCount(VulkanMisc *vM, int count, std::vector<VkDescriptorImageInfo> bufferInfo)
     {
         if(m_count != count)
         {
-			destroyVkDescriptorSet(vulkanM, m_DescriptorSets, m_DescriptorPool);
             destroyVkDescriptorPool(vulkanM,m_DescriptorPool);
             destroyVkVkDescriptorSetLayout(vulkanM,m_DescriptorSetLayout);
-            m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,count,m_descriptorType);
+            m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,count,m_descriptorType, m_countDescriptor);
             m_DescriptorPool = createVkDescriptorPool(vM,count,m_descriptorType);
             m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool); 
 			vM->str_VulkanSwapChainMisc->swapChainRecreate->recreatePipeline();
+			vM->str_VulkanDescriptor->recreateCommandBuffer = true;
         }
         m_count = count;
         VkWriteDescriptorSet descriptorWrites{};
@@ -105,7 +110,7 @@ namespace Ge
         return m_descriptorPool;
     }
 
-    VkDescriptorSetLayout Descriptor::createVkDescriptorSetLayout(VulkanMisc *vM,int count,VkDescriptorType type)
+    VkDescriptorSetLayout Descriptor::createVkDescriptorSetLayout(VulkanMisc *vM,int count,VkDescriptorType type,int descriptorCount)
     {
         VkDescriptorSetLayout m_descriptorSetLayout;
         VkDescriptorSetLayoutBinding uboLayoutBinding{};
@@ -124,7 +129,14 @@ namespace Ge
         {
             Debug::Error("Echec de la creation du descriptor set layout");
         }    
-        vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(m_descriptorSetLayout);
+		if (vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.size() != Descriptor::countDescriptor)
+		{
+			vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.push_back(m_descriptorSetLayout);
+		}
+		else
+		{
+			vM->str_VulkanSwapChainMisc->str_descriptorSetLayout[descriptorCount] = m_descriptorSetLayout;
+		}
         return m_descriptorSetLayout;
     }
 
@@ -158,8 +170,7 @@ namespace Ge
     }
 
     void Descriptor::destroyVkVkDescriptorSetLayout(VulkanMisc *vM,VkDescriptorSetLayout descriptorSetLayout)
-    {
-        vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.erase(std::remove(vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.begin(), vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.end(), descriptorSetLayout), vM->str_VulkanSwapChainMisc->str_descriptorSetLayout.end());                
+    {        
         vkDestroyDescriptorSetLayout(vM->str_VulkanDeviceMisc->str_device, descriptorSetLayout, nullptr);
     }
 }

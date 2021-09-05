@@ -22,7 +22,7 @@ namespace Ge
 		m_ubd.maxLight = vulkanM->str_VulkanDescriptor->lightCount;
 		m_ubd.u_time = Time::GetTime();
 		m_ubd.gamma = settingM->getGamma();
-		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubd, sizeof(m_ubd));
+		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubd, sizeof(UniformBufferDiver));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
