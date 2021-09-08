@@ -18,7 +18,7 @@ namespace Ge
 		BufferManager::unMapMemory(stagingBuffer);
 
 		BufferManager::createImageBuffer(texWidth, texHeight, VK_IMAGE_TYPE_2D,1, mipLevels, VK_SAMPLE_COUNT_1_BIT, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, textureImage,VK_NULL_HANDLE, vM);
-		transitionImageLayout(textureImage.image, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels, vM);//VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+		transitionImageLayout(textureImage.image, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels,1, vM);//VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
 		BufferManager::copyBufferToImage(stagingBuffer.buffer, textureImage.image, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight), vM);
 		BufferManager::destroyBuffer(stagingBuffer);
 
@@ -71,7 +71,7 @@ namespace Ge
 		return textureSampler;
 	}
 
-	void Textures::transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipLevels, VulkanMisc * vM)
+	void Textures::transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipLevels, uint32_t layerCount, VulkanMisc * vM)
 	{
 		VkCommandBuffer commandBuffer = BufferManager::beginSingleTimeCommands(vM);
 
@@ -86,7 +86,7 @@ namespace Ge
 		barrier.subresourceRange.baseMipLevel = 0;
 		barrier.subresourceRange.levelCount = mipLevels;
 		barrier.subresourceRange.baseArrayLayer = 0;
-		barrier.subresourceRange.layerCount = 1;
+		barrier.subresourceRange.layerCount = layerCount;
 
 		VkPipelineStageFlags sourceStage;
 		VkPipelineStageFlags destinationStage;

@@ -18,7 +18,7 @@ namespace Ge
 		VkSampler getVkSampler();
 		int getIndex();
 	public:
-		static void transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipLevels, VulkanMisc * vM);
+		static void transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipLevels, uint32_t layerCount, VulkanMisc * vM);
 		static void generateMipmaps(VkImage image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels, uint32_t layerCount, VulkanMisc * vM);
 	private:
 		int texWidth, texHeight;

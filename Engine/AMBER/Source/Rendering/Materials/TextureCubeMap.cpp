@@ -24,7 +24,7 @@ namespace Ge
 
 		BufferManager::createImageBuffer(texWidth, texHeight, VK_IMAGE_TYPE_2D,6, 1, VK_SAMPLE_COUNT_1_BIT, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, textureImage, VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT, vM);
 
-		Textures::transitionImageLayout(textureImage.image, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels, vM);//VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+		Textures::transitionImageLayout(textureImage.image, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels,6, vM);//VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
 		BufferManager::copyBufferToImage(stagingBuffer.buffer, textureImage.image, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight), vM);
 		BufferManager::destroyBuffer(stagingBuffer);
 
