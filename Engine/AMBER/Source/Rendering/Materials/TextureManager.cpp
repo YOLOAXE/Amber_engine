@@ -7,14 +7,16 @@ namespace Ge
 	bool TextureManager::initialize(VulkanMisc *vM)
 	{
 		vulkanM = vM;
-		stbi_uc *pixel = new stbi_uc[24];
-		for (int i = 0; i < 24; i++)
+		stbi_uc *pixel = new stbi_uc[48];
+		for (int i = 0; i < 48; i++)
 		{
 			pixel[i] = 255;			
 		}
 		nullTexture = new Textures(pixel, 4, 3, m_textures.size(), vulkanM);
 		std::vector<unsigned char *> pixelTab = convertCubMap(pixel, 4, 3);
+		Debug::Log("Test");
 		s_nullTextureCubeMap = new TextureCubeMap(pixelTab, 4, 3, m_textures.size(), vulkanM);
+		Debug::Log("Test");
 		m_textures.push_back(nullTexture);
 		m_texturesCube.push_back(s_nullTextureCubeMap);
 		vulkanM->str_VulkanDescriptor->textureCount = m_textures.size();
@@ -104,22 +106,31 @@ namespace Ge
 		updateDescriptor();
 	}
 
-	std::vector<unsigned char *> TextureManager::convertCubMap(unsigned char * pixel, int tw, int th)
+	std::vector<unsigned char *> TextureManager::convertCubMap(unsigned char * pixel, int tw, int th)//hauter 3 largeur 4
 	{
-		int twCubeMap = tw;
-		int thCubeMap = (th * 4) / 3;
+		int twCubeMap = tw/4;
+		int thCubeMap = th/3;
 		std::vector<unsigned char *> pixelTab;
+		std::vector<int> indiceStbi;
 		std::vector<unsigned char *> pixelTabCubeMap;
 		int indiceCubeMap[6] = { 4 , 5 , 6 , 7 , 1, 9 };
 		for (int i = 0; i < 12; i++)
 		{
-			pixelTab.push_back(new stbi_uc[twCubeMap * thCubeMap]);
+			pixelTab.push_back(new stbi_uc[twCubeMap * thCubeMap*4]);//4 char * -> 1			
 		}
-		for (int y = 0; y < th * 4; y++)
+		indiceStbi.resize(12);
+		int indicePT = 0,indicePixel = 0;
+		for (int y = 0; y < th; y++)
 		{
-			for (int x = 0; x < tw * 4; x++)
+			for (int x = 0; x < tw; x++)
 			{
-				pixelTab[(x / twCubeMap) + (y / thCubeMap) * 4][(x%twCubeMap) + ((y%thCubeMap)*twCubeMap)] = pixel[x + (y*th * 4)];
+				indicePT = (x / twCubeMap)+((y/ thCubeMap)*4);					
+				pixelTab[indicePT][4 * indiceStbi[indicePT] + 0] = pixel[4 * indicePixel + 0];
+				pixelTab[indicePT][4 * indiceStbi[indicePT] + 1] = pixel[4 * indicePixel + 1];
+				pixelTab[indicePT][4 * indiceStbi[indicePT] + 2] = pixel[4 * indicePixel + 2];
+				pixelTab[indicePT][4 * indiceStbi[indicePT] + 3] = pixel[4 * indicePixel + 3];
+				indiceStbi[indicePT]++;
+				indicePixel++;
 			}
 		}
 		for (int i = 0; i < 6; i++)
