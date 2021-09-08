@@ -23,7 +23,7 @@ namespace Ge
         static void *mapMemory(VmaBuffer &buffer);
         static void unMapMemory(VmaBuffer &buffer);
         static void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, VulkanMisc *vM);
-        static void copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, VulkanMisc *vM);
+        static void copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t baseArrayLayer, VulkanMisc * vM);
         static VkCommandBuffer beginSingleTimeCommands(VulkanMisc *vM);
         static void endSingleTimeCommands(VkCommandBuffer commandBuffer, VulkanMisc *vM);
 
