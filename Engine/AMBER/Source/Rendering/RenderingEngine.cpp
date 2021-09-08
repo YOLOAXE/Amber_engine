@@ -25,6 +25,7 @@ namespace Ge
 		p_ptrClass->modelManager = &m_modelManager;
 		p_ptrClass->textureManager = &m_textureManager;
 		p_ptrClass->hud = &m_hud;
+		p_ptrClass->skyboxManager = &m_skyboxManager;
         Debug::Info("Initialisation du moteur de rendu");
         if (!RenderingEngine::m_window.initialize(p_ptrClass->settingManager->getWindowWidth(), p_ptrClass->settingManager->getWindowHeight(), p_ptrClass->settingManager->getName(), &m_vulkanMisc))
         {
@@ -92,7 +93,7 @@ namespace Ge
             Debug::INITFAILED("CameraManager");
             return false;
         }
-        if (!RenderingEngine::m_textureManager.initiliaze(&m_vulkanMisc))
+        if (!RenderingEngine::m_textureManager.initialize(&m_vulkanMisc))
         {
             Debug::INITFAILED("TextureManager");
             return false;
@@ -117,7 +118,12 @@ namespace Ge
             Debug::INITFAILED("ShaderUniformBufferDivers");
             return false;
         }
-        if (!RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, p_ptrClass, &m_shaderUniformBufferDivers))
+		if (!RenderingEngine::m_skyboxManager.initialize(&m_vulkanMisc, &m_modelManager, p_ptrClass->graphiquePipelineManager))
+		{
+			Debug::INITFAILED("SkyboxManager");
+			return false;
+		}
+        if (!RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, p_ptrClass))
 		{
             Debug::INITFAILED("CommandBuffer");
             return false;
@@ -142,6 +148,7 @@ namespace Ge
 		RenderingEngine::m_hud.release();
 		RenderingEngine::m_syncObjects.release();
 		RenderingEngine::m_commandBuffer.release();
+		RenderingEngine::m_skyboxManager.release();
         RenderingEngine::m_shaderUniformBufferDivers.release();
         RenderingEngine::m_lightManager.release();
         RenderingEngine::m_materialManager.release();
@@ -184,7 +191,7 @@ namespace Ge
 		RenderingEngine::m_colorResources.initialize(&m_vulkanMisc);
 		RenderingEngine::m_depthResources.initialize(&m_vulkanMisc);
 		RenderingEngine::m_frameBuffers.initialize(&m_vulkanMisc);
-		RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass, &m_shaderUniformBufferDivers);
+		RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass);
 		m_hud.recreateSwapChain();
 	}
 
@@ -195,8 +202,9 @@ namespace Ge
 		if (m_VulkanDescriptor.recreateCommandBuffer)
 		{
 			vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);
+			m_swapChain.recreatePipeline();
 			RenderingEngine::m_commandBuffer.release();
-			RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass, &m_shaderUniformBufferDivers);
+			RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass);
 			m_VulkanDescriptor.recreateCommandBuffer = false;
 		}
 		vkWaitForFences(m_vulkanDeviceMisc.str_device, 1, &m_syncObjects.m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);

@@ -1,4 +1,5 @@
 #include "Hiearchy.hpp"
+#include "ModelManager.hpp"
 
 namespace Ge
 {
@@ -15,8 +16,21 @@ namespace Ge
 
 	void Hiearchy::render(VulkanMisc* vM)
 	{
-		std::vector<GObject *> items;
+		std::vector<GObject *> items = GObject::GetGObjects();
 		std::vector<const char *> cnames;
+		std::map<std::string, int> m_mapNB;
+
+		for (GObject * go : items)
+		{
+			m_mapNB[(*go->getName())]++;
+			std::string * result = go->getName();
+			if (m_mapNB[(*go->getName())] > 1)
+			{
+				*result += std::to_string(m_mapNB[(*go->getName())] - 1);
+			}
+			cnames.push_back(result->c_str());
+		}
+
 		ImGui::SetNextWindowBgAlpha(0.55f);
 		if (ImGui::Begin("Scene explorer", nullptr, window_flags))
 		{

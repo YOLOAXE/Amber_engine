@@ -6,7 +6,7 @@ namespace Ge
     ImageViewSwapChains::ImageViewSwapChains(VkImage * SwapChainImage, VkFormat swapChainImageFormat, VulkanMisc * vM)
     {
         vulkanM = vM;
-        m_imageView = createImageView((*SwapChainImage), swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1, vM);
+        m_imageView = createImageView((*SwapChainImage), VK_IMAGE_VIEW_TYPE_2D, swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1, vM);
     }
 
     ImageViewSwapChains::~ImageViewSwapChains()
@@ -19,12 +19,12 @@ namespace Ge
         return m_imageView;
     }
 
-    VkImageView ImageViewSwapChains::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevels, VulkanMisc *vM)
+    VkImageView ImageViewSwapChains::createImageView(VkImage image, VkImageViewType viewType, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevels, VulkanMisc *vM)
     {
         VkImageViewCreateInfo viewInfo{};
 		viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 		viewInfo.image = image;
-		viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		viewInfo.viewType = viewType;//VK_IMAGE_VIEW_TYPE_2D;
 		viewInfo.format = format;
 		viewInfo.subresourceRange.aspectMask = aspectFlags;
 		viewInfo.subresourceRange.baseMipLevel = 0;

@@ -24,6 +24,7 @@ namespace Ge
 	{
 	public:
 		GObject(bool inverse = false);
+		~GObject();
 		void setName(std::string nom);
 		std::string * getName();
 		void setPosition(glm::vec3 pos);
@@ -44,8 +45,10 @@ namespace Ge
 		void setFlipY(bool state);
 		void addComponent(Component * c);
 		void removeComponent(Component * c);
+		static std::vector<GObject *> GetGObjects();
 		virtual void onGUI();
 	protected:
+		static std::vector<GObject *> s_gobjects;
 		std::vector<GObject *> m_childs;//implementer
 		std::string m_nom;
 		bool m_flipY = false;

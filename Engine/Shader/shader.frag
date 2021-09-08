@@ -37,19 +37,8 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
 layout(set = 4, binding = 0) uniform UniformBufferLight
 {
 	vec3 position;
-    vec3 direction;
-    float cutOff;
-    float outerCutOff;
-  
-    float constant;
-    float linear;
-    float quadratic;
-  
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular; 
+    vec3 lightColor;
 	uint status;//DirLight = 0 ; PointLight = 1 ; SpotLight = 2
-	mat4 LightSpaceMatrix;
 } ubl[];
 
 layout(set = 5, binding = 0) uniform UniformBufferDiver
@@ -59,6 +48,8 @@ layout(set = 5, binding = 0) uniform UniformBufferDiver
 	float gamma;
 }ubd;
 
+layout (set = 6, binding = 0) uniform samplerCube samplerCubeMap;
+
 layout(push_constant) uniform PushConstants
 {
     uint ubo;
@@ -67,7 +58,7 @@ layout(push_constant) uniform PushConstants
 
 layout(location = 0) in vec2 fragTexCoord;
 layout(location = 1) in vec3 WorldPos;
-layout(location = 2) in vec3 NormalPos;
+layout(location = 2) in vec3 Normal;
 layout (location = 3) in vec3 inViewVec;
 
 layout(location = 0) out vec4 outColor;
@@ -118,7 +109,7 @@ vec3 getNormalFromMap()
     vec2 st1 = dFdx(fragTexCoord);
     vec2 st2 = dFdy(fragTexCoord);
 
-    vec3 N   = normalize(NormalPos);
+    vec3 N   = normalize(Normal);
     vec3 T  = normalize(Q1*st2.t - Q2*st1.t);
     vec3 B  = -normalize(cross(N, T));
     mat3 TBN = mat3(T, B, N);

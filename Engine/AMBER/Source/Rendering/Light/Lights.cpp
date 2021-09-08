@@ -7,9 +7,7 @@ namespace Ge
 		vMisc = vM;
 		m_index = index;
 		m_ubl.position = glm::vec3(0, 0, 0);
-		m_ubl.diffuse = glm::vec3(0, 0, 0);
-		m_ubl.specular = glm::vec3(0.0f);
-		m_ubl.ambient = glm::vec3(0.1f);
+		m_ubl.lightColor = glm::vec3(1);
 		if (!BufferManager::createBuffer(sizeof(UniformBufferLight), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM->str_VulkanDeviceMisc))
 		{
 			Debug::Error("Echec de la creation d'un uniform buffer object");
@@ -23,36 +21,35 @@ namespace Ge
 	void Lights::mapMemory()
 	{
 		m_ubl.position = m_transform.position;
-		m_ubl.direction = glm::vec3(0, 0, 0);//todo ajouter la direction
 		updateUniformBufferLight();
 	}
 
 	void Lights::setColors(glm::vec3 color)
 	{
-		m_ubl.diffuse = color;
+		m_ubl.lightColor = color;
 		updateUniformBufferLight();
 	}
 
 	glm::vec3 Lights::getColors()
 	{
-		return m_ubl.diffuse;
+		return m_ubl.lightColor;
 	}
 
 	void Lights::setSpecular(glm::vec3 spec)
 	{
-		m_ubl.specular = spec;
-		updateUniformBufferLight();
+		//m_ubl.specular = spec;
+		//updateUniformBufferLight();
 	}
 
 	glm::vec3 Lights::getSpecular()
 	{
-		return m_ubl.specular;
+		return glm::vec3(1.0f);//m_ubl.specular;
 	}
 
 	void Lights::setAmbiant(glm::vec3 ambiant)
 	{
-		m_ubl.ambient = ambiant;
-		updateUniformBufferLight();
+		//m_ubl.ambient = ambiant;
+		//updateUniformBufferLight();
 	}
 
 	int Lights::getStatus()
@@ -62,7 +59,7 @@ namespace Ge
 
 	glm::vec3 Lights::getAmbiant()
 	{
-		return m_ubl.ambient;
+		return glm::vec3(1.0f);//m_ubl.ambient;
 	}
 
 	int Lights::getIndex()
@@ -101,11 +98,11 @@ namespace Ge
 	{
 		GObject::onGUI();
 		ImGui::TextColored(ImVec4(0.2f, 1, 0.2f, 1), "Light\n");
-		if (ImGui::ColorEdit3("Color", (float *)&m_ubl.diffuse))
+		if (ImGui::ColorEdit3("Color", (float *)&m_ubl.lightColor))
 		{
-			setColors(m_ubl.diffuse);
+			setColors(m_ubl.lightColor);
 		}
-		if (ImGui::ColorEdit3("Ambiant", (float *)&m_ubl.ambient))
+		/*if (ImGui::ColorEdit3("Ambiant", (float *)&m_ubl.ambient))
 		{
 			setAmbiant(m_ubl.ambient);
 		}
@@ -120,7 +117,7 @@ namespace Ge
 		{
 			ImGui::DragFloat("CutOff", &m_ubl.cutOff,0.2f);
 			ImGui::DragFloat("OuterCutOff", &m_ubl.outerCutOff,0.2f);
-		}
+		}*/
 	}
 
 	Lights::~Lights()

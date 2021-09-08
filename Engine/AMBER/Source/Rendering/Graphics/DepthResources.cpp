@@ -14,7 +14,7 @@ namespace Ge
 		VkExtent2D swapChainExtent = vM->str_VulkanSwapChainMisc->str_swapChainExtent;
 
 		ColorResources::createImage(swapChainExtent.width, swapChainExtent.height, 1, PhysicalDevices::getMaxUsableSampleCount(vM), depthFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_depthImage, m_depthImageMemory, vM);
-		m_depthImageView = ImageViewSwapChains::createImageView(m_depthImage, depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, 1, vM);
+		m_depthImageView = ImageViewSwapChains::createImageView(m_depthImage, VK_IMAGE_VIEW_TYPE_2D, depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, 1, vM);
 		Debug::INITSUCCESS("DepthResources");
 		vM->str_VulkanCommandeBufferMisc->str_depthImageView = m_depthImageView;
 		return true;

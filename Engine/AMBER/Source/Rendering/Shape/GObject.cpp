@@ -2,11 +2,23 @@
 
 namespace Ge
 {
+	std::vector<GObject *> GObject::s_gobjects;
 	GObject::GObject(bool inverse)
 	{
 		m_inversePos = inverse;
 		m_flipY = false;
-		m_nom = "NoName";		
+		m_nom = "NoName";
+		s_gobjects.push_back(this);
+	}
+
+	GObject::~GObject()
+	{
+		s_gobjects.erase(std::remove(s_gobjects.begin(), s_gobjects.end(), this), s_gobjects.end());
+	}
+
+	std::vector<GObject *> GObject::GetGObjects()
+	{
+		return s_gobjects;
 	}
 
 	void GObject::setName(std::string name)

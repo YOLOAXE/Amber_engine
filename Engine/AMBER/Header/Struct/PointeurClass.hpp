@@ -12,6 +12,8 @@
 #include "Hud.hpp"
 #include "BehaviourManager.hpp"
 #include "SceneManager.hpp"
+#include "GraphiquePipelineManager.hpp"
+#include "SkyboxManager.hpp"
 
 using namespace Ge;
 
@@ -27,7 +29,9 @@ struct ptrClass
 	MaterialManager * materialManager;
 	BehaviourManager * behaviourManager;
 	SceneManager * sceneManager;
+	SkyboxManager * skyboxManager;
 	Hud * hud;	
+	GraphiquePipelineManager * graphiquePipelineManager;
 };
 
 #endif //__ENGINE_POINTEUR_CLASS__

@@ -87,12 +87,14 @@ namespace Ge
 		ptrC->modelManager->initDescriptor(vM);
 		ptrC->materialManager->initDescriptor(vM);
 		ptrC->lightManager->initDescriptor(vM);
-		sUBD->initDescriptor(vM);
+		sUBD->initDescriptor(vM);	
+		ptrC->skyboxManager->initDescriptor(vM);
 		if (!SwapChain::initPipeline())
 		{
 			Debug::INITFAILED("InitializeLayout");
 			return false;
 		}
+		ptrC->graphiquePipelineManager = &m_graphiquePipelineManager;
 		Debug::INITSUCCESS("SwapChain");
 		return true;
 	}

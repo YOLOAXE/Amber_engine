@@ -8,10 +8,11 @@
 #include "UniformBufferMaterial.hpp"
 #include "imgui-cmake/Header/imgui.h"
 #include "GraphiquePipeline.hpp"
+#include "Component.hpp"
 
 namespace Ge
 {
-	class Materials
+	class Materials : Component
 	{
 	public:
 		Materials(int index, VulkanMisc * vM);

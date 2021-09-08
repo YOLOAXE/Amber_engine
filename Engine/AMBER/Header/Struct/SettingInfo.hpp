@@ -13,7 +13,7 @@ struct SettingInfo
     float m_gamma = 1.0f;
     glm::vec3 m_gravity = glm::vec3(0, -9.81f, 0);
     Version m_version;
-	glm::vec4 m_clearColor = glm::vec4(1.0f);
+	glm::vec4 m_clearColor = glm::vec4(0.1f);
 };
 
 #endif //__ENGINE_SETTING_INFO__

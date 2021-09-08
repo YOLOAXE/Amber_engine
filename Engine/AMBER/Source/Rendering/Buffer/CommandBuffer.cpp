@@ -1,25 +1,27 @@
 #include "CommandBuffer.hpp"
 #include "GraphiquePipelineManager.hpp"
+#include "ModelManager.hpp"
+#include  "Descriptor.hpp"
+#include "SkyboxManager.hpp"
 
 namespace Ge
 {
 
-	bool CommandBuffer::initialize(VulkanMisc * vM,ptrClass * ptrC, ShaderUniformBufferDivers * sUBD)
+	bool CommandBuffer::initialize(VulkanMisc * vM, ptrClass * ptrC)
 	{
 		vulkanM = vM;
 		std::vector<VkFramebuffer> swapChainFramebuffers = vM->str_VulkanCommandeBufferMisc->str_swapChainFramebuffers;
 		std::vector< GraphiquePipeline * > all_pipeline = GraphiquePipelineManager::GetPipelines();
 		std::vector<Model *> all_models = ModelManager::GetModels();
 		std::vector<std::vector<VkDescriptorSet>> tab_Descriptor;
+		std::vector<Descriptor *> all_descriptor = Descriptor::GetAllDescriptor();
 		tab_Descriptor.resize(vM->str_VulkanSwapChainMisc->str_swapChainImages.size());
 		for (int i = 0; i < vM->str_VulkanSwapChainMisc->str_swapChainImages.size(); i++)
 		{
-			tab_Descriptor[i].push_back(ptrC->cameraManager->getDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(ptrC->textureManager->getDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(ptrC->modelManager->getDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(ptrC->materialManager->getDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(ptrC->lightManager->getDescriptor()->getDescriptorSets()[i]);
-			tab_Descriptor[i].push_back(sUBD->getDescriptor()->getDescriptorSets()[i]);
+			for (int j = 0; j < all_descriptor.size(); j++)
+			{
+				tab_Descriptor[i].push_back(all_descriptor[j]->getDescriptorSets()[i]);
+			}
 		}
 		m_commandBuffers.resize(swapChainFramebuffers.size());
 
@@ -54,7 +56,7 @@ namespace Ge
 			renderPassInfo.renderArea.extent = vM->str_VulkanSwapChainMisc->str_swapChainExtent;
 
 			std::array<VkClearValue, 2> clearValues{};
-			clearValues[0].color = { 0.682f, 0.811f, 0.917f, 1.0f };
+			clearValues[0].color = { ptrC->settingManager->getClearColor().r, ptrC->settingManager->getClearColor().g, ptrC->settingManager->getClearColor().b, ptrC->settingManager->getClearColor().a };
 			clearValues[1].depthStencil = { 1.0f, 0 };
 			VkDeviceSize offsets[] = { 0 };
 
@@ -62,7 +64,14 @@ namespace Ge
 			renderPassInfo.pClearValues = clearValues.data();
 
 			vkCmdBeginRenderPass(m_commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-
+			for (int p = 0; p < all_pipeline.size(); p++)
+			{
+				Skybox * sky = SkyboxManager::GetCurrentSkybox();
+				if (sky->getIndexPipeline() == all_pipeline[p]->getIndex())
+				{
+					SkyboxManager::GetCurrentSkybox()->render(m_commandBuffers[i], all_pipeline[p], tab_Descriptor[i], VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT);
+				}
+			}
 			for (int p = 0; p < all_pipeline.size();p++)
 			{
 				vkCmdBindPipeline(m_commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, all_pipeline[p]->m_graphiquePipelineElement.m_graphicsPipeline);

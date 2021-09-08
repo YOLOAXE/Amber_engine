@@ -3,6 +3,7 @@
 namespace Ge
 {
 	int Descriptor::countDescriptor = 0;
+	std::vector<Descriptor *> Descriptor::s_Descriptor;
     Descriptor::Descriptor(VulkanMisc *vM, VkDescriptorType descriptorType, int baseCount)
     {
         m_count = baseCount;                
@@ -12,11 +13,18 @@ namespace Ge
         m_descriptorType = descriptorType;
         m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,baseCount,descriptorType, m_countDescriptor); //TODO swapchain image X3 a verifier si X1 fonctionne 
         m_DescriptorPool = createVkDescriptorPool(vM,baseCount,descriptorType); 
-        m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);     		
+        m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);    
+		s_Descriptor.push_back(this);
     }
+
+	std::vector<Descriptor *> Descriptor::GetAllDescriptor()
+	{
+		return Descriptor::s_Descriptor;
+	}
 
 	Descriptor::~Descriptor()
 	{
+		s_Descriptor.erase(std::remove(s_Descriptor.begin(), s_Descriptor.end(), this), s_Descriptor.end());
 		//destroyVkDescriptorSet(vulkanM,m_DescriptorSets,m_DescriptorPool);
 		destroyVkDescriptorPool(vulkanM, m_DescriptorPool);
 		destroyVkVkDescriptorSetLayout(vulkanM, m_DescriptorSetLayout);
@@ -45,8 +53,7 @@ namespace Ge
             destroyVkVkDescriptorSetLayout(vulkanM,m_DescriptorSetLayout);
             m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,count,m_descriptorType, m_countDescriptor);
             m_DescriptorPool = createVkDescriptorPool(vM,count,m_descriptorType);
-            m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);   
-			vM->str_VulkanSwapChainMisc->swapChainRecreate->recreatePipeline();			
+            m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);   		
         }
         m_count = count;
         VkWriteDescriptorSet descriptorWrites{};
@@ -72,8 +79,7 @@ namespace Ge
             destroyVkVkDescriptorSetLayout(vulkanM,m_DescriptorSetLayout);
             m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,count,m_descriptorType, m_countDescriptor);
             m_DescriptorPool = createVkDescriptorPool(vM,count,m_descriptorType);
-            m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool); 
-			vM->str_VulkanSwapChainMisc->swapChainRecreate->recreatePipeline();
+            m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);
 			vM->str_VulkanDescriptor->recreateCommandBuffer = true;
         }
         m_count = count;

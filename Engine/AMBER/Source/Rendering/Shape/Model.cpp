@@ -56,8 +56,13 @@ namespace Ge
 
 	void Model::setMaterial(Materials * m)
 	{
+		if (m_material != nullptr)
+		{
+			removeComponent((Component *)m_material);
+		}		
+		addComponent((Component *)m);
 		m_material = m;
-		m_index.material = m_material->getIndex();
+		m_index.material = m_material->getIndex();		
 	}
 
 	Materials * Model::getMaterial()

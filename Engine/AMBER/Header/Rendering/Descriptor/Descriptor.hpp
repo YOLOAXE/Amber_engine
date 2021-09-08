@@ -17,6 +17,7 @@ namespace Ge
         std::vector<VkDescriptorSet> getDescriptorSets();
         void updateCount(VulkanMisc *vM, int count, std::vector<VkDescriptorBufferInfo> bufferInfo);
         void updateCount(VulkanMisc *vM, int count, std::vector<VkDescriptorImageInfo> bufferInfo);
+		static std::vector<Descriptor *> GetAllDescriptor();
     private:
         static VkDescriptorPool createVkDescriptorPool(VulkanMisc *vM, int count, VkDescriptorType type);
         static VkDescriptorSetLayout createVkDescriptorSetLayout(VulkanMisc *vM, int count, VkDescriptorType type, int descriptorCount);
@@ -27,6 +28,7 @@ namespace Ge
 
     private:
 		static int countDescriptor;
+		static std::vector<Descriptor *> s_Descriptor;
         VulkanMisc *vulkanM;
         VkDescriptorSetLayout m_DescriptorSetLayout;
         VkDescriptorPool m_DescriptorPool;

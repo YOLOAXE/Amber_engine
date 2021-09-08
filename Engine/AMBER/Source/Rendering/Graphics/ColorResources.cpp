@@ -12,7 +12,7 @@ namespace Ge
 		{
 			return false;
 		}
-		m_colorImageView = ImageViewSwapChains::createImageView(m_colorImage, vM->str_VulkanSwapChainMisc->str_swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1, vM);
+		m_colorImageView = ImageViewSwapChains::createImageView(m_colorImage, VK_IMAGE_VIEW_TYPE_2D, vM->str_VulkanSwapChainMisc->str_swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1, vM);
 		vM->str_VulkanCommandeBufferMisc->str_colorImageView = m_colorImageView;
 		vM->str_VulkanCommandeBufferMisc->str_colorImage = m_colorImage;
 		vM->str_VulkanCommandeBufferMisc->str_colorImageMemory = m_colorImageMemory;

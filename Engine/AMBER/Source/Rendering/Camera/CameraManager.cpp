@@ -7,7 +7,8 @@ namespace Ge
     bool CameraManager::initialize(VulkanMisc *vM, InputManager *im)
     {        
         vulkanM = vM;
-        m_flyCamera = new FlyCamera(vM, im);        
+        m_flyCamera = new FlyCamera(vM, im);      
+		((Camera *)m_flyCamera)->setName("FlyCamera");
 		m_cameras.push_back((Camera *)m_flyCamera);
         CameraManager::updatePriorityCamera(); 
 		updateDescriptor();

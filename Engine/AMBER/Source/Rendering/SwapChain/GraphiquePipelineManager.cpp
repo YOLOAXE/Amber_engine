@@ -19,8 +19,9 @@ namespace Ge
 
 	void GraphiquePipelineManager::release()
 	{
+		m_fileNameShaders.clear();
 		for (int i = 0; i < m_graphiquePipeline.size();i++)
-		{
+		{			
 			m_fileNameShaders.push_back(m_graphiquePipeline[i]->getShaderPair());
 			delete (m_graphiquePipeline[i]);
 		}

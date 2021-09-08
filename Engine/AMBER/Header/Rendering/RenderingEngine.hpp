@@ -24,6 +24,7 @@
 #include "CommandBuffer.hpp"
 #include "Hud.hpp"
 #include "SyncObjects.hpp"
+#include "SkyboxManager.hpp"
 
 namespace Ge
 {
@@ -66,6 +67,7 @@ namespace Ge
         CommandBuffer m_commandBuffer;
 		Hud m_hud;
 		SyncObjects m_syncObjects;
+		SkyboxManager m_skyboxManager;
 		size_t m_currentFrame = 0;
     };
 }

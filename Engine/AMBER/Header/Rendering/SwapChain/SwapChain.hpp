@@ -25,7 +25,7 @@ namespace Ge
 		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
 	private:
 		friend class RenderingEngine;
-		bool initialize(VulkanMisc * vM, ptrClass * ptrC, ShaderUniformBufferDivers * sUBD);
+		bool initialize(VulkanMisc *vM, ptrClass * ptrC, ShaderUniformBufferDivers * sUBD);
 		void release();
 		bool initPipeline();
 		void releasePipeline();		
