@@ -161,12 +161,12 @@ namespace Ge
 		BufferManager::endSingleTimeCommands(commandBuffer, vM);
 	}
 
-	void BufferManager::copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t baseArrayLayer, VulkanMisc * vM)
+	void BufferManager::copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t baseArrayLayer, uint32_t bufferOffset,  VulkanMisc * vM)
 	{
 		VkCommandBuffer commandBuffer = BufferManager::beginSingleTimeCommands(vM);
 
 		VkBufferImageCopy region{};
-		region.bufferOffset = 0;
+		region.bufferOffset = bufferOffset;
 		region.bufferRowLength = 0;
 		region.bufferImageHeight = 0;
 		region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

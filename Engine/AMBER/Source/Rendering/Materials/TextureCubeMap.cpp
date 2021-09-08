@@ -10,7 +10,7 @@ namespace Ge
 		texHeight = Height/3;
 		texWidth = Width/4;
 		imageSize = texWidth * texHeight * 4 * 6;
-		mipLevels = 1;//static_cast<uint32_t>(std::floor(std::log2(Width > Height ? Width : Height))) + 1;
+		mipLevels = 1;
 		VmaBuffer stagingBuffer;
 		BufferManager::createBuffer(imageSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, vM->str_VulkanDeviceMisc);
 		
@@ -18,17 +18,33 @@ namespace Ge
 		VkDeviceSize layersize = imageSize / 6;
 		for (int face = 0; face < 6; face++)
 		{
-			memcpy((stbi_uc *)data + (layersize)*face, pc[face], static_cast<size_t>(layersize));
+			memcpy((stbi_uc *)data+layersize*face, pc[face], static_cast<size_t>(layersize));
 		}
 		BufferManager::unMapMemory(stagingBuffer);
 
-		BufferManager::createImageBuffer(texWidth, texHeight, VK_IMAGE_TYPE_2D,6, 1, VK_SAMPLE_COUNT_1_BIT, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, textureImage, VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT, vM);
+		BufferManager::createImageBuffer(texWidth, texHeight, VK_IMAGE_TYPE_2D, 6, 1, VK_SAMPLE_COUNT_1_BIT, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, textureImage, VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT, vM);
+		Textures::transitionImageLayout(textureImage.image, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels, 6, vM);//VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
 
-		Textures::transitionImageLayout(textureImage.image, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels,6, vM);//VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+		VkCommandBuffer commandBuffer = BufferManager::beginSingleTimeCommands(vM);
 		for (int face = 0; face < 6; face++)
 		{
-			BufferManager::copyBufferToImage(stagingBuffer.buffer, textureImage.image, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight), face, vM);
+			VkBufferImageCopy region{};
+			region.bufferOffset = face * layersize * sizeof(stbi_uc);
+			region.bufferRowLength = texWidth;
+			region.bufferImageHeight = texHeight;
+			region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			region.imageSubresource.mipLevel = 0;
+			region.imageSubresource.baseArrayLayer = face;
+			region.imageSubresource.layerCount = 1;
+			region.imageOffset = { 0, 0, 0 };
+			region.imageExtent = {
+				static_cast<uint32_t>(texWidth),
+				static_cast<uint32_t>(texHeight),
+				1
+			};
+			vkCmdCopyBufferToImage(commandBuffer, stagingBuffer.buffer, textureImage.image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);			
 		}
+		BufferManager::endSingleTimeCommands(commandBuffer, vM);
 		BufferManager::destroyBuffer(stagingBuffer);
 
 		Textures::generateMipmaps(textureImage.image, VK_FORMAT_R8G8B8A8_UNORM, texWidth, texHeight, mipLevels, 6, vM);
