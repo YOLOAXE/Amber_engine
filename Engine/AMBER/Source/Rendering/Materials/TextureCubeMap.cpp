@@ -54,7 +54,7 @@ namespace Ge
 			region.bufferRowLength = texWidth;
 			region.bufferImageHeight = texHeight;
 			region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-			region.imageSubresource.mipLevel = 0;
+			region.imageSubresource.mipLevel = 0;// ??
 			region.imageSubresource.baseArrayLayer = face;
 			region.imageSubresource.layerCount = 1;
 			region.imageOffset = { 0, 0, 0 };
