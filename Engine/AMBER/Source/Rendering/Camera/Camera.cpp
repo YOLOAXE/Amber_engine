@@ -11,7 +11,7 @@ namespace Ge
 		}
 		else
 		{
-			m_uniformBufferCamera.proj = glm::perspective(glm::radians(m_fov), vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height/ (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height, m_near, m_far);
+			m_uniformBufferCamera.proj = glm::perspective(glm::radians(m_fov), 16.0f/9.0f, m_near, m_far);
 		}
 		m_uniformBufferCamera.proj[1][1] *= -1;
 		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(UniformBufferCamera));

@@ -11,6 +11,7 @@ namespace Ge
 		cubeMapBaseModel = mM->allocateBuffer("../Model/skybox.obj");
 		m_skyboxPipeline = gPM->createPipeline("../Shader/sbFrag.spv","../Shader/sbVert.spv");
 		loadSkybox(TextureManager::GetNullCubeMap());
+		currentSkybox = nullptr;
 		Debug::INITSUCCESS("SkyboxManager");
 		return true;
 	}

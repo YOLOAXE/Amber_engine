@@ -39,7 +39,7 @@ namespace Ge
 		VulkanMisc * vulkanM;
 		UniformBufferCamera m_uniformBufferCamera;
 		VmaBuffer m_vmaUniformBuffer;
-		float m_fov = 70.0f;
+		float m_fov = 80.0f;
 		float m_near = 0.1f;
 		float m_far = 300.0f;
 		int m_priority = 0;

@@ -64,12 +64,15 @@ namespace Ge
 			renderPassInfo.pClearValues = clearValues.data();
 
 			vkCmdBeginRenderPass(m_commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-			for (int p = 0; p < all_pipeline.size(); p++)
+			Skybox * sky = SkyboxManager::GetCurrentSkybox();
+			if (sky != nullptr)
 			{
-				Skybox * sky = SkyboxManager::GetCurrentSkybox();
-				if (sky->getIndexPipeline() == all_pipeline[p]->getIndex())
+				for (int p = 0; p < all_pipeline.size(); p++)
 				{
-					SkyboxManager::GetCurrentSkybox()->render(m_commandBuffers[i], all_pipeline[p], tab_Descriptor[i], VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT);
+					if (sky->getIndexPipeline() == all_pipeline[p]->getIndex())
+					{
+						SkyboxManager::GetCurrentSkybox()->render(m_commandBuffers[i], all_pipeline[p], tab_Descriptor[i], VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT);
+					}
 				}
 			}
 			for (int p = 0; p < all_pipeline.size();p++)

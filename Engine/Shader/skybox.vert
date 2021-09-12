@@ -63,7 +63,7 @@ layout (location = 0) out vec3 outUVW;
 void main() 
 {
 	outUVW = inPosition;
-	outUVW.xy *= -1.0;
+	//outUVW.xy *= -1.0;
 	mat4 modelView = ubc.view;
 	modelView[3] = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	gl_Position = ubc.proj * modelView * vec4(inPosition.xyz, 1.0);

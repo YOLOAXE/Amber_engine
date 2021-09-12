@@ -112,8 +112,9 @@ namespace Ge
 		int thCubeMap = th/3;
 		std::vector<unsigned char *> pixelTab;
 		std::vector<int> indiceStbi;
-		std::vector<unsigned char *> pixelTabCubeMap;
-		int indiceCubeMap[6] = { 4 , 5 , 6 , 7 , 1, 9 };
+		std::vector<unsigned char *> pixelTabCubeMap;		
+		std::vector<int> indiceCubeMapNull = { 0 , 2 , 3 , 8 , 10, 11 };
+		int indiceCubeMap[6] = { 6 , 4 , 1 , 9 , 5, 7 };
 		for (int i = 0; i < 12; i++)
 		{
 			pixelTab.push_back(new stbi_uc[twCubeMap * thCubeMap*4]);//4 char * -> 1			
@@ -124,13 +125,13 @@ namespace Ge
 		{
 			for (int x = 0; x < tw; x++)
 			{
-				indicePT = (x / twCubeMap)+((y/ thCubeMap)*4);					
-				pixelTab[indicePT][4 * indiceStbi[indicePT] + 0] = pixel[4 * indicePixel + 0];
-				pixelTab[indicePT][4 * indiceStbi[indicePT] + 1] = pixel[4 * indicePixel + 1];
-				pixelTab[indicePT][4 * indiceStbi[indicePT] + 2] = pixel[4 * indicePixel + 2];
-				pixelTab[indicePT][4 * indiceStbi[indicePT] + 3] = pixel[4 * indicePixel + 3];
-				indiceStbi[indicePT]++;
-				indicePixel++;
+				indicePT = (x / twCubeMap)+((y/ thCubeMap)*4);
+				pixelTab[indicePT][indiceStbi[indicePT] + 0] = pixel[indicePixel + 0];
+				pixelTab[indicePT][indiceStbi[indicePT] + 1] = pixel[indicePixel + 1];
+				pixelTab[indicePT][indiceStbi[indicePT] + 2] = pixel[indicePixel + 2];
+				pixelTab[indicePT][indiceStbi[indicePT] + 3] = pixel[indicePixel + 3];
+				indiceStbi[indicePT]+=4;				
+				indicePixel+=4;
 			}
 		}
 		for (int i = 0; i < 6; i++)
