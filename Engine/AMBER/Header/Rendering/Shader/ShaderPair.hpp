@@ -7,10 +7,11 @@ namespace Ge
 	class ShaderPair
 	{
 	public:
-		ShaderPair(std::string f, std::string v);
+		ShaderPair(std::string f, std::string v,bool b);
 		ShaderPair();
 		std::string Frag;
 		std::string Vert;
+		bool back;
 	};
 }
 

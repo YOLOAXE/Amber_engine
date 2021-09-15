@@ -18,7 +18,7 @@ namespace Ge
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
-	Camera::Camera(VulkanMisc * vM) : GObject(true)
+	Camera::Camera(VulkanMisc * vM) : GObject(false)
 	{
 		if (!BufferManager::createBuffer(sizeof(UniformBufferCamera), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM->str_VulkanDeviceMisc)) 
 		{
@@ -104,5 +104,24 @@ namespace Ge
 	int Camera::getPriority()
 	{
 		return m_priority;
+	}
+
+	void Camera::onGUI()
+	{
+		GObject::onGUI();
+		ImGui::TextColored(ImVec4(0.2f, 1, 0.2f, 1), "Camera\n");
+		if (ImGui::DragFloat("Fov", &m_fov,2.0f,10.0f,180.0f))
+		{
+			Camera::updatePerspective();
+		}
+		if (ImGui::DragFloat("Near", &m_near, 0.5f, 0.0001f, 10.0f))
+		{
+			Camera::updatePerspective();
+		}
+		if (ImGui::DragFloat("Far", &m_far, 0.5f, 1.0f, 10000.0f))
+		{
+			Camera::updatePerspective();
+		}
+
 	}
 }

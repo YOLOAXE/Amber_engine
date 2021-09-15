@@ -8,8 +8,12 @@ namespace Ge
 	{
 		vulkanM = vM;
 		currentSkybox = nullptr;
-		cubeMapBaseModel = mM->allocateBuffer("../Model/skybox.obj");
-		m_skyboxPipeline = gPM->createPipeline("../Shader/sbFrag.spv","../Shader/sbVert.spv");
+		float pos[72] = { -5,-5,-5,5,5,-5,-5,5,-5,5,-5,-5,-5,-5,5,5,5,5,5,-5,5,-5,5,5,-5,-5,-5,5,-5,5,5,-5,-5,-5,-5,5,5,-5,-5,5,5,5,5,5,-5,5,-5,5,5,5,-5,-5,5,5,-5,5,-5,5,5,5,-5,5,-5,-5,-5,5,-5,-5,-5,-5,5,5 };
+		float texCord[48] = { 1,1,0,0,1,0,0,1,0,1,1,0,1,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1,1,0,0 };
+		float normal[72] = { 0,-0,1,0,-0,1,0,-0,1,0,-0,1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,-1,-0,0,1,0,-0,1,0,-0,-1,-0,0,0,-1,0,0,1,-0,0,1,-0,0,-1,0,1,0,-0,-1,-0,0,-1,-0,0,1,0,-0,0,1,-0,0,-1,0,0,-1,0,0,1,-0 };
+		unsigned int indice[36] = { 0,1,2,1,0,3,4,5,6,5,4,7,8,9,10,9,8,11,12,13,14,13,12,15,16,17,18,17,16,19,20,21,22,21,20,23 };
+		cubeMapBaseModel = mM->allocateBuffer(pos, texCord, texCord, indice,24,36);
+		m_skyboxPipeline = gPM->createPipeline("../Shader/skybox_fs.spv","../Shader/skybox_vs.spv",true);
 		loadSkybox(TextureManager::GetNullCubeMap());
 		currentSkybox = nullptr;
 		Debug::INITSUCCESS("SkyboxManager");

@@ -59,18 +59,13 @@ layout(location = 1) in vec3 inNormal;
 layout(location = 2) in vec2 inTexCoord;
 
 layout(location = 0) out vec2 fragTexCoord;
-layout(location = 1) out vec3 WorldPos;
-layout(location = 2) out vec3 Normal;
-layout (location = 3) out vec3 outViewVec;
+layout(location = 1) out vec3 Normal;
+layout(location = 2) out vec3 WorldPos;
 
 void main() 
 {
 	fragTexCoord = inTexCoord * ubm[index.material].offset;
 	WorldPos = vec3(ubo[index.ubo].model * vec4(inPosition, 1.0));
 	Normal = mat3(transpose(inverse(ubo[index.ubo].model))) * inNormal;
-
-	vec4 pos = ubo[index.ubo].model * vec4(inPosition, 1.0);
-    outViewVec = -pos.xyz;			
-	
     gl_Position = ubc.proj * ubc.view * ubo[index.ubo].model * vec4(inPosition, 1.0);
 }

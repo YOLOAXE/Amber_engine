@@ -33,29 +33,29 @@ namespace Ge
 
 		if (m_im->getKey(87))
 		{
-			setPosition(getPosition() - transformDirectionAxeX() * m_moveSpeed);
+			setPosition(getPosition() + transformDirectionAxeX() * m_moveSpeed);
 		}
 		else if (m_im->getKey(83))
 		{
-			setPosition(getPosition() - transformDirectionAxeX() * -m_moveSpeed);
+			setPosition(getPosition() + transformDirectionAxeX() * -m_moveSpeed);
 		}
 
 		if (m_im->getKey(68))
 		{
-			setPosition(getPosition() - transformDirectionAxeY() * m_moveSpeed);
+			setPosition(getPosition() + transformDirectionAxeY() * m_moveSpeed);
 		}
 		else if (m_im->getKey(65))
 		{
-			setPosition(getPosition() - transformDirectionAxeY() * -m_moveSpeed);
+			setPosition(getPosition() + transformDirectionAxeY() * -m_moveSpeed);
 		}
 
 		if (m_im->getKey(341))
 		{
-			setPosition(getPosition() - glm::vec3(0, 1, 0) * m_moveSpeed);
+			setPosition(getPosition() + glm::vec3(0, 1, 0) * m_moveSpeed);
 		}
 		else if (m_im->getKey(32))
 		{
-			setPosition(getPosition() - glm::vec3(0, -1, 0) * m_moveSpeed);
+			setPosition(getPosition() + glm::vec3(0, -1, 0) * m_moveSpeed);
 		}		
 	}
 }

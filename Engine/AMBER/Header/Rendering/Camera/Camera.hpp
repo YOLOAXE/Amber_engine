@@ -32,6 +32,7 @@ namespace Ge
 		float getFar();
 		void mapMemory() override;
 		int getPriority();
+		void onGUI() override;
 		VkBuffer getUniformBuffer();
 	private:
 		void updatePerspective();

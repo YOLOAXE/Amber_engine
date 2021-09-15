@@ -12,6 +12,8 @@ public:
 	void update();
 	void stop();
 	void onGUI();
+private:
+	float gammaValue;
 };
 
 #endif//__ENGINE_GUI_INFO__

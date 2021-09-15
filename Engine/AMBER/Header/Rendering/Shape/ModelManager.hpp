@@ -18,6 +18,8 @@ namespace Ge
         bool initiliaze(VulkanMisc *vM);
         void release();
         ShapeBuffer *allocateBuffer(const char *path);
+		ShapeBuffer *allocateBuffer(float * pos, float * texCord, float * normal, unsigned int * indice, unsigned vertexSize, unsigned indiceSize);
+		void printModelInfo(const char *path);
         Model *createModel(ShapeBuffer *buffer, std::string nom = "Model");
         void destroyModel(Model *model);
         void destroyBuffer(ShapeBuffer *buffer);

@@ -10,7 +10,7 @@ namespace Ge
 		texHeight = Height / 3;
 		texWidth = Width / 4;
 		imageSize = texWidth * texHeight * 4 * 6;
-		mipLevels = static_cast<uint32_t>(std::floor(std::log2(texWidth > texHeight ? texWidth : texHeight))) + 1;
+		mipLevels = 1;//static_cast<uint32_t>(std::floor(std::log2(texWidth > texHeight ? texWidth : texHeight))) + 1;
 		VmaBuffer stagingBuffer;
 		BufferManager::createBuffer(imageSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, vM->str_VulkanDeviceMisc);
 
@@ -31,7 +31,7 @@ namespace Ge
 		subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		subresourceRange.baseMipLevel = 0;
 		subresourceRange.levelCount = 1;
-		subresourceRange.layerCount = 1;
+		subresourceRange.layerCount = 6;//1;
 		subresourceRange.baseArrayLayer = 0;
 
 		VkImageMemoryBarrier imageMemoryBarrier = {};
@@ -44,7 +44,7 @@ namespace Ge
 		imageMemoryBarrier.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 		imageMemoryBarrier.srcAccessMask = 0;
 		imageMemoryBarrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-		Debug::Log("stateEntry");
+
 		vkCmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 		std::vector<VkBufferImageCopy> bufferImageCopyRegion;
 		for (int face = 0; face < 6; face++)
@@ -66,7 +66,7 @@ namespace Ge
 			bufferImageCopyRegion.push_back(region);
 		}
 		vkCmdCopyBufferToImage(commandBuffer, stagingBuffer.buffer, textureImage.image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, bufferImageCopyRegion.size(), bufferImageCopyRegion.data());		
-		for (int face = 0; face < 6; face++)
+		/*for (int face = 0; face < 6; face++)
 		{
 			Debug::Log("state 1 face : %d", face);
 			int32_t mipWidth = texWidth;
@@ -119,7 +119,18 @@ namespace Ge
 				0, nullptr,
 				0, nullptr,
 				1, &imageMemoryBarrier);
-		}
+		}*/
+
+		imageMemoryBarrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+		imageMemoryBarrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+		imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+
+		vkCmdPipelineBarrier(commandBuffer,
+			VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0,
+			0, nullptr,
+			0, nullptr,
+			1, &imageMemoryBarrier);
 
 		BufferManager::endSingleTimeCommands(commandBuffer, vM);
 
