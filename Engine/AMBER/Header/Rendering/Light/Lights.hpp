@@ -25,6 +25,8 @@ namespace Ge
 		glm::vec3 getSpecular();
 		void setAmbiant(glm::vec3 ambiant);
 		glm::vec3 getAmbiant();
+		void setRange(float r);
+		float getRange();
 		int getStatus(); //Statut directional spotlight pointlight
 		int getIndex();
 		void setIndex(int i);

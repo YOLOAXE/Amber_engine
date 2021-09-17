@@ -8,6 +8,7 @@ namespace Ge
 		m_index = index;
 		m_ubl.position = glm::vec3(0, 0, 0);
 		m_ubl.lightColor = glm::vec3(1);
+		m_ubl.range = 10.0f;
 		if (!BufferManager::createBuffer(sizeof(UniformBufferLight), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM->str_VulkanDeviceMisc))
 		{
 			Debug::Error("Echec de la creation d'un uniform buffer object");
@@ -22,6 +23,17 @@ namespace Ge
 	{
 		m_ubl.position = m_transform.position;
 		updateUniformBufferLight();
+	}
+
+	void Lights::setRange(float r)
+	{
+		m_ubl.range = r;
+		updateUniformBufferLight();
+	}
+
+	float Lights::getRange()
+	{
+		return m_ubl.range;
 	}
 
 	void Lights::setColors(glm::vec3 color)
@@ -102,22 +114,13 @@ namespace Ge
 		{
 			setColors(m_ubl.lightColor);
 		}
-		/*if (ImGui::ColorEdit3("Ambiant", (float *)&m_ubl.ambient))
+		if (m_ubl.status != 0)
 		{
-			setAmbiant(m_ubl.ambient);
+			if (ImGui::DragFloat("Range", &m_ubl.range, 0.2f,0.01f))
+			{
+				updateUniformBufferLight();
+			}
 		}
-		if (ImGui::ColorEdit3("Specular", (float *)&m_ubl.specular))
-		{
-			setSpecular(m_ubl.specular);
-		}
-		ImGui::DragFloat("Quadratic", &m_ubl.quadratic,0.1f);
-		ImGui::DragFloat("Constant", &m_ubl.constant,0.1f);
-		ImGui::DragFloat("Linear", &m_ubl.linear,0.1f);
-		if (m_ubl.status == 2)
-		{
-			ImGui::DragFloat("CutOff", &m_ubl.cutOff,0.2f);
-			ImGui::DragFloat("OuterCutOff", &m_ubl.outerCutOff,0.2f);
-		}*/
 	}
 
 	Lights::~Lights()

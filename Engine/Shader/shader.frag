@@ -38,6 +38,7 @@ layout(set = 4, binding = 0) uniform UniformBufferLight
 {
 	vec3 position;
     vec3 lightColor;
+	float range;
 	uint status;//DirLight = 0 ; PointLight = 1 ; SpotLight = 2
 } ubl[];
 
@@ -62,7 +63,7 @@ layout(location = 2) in vec3 WorldPos;
 
 layout(location = 0) out vec4 outColor;
 
-vec3 BlinnPhong(vec3 normal, vec3 fragPos, vec3 lightPos, vec3 lightColor)
+vec3 BlinnPhong(vec3 normal, vec3 fragPos, vec3 lightPos, vec3 lightColor, float range)
 {
     // diffuse
     vec3 lightDir = normalize(lightPos - fragPos);
@@ -78,7 +79,7 @@ vec3 BlinnPhong(vec3 normal, vec3 fragPos, vec3 lightPos, vec3 lightColor)
     // simple attenuation
     float max_distance = 1.5;
     float distance = length(lightPos - fragPos);
-    float attenuation = 1.0 / (distance * distance);
+    float attenuation = range / (distance * distance);
     
     diffuse *= attenuation;
     specular *= attenuation;
@@ -93,7 +94,7 @@ void main()
     vec3 lighting = vec3(0.0);
     for(int i = 0; i < ubd.maxLight; i++)
 	{
-        lighting += BlinnPhong(normalize(Normal), WorldPos, ubl[i].position, ubl[i].lightColor);
+        lighting += BlinnPhong(normalize(Normal), WorldPos, ubl[i].position, ubl[i].lightColor,ubl[i].range);
 	}
     color *= lighting;
 	color += ambiantWolrdLight;

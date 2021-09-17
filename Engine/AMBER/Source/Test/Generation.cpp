@@ -20,6 +20,8 @@ void Generation::load()
 	m->setMaterial(mat);	
 	m2->addComponent(&m_gui);
 	GameEngine::getPtrClass().lightManager->createPointLight(glm::vec3(0, 4, 0), glm::vec3(1));
+	GameEngine::getPtrClass().lightManager->createPointLight(glm::vec3(0, 4, 0), glm::vec3(1));
+	GameEngine::getPtrClass().lightManager->createPointLight(glm::vec3(0, 4, 0), glm::vec3(1));
 	GameEngine::getPtrClass().behaviourManager->addBehaviour(&m_gui);
 	GameEngine::getPtrClass().skyboxManager->loadSkybox(GameEngine::getPtrClass().textureManager->createTextureCubeMap("../Texture/skybox.png"));
 	Debug::Log("Load scene");

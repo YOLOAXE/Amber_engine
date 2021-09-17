@@ -35,6 +35,7 @@ layout(set = 4, binding = 0) uniform UniformBufferLight
 {
 	vec3 position;
     vec3 lightColor;
+	float range;
 	uint status;//DirLight = 0 ; PointLight = 1 ; SpotLight = 2
 } ubl[];
 
