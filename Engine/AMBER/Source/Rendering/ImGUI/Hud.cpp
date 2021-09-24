@@ -334,6 +334,13 @@ namespace Ge
 		bool openInfo = true;
 
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		if (m_globalUI)
+		{
+			for (int i = 0; i < m_imguiBlockExtern.size(); i++)
+			{
+				m_imguiBlockExtern[i]->preRender(io);
+			}
+		}
 		ImGui_ImplVulkan_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
