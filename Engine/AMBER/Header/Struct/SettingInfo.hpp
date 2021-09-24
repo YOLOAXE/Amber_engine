@@ -14,6 +14,7 @@ struct SettingInfo
     glm::vec3 m_gravity = glm::vec3(0, -9.81f, 0);
     Version m_version;
 	glm::vec4 m_clearColor = glm::vec4(0.1f);
+	const char * iconPath = "";
 };
 
 #endif //__ENGINE_SETTING_INFO__

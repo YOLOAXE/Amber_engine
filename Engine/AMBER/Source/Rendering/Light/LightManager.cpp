@@ -10,6 +10,7 @@ namespace Ge
 			Debug::Error("Echec de la creation d'un uniform buffer");
 			return false;
 		}
+		updateDescriptor();
 		vulkanM->str_VulkanDescriptor->lightCount = 0;	
 		Debug::INITSUCCESS("LightManager");
         return true;
@@ -94,7 +95,7 @@ namespace Ge
 			bufferInfoLight.push_back(bufferIL);
 		}
 				
-		m_descriptor->updateCount(vulkanM, m_lights.size(),bufferInfoLight);
+		m_descriptor->updateCount(vulkanM, bufferInfoLight.size(),bufferInfoLight);
 	}
 
 	void LightManager::initDescriptor(VulkanMisc * vM) 

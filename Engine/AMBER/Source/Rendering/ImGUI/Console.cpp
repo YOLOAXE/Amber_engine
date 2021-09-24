@@ -8,6 +8,11 @@ namespace Ge
 		m_consoleDebug.Draw("Console", vM, &m_open);
 	}
 
+	void Console::preRender(ImGuiIO& io)
+	{
+
+	}
+
 	Console::Console()
 	{
 		Console::s_pInstance = this;

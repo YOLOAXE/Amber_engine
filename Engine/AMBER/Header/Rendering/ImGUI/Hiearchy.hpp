@@ -10,6 +10,7 @@ namespace Ge
 	{
 	public:
 		Hiearchy();
+		void preRender(ImGuiIO& io);
 		void render(VulkanMisc* vM);
 	private:		
 		ImGuiWindowFlags window_flags;

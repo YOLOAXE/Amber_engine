@@ -10,6 +10,7 @@ int main()
 	Debug::Info("Moteur Graphique");
 	GameEngine engine;
 	Generation gen;
+
 	engine.getPtrClass().settingManager->setName("ProceduralGeneration");
 	if (!engine.initialize())
 	{

@@ -2,6 +2,11 @@
 
 namespace Ge
 {
+	void EngineInfo::preRender(ImGuiIO& io)
+	{
+
+	}
+
 	void EngineInfo::render(VulkanMisc* vM)
 	{
 		ImGuiIO& io = ImGui::GetIO();

@@ -36,7 +36,7 @@ namespace Ge
 		VkBuffer getUniformBuffer();
 	private:
 		void updatePerspective();
-	private:
+	protected:
 		VulkanMisc * vulkanM;
 		UniformBufferCamera m_uniformBufferCamera;
 		VmaBuffer m_vmaUniformBuffer;

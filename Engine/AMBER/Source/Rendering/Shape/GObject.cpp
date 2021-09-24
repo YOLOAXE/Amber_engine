@@ -88,6 +88,12 @@ namespace Ge
 		m_transform.rotationMatrix = glm::lookAt(m_transform.position, m_transform.target, glm::vec3(0.0f, 0.0f, 1.0f));
 		m_transform.rotation = toQuat(m_transform.rotationMatrix);
 		extractEulerAngleXYZ(m_transform.rotationMatrix, m_transform.eulerAngles.x, m_transform.eulerAngles.y, m_transform.eulerAngles.z);
+		float yaw = glm::radians(m_transform.eulerAngles.x * (m_flipY ? -1.0f : 1.0f));
+		float pitch = glm::radians(m_transform.eulerAngles.y);
+		float roll = glm::radians(m_transform.eulerAngles.z);
+		m_transform.direction.x = sin(yaw);
+		m_transform.direction.y = -(sin(pitch)*cos(yaw));
+		m_transform.direction.z = -(cos(pitch)*cos(yaw));
 		mapMemory();
 	}
 

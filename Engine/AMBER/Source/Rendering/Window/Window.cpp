@@ -1,9 +1,10 @@
 #include "Window.hpp"
+#include "stb-cmake/stb_image.h"
 
 namespace Ge
 {
 
-	bool Window::initialize(uint32_t Width, uint32_t Height, const char * name, VulkanMisc * vM)
+	bool Window::initialize(uint32_t Width, uint32_t Height, const char * name, const char * iconPath, VulkanMisc * vM)
 	{
 		glfwInit();//init la fenetre
 
@@ -14,6 +15,13 @@ namespace Ge
 		glfwSetFramebufferSizeCallback(this->m_window, this->framebufferResizeCallback);//utiliser une fonction statique car GLFW ne sait pas correctement appeler une fonction membre
 		vM->str_VulkanDeviceMisc->str_window = this->m_window;
 		Debug::INITSUCCESS("Window");
+		if (iconPath != "")
+		{
+			GLFWimage images;
+			images.pixels = stbi_load(iconPath, &images.width, &images.height, 0, 4);
+			glfwSetWindowIcon(this->m_window, 1, &images);
+			stbi_image_free(images.pixels);
+		}
 		return true;
 	}
 

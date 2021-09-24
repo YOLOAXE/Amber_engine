@@ -85,4 +85,14 @@ namespace Ge
     {
         return m_settingInfo.m_gamma;
     }
+
+	void SettingManager::setIconPath(const char * path)
+	{
+		m_settingInfo.iconPath = path;
+	}
+
+	const char * SettingManager::getIconPath()
+	{
+		return m_settingInfo.iconPath;
+	}
 }

@@ -2,17 +2,18 @@
 
 namespace Ge
 {
+	CameraManager * CameraManager::Instance = nullptr;
 	std::vector<Camera *> CameraManager::m_cameras;
 	Camera *CameraManager::currentCamera = nullptr;
     bool CameraManager::initialize(VulkanMisc *vM, InputManager *im)
     {        
         vulkanM = vM;
+		Instance = this;
         m_flyCamera = new FlyCamera(vM, im);      
 		((Camera *)m_flyCamera)->setName("FlyCamera");
 		m_cameras.push_back((Camera *)m_flyCamera);
         CameraManager::updatePriorityCamera(); 
-		updateDescriptor();
-		Debug::INITSUCCESS("CameraManager");
+		Debug::INITSUCCESS("CameraManager");		
         return true;
     }
 
@@ -51,6 +52,7 @@ namespace Ge
 				currentCamera = m_cameras[i];
 			}
 		}    
+		CameraManager::Instance->updateDescriptor();
     }
 
     Camera *CameraManager::getCurrentCamera()

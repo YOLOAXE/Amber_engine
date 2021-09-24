@@ -9,6 +9,7 @@ namespace Ge
 		m_angleY = 0.0f;
 		m_angleX = 0.0f;
 		m_moveSpeed = 0.0f;
+		m_priority = 1.0f;
 	}
 
 	void FlyCamera::updateCamera()

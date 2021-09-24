@@ -14,9 +14,7 @@ namespace Ge
 		}
 		nullTexture = new Textures(pixel, 4, 3, m_textures.size(), vulkanM);
 		std::vector<unsigned char *> pixelTab = convertCubMap(pixel, 4, 3);
-		Debug::Log("Test");
 		s_nullTextureCubeMap = new TextureCubeMap(pixelTab, 4, 3, m_textures.size(), vulkanM);
-		Debug::Log("Test");
 		m_textures.push_back(nullTexture);
 		m_texturesCube.push_back(s_nullTextureCubeMap);
 		vulkanM->str_VulkanDescriptor->textureCount = m_textures.size();
@@ -113,7 +111,6 @@ namespace Ge
 		std::vector<unsigned char *> pixelTab;
 		std::vector<int> indiceStbi;
 		std::vector<unsigned char *> pixelTabCubeMap;		
-		std::vector<int> indiceCubeMapNull = { 0 , 2 , 3 , 8 , 10, 11 };
 		int indiceCubeMap[6] = { 6 , 4 , 1 , 9 , 5, 7 };
 		for (int i = 0; i < 12; i++)
 		{
@@ -126,12 +123,20 @@ namespace Ge
 			for (int x = 0; x < tw; x++)
 			{
 				indicePT = (x / twCubeMap)+((y/ thCubeMap)*4);
-				pixelTab[indicePT][indiceStbi[indicePT] + 0] = pixel[indicePixel + 0];
-				pixelTab[indicePT][indiceStbi[indicePT] + 1] = pixel[indicePixel + 1];
-				pixelTab[indicePT][indiceStbi[indicePT] + 2] = pixel[indicePixel + 2];
-				pixelTab[indicePT][indiceStbi[indicePT] + 3] = pixel[indicePixel + 3];
-				indiceStbi[indicePT]+=4;				
-				indicePixel+=4;
+				if (std::find(std::begin(indiceCubeMap), std::end(indiceCubeMap), indicePT) != std::end(indiceCubeMap))
+				{
+					pixelTab[indicePT][indiceStbi[indicePT] + 0] = pixel[indicePixel + 0];
+					pixelTab[indicePT][indiceStbi[indicePT] + 1] = pixel[indicePixel + 1];
+					pixelTab[indicePT][indiceStbi[indicePT] + 2] = pixel[indicePixel + 2];
+					pixelTab[indicePT][indiceStbi[indicePT] + 3] = pixel[indicePixel + 3];
+					indiceStbi[indicePT] += 4;				
+					indicePixel += 4;
+				}		
+				else
+				{					
+					indicePixel += twCubeMap *4;
+					x += twCubeMap-1;
+				}				
 			}
 		}
 		for (int i = 0; i < 6; i++)

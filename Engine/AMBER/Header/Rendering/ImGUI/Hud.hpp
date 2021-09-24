@@ -25,6 +25,12 @@ namespace Ge
 		void release();
 		void recreateSwapChain();
 		void render(uint32_t currentframe);
+		bool getHudActive();
+		bool getGlobalHud();
+		void setHudActive(bool state);
+		void setGlobalHud(bool state);
+		void addBlockUI(ImguiBlock * ib);
+		void removeBlockUI(ImguiBlock * ib);
 		static void check_vk_result(VkResult err);
 	private:
 		bool createCommandPool(VkCommandPool* commandPool, VkCommandPoolCreateFlags flags, VulkanDeviceMisc* vM);
@@ -40,6 +46,7 @@ namespace Ge
 		Hiearchy m_hiearchy;
 		Console m_console;
 		std::vector<ImguiBlock *> m_imguiBlock;
+		std::vector<ImguiBlock *> m_imguiBlockExtern;
 		std::vector<VkFramebuffer> m_imGuiFramebuffer;
 		std::vector<VkCommandBuffer> m_imGuiCommandBuffers;
 		std::array<VkClearValue, 2> m_clearValues{};

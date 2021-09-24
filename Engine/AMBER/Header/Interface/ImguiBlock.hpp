@@ -12,6 +12,7 @@ namespace Ge
 	class ImguiBlock
 	{
 	public:
+		virtual void preRender(ImGuiIO& io) = 0;
 		virtual void render(VulkanMisc* vM) = 0;
 	};
 }

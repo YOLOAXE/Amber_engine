@@ -27,7 +27,7 @@ namespace Ge
 		p_ptrClass->hud = &m_hud;
 		p_ptrClass->skyboxManager = &m_skyboxManager;
         Debug::Info("Initialisation du moteur de rendu");
-        if (!RenderingEngine::m_window.initialize(p_ptrClass->settingManager->getWindowWidth(), p_ptrClass->settingManager->getWindowHeight(), p_ptrClass->settingManager->getName(), &m_vulkanMisc))
+        if (!RenderingEngine::m_window.initialize(p_ptrClass->settingManager->getWindowWidth(), p_ptrClass->settingManager->getWindowHeight(), p_ptrClass->settingManager->getName(), p_ptrClass->settingManager->getIconPath(), &m_vulkanMisc))
         {
             Debug::INITFAILED("Window");
             return false;

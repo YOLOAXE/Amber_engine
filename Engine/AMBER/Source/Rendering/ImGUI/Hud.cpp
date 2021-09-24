@@ -224,6 +224,26 @@ namespace Ge
 		}
 	}
 
+	bool Hud::getHudActive()
+	{
+		return m_hudActive;
+	}
+
+	bool Hud::getGlobalHud()
+	{
+		return m_globalUI;
+	}
+
+	void Hud::setHudActive(bool state)
+	{
+		m_hudActive = state;
+	}
+
+	void Hud::setGlobalHud(bool state)
+	{
+		m_globalUI = state;
+	}
+
 	bool Hud::createCommandPool(VkCommandPool* commandPool, VkCommandPoolCreateFlags flags, VulkanDeviceMisc* vM)
 	{
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
@@ -273,6 +293,16 @@ namespace Ge
 		initialize(vulkanM);
 	}
 
+	void Hud::addBlockUI(ImguiBlock * ib)
+	{
+		m_imguiBlockExtern.push_back(ib);
+	}
+
+	void Hud::removeBlockUI(ImguiBlock * ib)
+	{
+		m_imguiBlockExtern.erase(std::remove(m_imguiBlockExtern.begin(), m_imguiBlockExtern.end(), ib), m_imguiBlockExtern.end());
+	}
+
 	void Hud::render(uint32_t currentframe)
 	{
 		//vkResetCommandPool(vM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, 0);
@@ -309,9 +339,12 @@ namespace Ge
 		ImGui::NewFrame();
 		if (m_globalUI)
 		{
+			for (int i = 0; i < m_imguiBlockExtern.size(); i++)
+			{
+				m_imguiBlockExtern[i]->render(vulkanM);
+			}
 			if (m_hudActive)
 			{
-				//ImGui::ShowDemoWindow();
 				for (int i = 0; i < m_imguiBlock.size(); i++)
 				{					
 					m_imguiBlock[i]->render(vulkanM);

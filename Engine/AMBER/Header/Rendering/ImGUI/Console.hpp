@@ -10,6 +10,7 @@ namespace Ge
 	{
 	public:
 		Console();
+		void preRender(ImGuiIO& io);
 		void render(VulkanMisc* vM);
 		static ConsoleDebug * GetConsole();
 		static bool IsInit();

@@ -122,6 +122,14 @@ namespace Ge
 		{
 			Camera::updatePerspective();
 		}
+		if (ImGui::DragInt("Priority", &m_priority, 1.0f))
+		{
+			CameraManager::updatePriorityCamera();
+		}
+		if (ImGui::Checkbox("Ortho", &m_ortho))
+		{
+			Camera::updatePerspective();
+		}
 
 	}
 }

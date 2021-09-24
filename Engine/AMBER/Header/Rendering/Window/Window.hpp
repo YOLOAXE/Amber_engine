@@ -14,7 +14,7 @@ namespace Ge
 		static void framebufferResizeCallback(GLFWwindow* window,int width,int height);
 	private:
 		friend class RenderingEngine;
-		bool initialize(uint32_t Width, uint32_t Height, const char * name, VulkanMisc * vM);
+		bool initialize(uint32_t Width, uint32_t Height, const char * name,const char * iconPath, VulkanMisc * vM);
 		void release();
 	private:
 		friend class RenderingEngine;

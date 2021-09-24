@@ -23,6 +23,7 @@ namespace Ge
 		void updateDescriptor();
 		static void updatePriorityCamera();
     private:		
+		static CameraManager * Instance;
         static std::vector<Camera *> m_cameras;
         static Camera *currentCamera;
         VulkanMisc * vulkanM;        

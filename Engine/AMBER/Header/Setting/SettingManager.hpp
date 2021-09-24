@@ -26,6 +26,8 @@ namespace Ge
 		glm::vec4 getClearColor();
         void setGamma(float gamma);
         float getGamma();
+		void setIconPath(const char * path);
+		const char * getIconPath();
 
     private:
         SettingInfo m_settingInfo;

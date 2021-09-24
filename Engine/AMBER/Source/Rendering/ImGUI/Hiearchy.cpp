@@ -14,6 +14,8 @@ namespace Ge
 		window_flags |= ImGuiWindowFlags_NoNav;
 	}
 
+	void Hiearchy::preRender(ImGuiIO& io){}
+
 	void Hiearchy::render(VulkanMisc* vM)
 	{
 		std::vector<GObject *> items = GObject::GetGObjects();
