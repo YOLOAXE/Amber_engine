@@ -8,7 +8,7 @@ namespace Ge
 	class EngineInfo : public ImguiBlock
 	{
 	public:
-		void preRender(ImGuiIO& io);
+		void preRender(VulkanMisc* vM);
 		void render(VulkanMisc* vM);
 	private:
 		bool m_open = true;

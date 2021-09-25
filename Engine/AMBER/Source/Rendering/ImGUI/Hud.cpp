@@ -3,7 +3,6 @@
 #include "PhysicalDevices.hpp"
 #include "SwapChain.hpp"
 
-
 namespace Ge
 {
 	Hud::Hud()
@@ -16,7 +15,6 @@ namespace Ge
 	bool Hud::initialize(VulkanMisc* vM)
 	{
 		IMGUI_CHECKVERSION();
-		m_hudActive = true;
 		vulkanM = vM;
 		//vulkanM = vM;
 		ImGui::CreateContext();
@@ -216,6 +214,19 @@ namespace Ge
 		return true;
 	}
 
+	ImFont * Hud::createFont(const char* filename, float size_pixels, const ImFontConfig* font_cfg, const ImWchar* glyph_ranges)
+	{
+		ImFont * fontBuild = nullptr;
+		ImGuiIO& io = ImGui::GetIO();
+		fontBuild = io.Fonts->AddFontFromFileTTF(filename, size_pixels, font_cfg, glyph_ranges);
+		io.Fonts->Build();
+		VkCommandBuffer cmd = BufferManager::beginSingleTimeCommands(vulkanM);
+		ImGui_ImplVulkan_CreateFontsTexture(cmd);
+		BufferManager::endSingleTimeCommands(cmd, vulkanM);
+		ImGui_ImplVulkan_DestroyFontUploadObjects();
+		return fontBuild;
+	}
+
 	void Hud::check_vk_result(VkResult err)
 	{
 		if (err != VK_SUCCESS)
@@ -256,6 +267,10 @@ namespace Ge
 			Debug::Error("Echec de la creation d'un commandPool pour imGUI");
 			return false;
 		}
+		for (int i = 0; i < m_imguiBlockExtern.size(); i++)
+		{
+			m_imguiBlockExtern[i]->preRender(vulkanM);
+		}
 		return true;
 	}
 
@@ -272,6 +287,8 @@ namespace Ge
 
 	void Hud::release()
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.Fonts->Clear();
 		for (auto framebuffer : m_imGuiFramebuffer)
 		{
 			vkDestroyFramebuffer(vulkanM->str_VulkanDeviceMisc->str_device, framebuffer, nullptr);
@@ -289,18 +306,40 @@ namespace Ge
 
 	void Hud::recreateSwapChain()
 	{
-		release();
-		initialize(vulkanM);
+		for (auto framebuffer : m_imGuiFramebuffer)
+		{
+			vkDestroyFramebuffer(vulkanM->str_VulkanDeviceMisc->str_device, framebuffer, nullptr);
+		}
+
+		m_imGuiFramebuffer.resize(vulkanM->str_VulkanSwapChainMisc->str_swapChainImages.size());
+		VkFramebufferCreateInfo fbinfo = {};
+		fbinfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+		fbinfo.renderPass = m_imGuiRenderPass;
+		fbinfo.attachmentCount = 1;
+		fbinfo.pAttachments = nullptr;
+		fbinfo.width = vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.width;
+		fbinfo.height = vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height;
+		fbinfo.layers = 1;
+		for (uint32_t i = 0; i < vulkanM->str_VulkanSwapChainMisc->str_swapChainImages.size(); i++)
+		{
+			fbinfo.pAttachments = &vulkanM->str_VulkanSwapChainMisc->str_swapChainImageViews[i];
+			if (vkCreateFramebuffer(vulkanM->str_VulkanDeviceMisc->str_device, &fbinfo, nullptr, &m_imGuiFramebuffer[i]) != VK_SUCCESS)
+			{
+				Debug::Error("Echec de la creation d'un frame buffer pour imGUi");
+			}
+		}
 	}
 
 	void Hud::addBlockUI(ImguiBlock * ib)
 	{
 		m_imguiBlockExtern.push_back(ib);
+		ib->preRender(vulkanM);
 	}
 
 	void Hud::removeBlockUI(ImguiBlock * ib)
 	{
 		m_imguiBlockExtern.erase(std::remove(m_imguiBlockExtern.begin(), m_imguiBlockExtern.end(), ib), m_imguiBlockExtern.end());
+		ImGui_ImplVulkan_DestroyFontsTexture(); //TODO a modifier
 	}
 
 	void Hud::render(uint32_t currentframe)
@@ -334,13 +373,6 @@ namespace Ge
 		bool openInfo = true;
 
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		if (m_globalUI)
-		{
-			for (int i = 0; i < m_imguiBlockExtern.size(); i++)
-			{
-				m_imguiBlockExtern[i]->preRender(io);
-			}
-		}
 		ImGui_ImplVulkan_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();

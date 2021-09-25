@@ -30,7 +30,8 @@ namespace Ge
 		void setHudActive(bool state);
 		void setGlobalHud(bool state);
 		void addBlockUI(ImguiBlock * ib);
-		void removeBlockUI(ImguiBlock * ib);
+		void removeBlockUI(ImguiBlock * ib);	
+		ImFont * createFont(const char* filename, float size_pixels, const ImFontConfig* font_cfg = NULL, const ImWchar* glyph_ranges = NULL);
 		static void check_vk_result(VkResult err);
 	private:
 		bool createCommandPool(VkCommandPool* commandPool, VkCommandPoolCreateFlags flags, VulkanDeviceMisc* vM);
@@ -51,7 +52,7 @@ namespace Ge
 		std::vector<VkCommandBuffer> m_imGuiCommandBuffers;
 		std::array<VkClearValue, 2> m_clearValues{};
 		VkDescriptorPool m_imGuiDescriptorPool;
-		bool m_hudActive;
+		bool m_hudActive = true;
 		bool m_globalUI = true;
 	};
 

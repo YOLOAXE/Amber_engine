@@ -8,7 +8,7 @@ namespace Ge
 		m_consoleDebug.Draw("Console", vM, &m_open);
 	}
 
-	void Console::preRender(ImGuiIO& io)
+	void Console::preRender(VulkanMisc* vM)
 	{
 
 	}

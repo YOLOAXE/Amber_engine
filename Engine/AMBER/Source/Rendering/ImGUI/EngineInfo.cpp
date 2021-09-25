@@ -2,7 +2,7 @@
 
 namespace Ge
 {
-	void EngineInfo::preRender(ImGuiIO& io)
+	void EngineInfo::preRender(VulkanMisc* vM)
 	{
 
 	}
