@@ -32,6 +32,7 @@ namespace Ge
 		UniformBufferObject getUBO();
 		void setMaterial(Materials * m);
 		Materials * getMaterial();
+		void majMaterialIndex();
 		void mapMemory() override;
 		void setIndexUbo(int index);		
 	private:

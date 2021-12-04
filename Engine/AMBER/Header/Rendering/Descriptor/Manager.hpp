@@ -10,10 +10,15 @@ namespace Ge
 	{
 	public:
 		virtual void initDescriptor(VulkanMisc * vM) = 0;
-		virtual void updateDescriptor() = 0;
+		virtual void updateDescriptor() = 0;		
 		Descriptor* getDescriptor();
+		bool getDestroyElement();
+	protected:
+		friend class RenderingEngine;
+		virtual void destroyElement();
 	protected:
 		Descriptor *m_descriptor = nullptr;
+		bool m_destroyElement = false;
 	};
 }
 

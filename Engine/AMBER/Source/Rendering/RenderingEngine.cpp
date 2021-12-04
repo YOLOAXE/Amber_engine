@@ -151,8 +151,8 @@ namespace Ge
 		RenderingEngine::m_skyboxManager.release();
         RenderingEngine::m_shaderUniformBufferDivers.release();
         RenderingEngine::m_lightManager.release();
-        RenderingEngine::m_materialManager.release();
-        RenderingEngine::m_modelManager.release();
+		RenderingEngine::m_modelManager.release();
+        RenderingEngine::m_materialManager.release();        
 		RenderingEngine::m_cameraManager.release();
         RenderingEngine::m_textureManager.release();
         RenderingEngine::m_frameBuffers.release();
@@ -196,19 +196,20 @@ namespace Ge
 	}
 
     void RenderingEngine::drawFrame()
-    {
+    {		
 		m_cameraManager.updateFlyCam();
 		m_shaderUniformBufferDivers.updateUniformBufferDiver();
 		if (m_VulkanDescriptor.recreateCommandBuffer)
 		{
 			vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);
+			m_modelManager.destroyElement();
 			m_swapChain.recreatePipeline();
 			RenderingEngine::m_commandBuffer.release();
 			RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass);
 			m_VulkanDescriptor.recreateCommandBuffer = false;
-		}
+		}		
 		vkWaitForFences(m_vulkanDeviceMisc.str_device, 1, &m_syncObjects.m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
-
+		
 		uint32_t imageIndex;
 		VkResult result = vkAcquireNextImageKHR(m_vulkanDeviceMisc.str_device, m_vulkanSwapChainMisc.str_swapChain, UINT64_MAX, m_syncObjects.m_imageAvailableSemaphores[m_currentFrame], VK_NULL_HANDLE, &imageIndex);
 
@@ -238,7 +239,7 @@ namespace Ge
 		submitInfo.waitSemaphoreCount = 1;
 		submitInfo.pWaitSemaphores = waitSemaphores;
 		submitInfo.pWaitDstStageMask = waitStages;
-
+		
 		std::array<VkCommandBuffer, 2> submitCommandBuffers =
 		{ m_VulkanCommandeBufferMisc.str_commandBuffers[imageIndex], m_hud.m_imGuiCommandBuffers[imageIndex] };
 
@@ -255,7 +256,7 @@ namespace Ge
 		{
 			Debug::Error("Echec l'or de la soumission au command buffer");
 		}
-
+		
 		VkPresentInfoKHR presentInfo{};
 		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 
@@ -278,7 +279,7 @@ namespace Ge
 		{
 			Debug::Error("Echec l'or de la presentation");
 		}
-		m_currentFrame = (m_currentFrame + 1) % m_VulkanSynchronisation.MAX_FRAMES_IN_FLIGHT;
+		m_currentFrame = (m_currentFrame + 1) % m_VulkanSynchronisation.MAX_FRAMES_IN_FLIGHT;		
     }
 
     VulkanMisc *RenderingEngine::getVulkanMisc()

@@ -80,27 +80,56 @@ namespace Ge
 
 	void ModelManager::destroyModel(Model *model)
 	{
-		m_models.erase(std::remove(m_models.begin(), m_models.end(), model), m_models.end());
-        delete (model);
-		vulkanM->str_VulkanDescriptor->modelCount = m_models.size();
-		updateDescriptor();
+		m_destroyElement = true;
+		m_destroymodels.erase(std::remove(m_destroymodels.begin(), m_destroymodels.end(), model), m_destroymodels.end());
+		m_destroymodels.push_back(model);
+		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
 	}
 
 	void ModelManager::destroyBuffer(ShapeBuffer *buffer)
 	{
-		for (int i = 0; i < m_models.size(); i++)
+		m_destroyElement = true;
+		m_destroyshapeBuffers.erase(std::remove(m_destroyshapeBuffers.begin(), m_destroyshapeBuffers.end(), buffer), m_destroyshapeBuffers.end());
+		m_destroyshapeBuffers.push_back(buffer);
+		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
+	}
+
+	void ModelManager::destroyElement()
+	{		
+		if (m_destroyElement)
 		{
-			if (m_models[i]->getShapeBuffer() == buffer)
+			for (int j = 0; j < m_destroymodels.size(); j++)
 			{
-				Model * m = m_models[i];
-				m_models.erase(std::remove(m_models.begin(), m_models.end(), m), m_models.end());
-				delete (m);
-				i--;
+				m_models.erase(std::remove(m_models.begin(), m_models.end(), m_destroymodels[j]), m_models.end());
+				delete (m_destroymodels[j]);				
 			}
+
+			for (int j = 0; j < m_destroyshapeBuffers.size(); j++)
+			{
+				for (int i = 0; i < m_models.size(); i++)
+				{
+					if (m_models[i]->getShapeBuffer() == m_destroyshapeBuffers[j])
+					{
+						Model * m = m_models[i];
+						m_models.erase(std::remove(m_models.begin(), m_models.end(), m), m_models.end());
+						delete (m);
+						i--;
+					}
+				}
+				m_shapeBuffers.erase(std::remove(m_shapeBuffers.begin(), m_shapeBuffers.end(), m_destroyshapeBuffers[j]), m_shapeBuffers.end());
+				delete (m_destroyshapeBuffers[j]);
+			}
+
+			m_destroyshapeBuffers.clear();
+			m_destroymodels.clear();
+			for (int i = 0; i < m_models.size(); i++)
+			{
+				m_models[i]->setIndexUbo(i);
+			}
+			vulkanM->str_VulkanDescriptor->modelCount = m_models.size();
+			updateDescriptor();
+			m_destroyElement = false;
 		}
-		m_shapeBuffers.erase(std::remove(m_shapeBuffers.begin(), m_shapeBuffers.end(), buffer), m_shapeBuffers.end());
-        delete (buffer);		
-		updateDescriptor();
 	}
 
 	std::vector<Model *> ModelManager::GetModels()

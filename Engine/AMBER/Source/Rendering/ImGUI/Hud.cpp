@@ -66,7 +66,6 @@ namespace Ge
 		colors[ImGuiCol_PlotHistogram] = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
 		colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.00f, 0.60f, 0.00f, 1.00f);
 		colors[ImGuiCol_TextSelectedBg] = ImVec4(0.00f, 0.00f, 1.00f, 0.35f);
-		colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
 		colors[ImGuiCol_DragDropTarget] = ImVec4(1.00f, 1.00f, 0.00f, 0.90f);
 		colors[ImGuiCol_NavHighlight] = colors[ImGuiCol_HeaderHovered];
 		colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.00f, 1.00f, 1.00f, 0.70f);
@@ -215,12 +214,15 @@ namespace Ge
 	}
 
 	ImFont * Hud::createFont(const char* filename, float size_pixels, const ImFontConfig* font_cfg, const ImWchar* glyph_ranges)
-	{
+	{		
 		ImFont * fontBuild = nullptr;
+		//vkDeviceWaitIdle(vulkanM->str_VulkanDeviceMisc->str_device);		
 		ImGuiIO& io = ImGui::GetIO();
-		fontBuild = io.Fonts->AddFontFromFileTTF(filename, size_pixels, font_cfg, glyph_ranges);
-		io.Fonts->Build();
+		fontBuild = io.Fonts->AddFontFromFileTTF(filename, size_pixels, font_cfg, glyph_ranges);		
+		io.Fonts->Build();		
 		VkCommandBuffer cmd = BufferManager::beginSingleTimeCommands(vulkanM);
+		ImGui_ImplVulkan_DestroyFontUploadObjects();
+		ImGui_ImplVulkan_DestroyFontsTexture();
 		ImGui_ImplVulkan_CreateFontsTexture(cmd);
 		BufferManager::endSingleTimeCommands(cmd, vulkanM);
 		ImGui_ImplVulkan_DestroyFontUploadObjects();
@@ -339,18 +341,19 @@ namespace Ge
 	void Hud::removeBlockUI(ImguiBlock * ib)
 	{
 		m_imguiBlockExtern.erase(std::remove(m_imguiBlockExtern.begin(), m_imguiBlockExtern.end(), ib), m_imguiBlockExtern.end());
-		ImGui_ImplVulkan_DestroyFontsTexture(); //TODO a modifier
+		//ImGui_ImplVulkan_DestroyFontsTexture(); //TODO a modifier
 	}
 
 	void Hud::render(uint32_t currentframe)
 	{
-		//vkResetCommandPool(vM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, 0);
+		//vkResetCommandPool(vulkanM->str_VulkanDeviceMisc->str_device, m_imGuiCommandPools, 0);
 		VkCommandBufferBeginInfo info = {};
 		info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 		vkBeginCommandBuffer(m_imGuiCommandBuffers[currentframe], &info);
 		Hud::imGuiRender();
 		ImGui::Render();
+
 
 		VkRenderPassBeginInfo binfo = {};
 		binfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -365,8 +368,8 @@ namespace Ge
 		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), m_imGuiCommandBuffers[currentframe]);
 
 		vkCmdEndRenderPass(m_imGuiCommandBuffers[currentframe]);
-		vkEndCommandBuffer(m_imGuiCommandBuffers[currentframe]);
 
+		vkEndCommandBuffer(m_imGuiCommandBuffers[currentframe]);
 	}
 	void Hud::imGuiRender()
 	{

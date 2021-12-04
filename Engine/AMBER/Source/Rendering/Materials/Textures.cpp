@@ -17,7 +17,7 @@ namespace Ge
 		memcpy(BufferManager::mapMemory(stagingBuffer), pc, static_cast<size_t>(imageSize));
 		BufferManager::unMapMemory(stagingBuffer);
 
-		BufferManager::createImageBuffer(texWidth, texHeight, VK_IMAGE_TYPE_2D,1, mipLevels, VK_SAMPLE_COUNT_1_BIT, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, textureImage,VK_NULL_HANDLE, vM);
+		BufferManager::createImageBuffer(texWidth, texHeight, VK_IMAGE_TYPE_2D,1, mipLevels, VK_SAMPLE_COUNT_1_BIT, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, textureImage,0, vM);
 		transitionImageLayout(textureImage.image, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels,1, vM);//VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
 		BufferManager::copyBufferToImage(stagingBuffer.buffer, textureImage.image, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight),0,0, vM);
 		BufferManager::destroyBuffer(stagingBuffer);

@@ -84,23 +84,23 @@ namespace Ge
 
 	void Materials::setMetallicTexture(Textures * metal)
 	{
-			m_ubm.metallicMap = metal->getIndex();
-			m_metallicMap = metal;
+		m_ubm.metallicMap = metal->getIndex();
+		m_metallicMap = metal;
 		updateUniformBufferMaterial();
 	}
 
 	void Materials::setHDRTexture(Textures * hdr)
 	{
-			m_ubm.hdr = hdr->getIndex();
-			m_hdrMap = hdr;
-			updateUniformBufferMaterial();
+		m_ubm.hdr = hdr->getIndex();
+		m_hdrMap = hdr;
+		updateUniformBufferMaterial();
 	}
 
 	void Materials::setOclusionTexture(Textures * oclu)
 	{
-			m_ubm.aoMap = oclu->getIndex();
-			m_aoMap = oclu;
-			updateUniformBufferMaterial();
+		m_ubm.aoMap = oclu->getIndex();
+		m_aoMap = oclu;
+		updateUniformBufferMaterial();
 	}
 
 	glm::vec3 Materials::getColor()
@@ -227,11 +227,11 @@ namespace Ge
 		{
 			updateUniformBufferMaterial();
 		}
-		if (ImGui::DragFloat2("Offset", (float *)&m_ubm.offset,0.2f))
+		if (ImGui::DragFloat2("Offset", (float *)&m_ubm.offset, 0.2f))
 		{
 			updateUniformBufferMaterial();
 		}
-		ImGui::DragFloat("Specular", &m_ubm.metallic,0.2f);
+		ImGui::DragFloat("Specular", &m_ubm.metallic, 0.2f);
 		ImGui::DragFloat("Normal", &m_ubm.normal, 0.2f);
 		ImGui::DragFloat("HDR", &m_ubm.hdr, 0.2f);
 		ImGui::DragFloat("AO", &m_ubm.ao, 0.2f);

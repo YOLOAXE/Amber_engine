@@ -61,8 +61,21 @@ namespace Ge
 			removeComponent((Component *)m_material);
 		}		
 		addComponent((Component *)m);
-		m_material = m;
+		m_material = m;		
 		m_index.material = m_material->getIndex();		
+		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
+	}
+
+	void Model::majMaterialIndex()
+	{
+		if (m_material != nullptr)
+		{
+			m_index.material = m_material->getIndex();
+		}
+		else
+		{
+			m_index.material = 0;
+		}
 	}
 
 	Materials * Model::getMaterial()

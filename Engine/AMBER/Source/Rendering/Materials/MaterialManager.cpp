@@ -1,4 +1,5 @@
 #include "MaterialManager.hpp"
+#include "ModelManager.hpp"
 
 namespace Ge
 {
@@ -29,6 +30,15 @@ namespace Ge
     {
 		m_materials.erase(std::remove(m_materials.begin(), m_materials.end(), material), m_materials.end());
         delete(material);
+		for (int i = 0; i < m_materials.size(); i++)
+		{
+			m_materials[i]->setIndex(i);
+		}
+		std::vector<Model *> all_models = ModelManager::GetModels();
+		for (int i = 0; i < all_models.size();i++)
+		{
+			all_models[i]->majMaterialIndex();
+		}
         vulkanM->str_VulkanDescriptor->materialCount = m_materials.size();
         updateDescriptor();
     }
@@ -55,6 +65,7 @@ namespace Ge
 		}
 		m_materials.clear();
         delete (m_descriptor);
+		//delete(defaultMaterial);
         Debug::RELEASESUCCESS("MaterialManager");
     }
 

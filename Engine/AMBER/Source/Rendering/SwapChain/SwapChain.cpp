@@ -72,7 +72,7 @@ namespace Ge
 		vM->str_VulkanSwapChainMisc->str_imageCount = m_imageCount;
 
 		m_swapChainImagesView.resize(m_imageCount);
-		for (int i = 0; i < m_imageCount; i++)
+		for (uint32_t i = 0; i < m_imageCount; i++)
 		{
 			m_swapChainImagesView[i] = new ImageViewSwapChains(&m_swapChainImages[i], m_swapChainImageFormat, vM);
 			vM->str_VulkanSwapChainMisc->str_swapChainImageViews.push_back(m_swapChainImagesView[i]->getImageView());

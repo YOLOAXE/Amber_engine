@@ -7,6 +7,7 @@ FIND_PACKAGE(Vulkan)
 
 INCLUDE_DIRECTORIES(${ThirdParty}/imgui-cmake/Header/)
 INCLUDE_DIRECTORIES(${ThirdParty}/glfw/Include/GLFW/)
+LINK_DIRECTORIES(${ThirdParty}/imgui-cmake/freeTypeLib)
 
 ADD_LIBRARY(ImGUI STATIC
         Source/imgui.cpp
@@ -14,7 +15,11 @@ ADD_LIBRARY(ImGUI STATIC
 		Source/imgui_draw.cpp
 		Source/imgui_impl_glfw.cpp
 		Source/imgui_impl_vulkan.cpp
-		Source/imgui_widgets.cpp)
+		Source/imgui_widgets.cpp
+		Source/binary_to_compressed_c.cpp
+		Source/imgui_freetype.cpp
+		Source/imgui_stdlib.cpp
+		Source/imgui_tables.cpp)
 
 IF (VULKAN_FOUND)
 	TARGET_INCLUDE_DIRECTORIES(ImGUI PRIVATE "${Vulkan_INCLUDE_DIRS}")
