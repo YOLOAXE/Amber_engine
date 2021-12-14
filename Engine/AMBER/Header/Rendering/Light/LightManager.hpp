@@ -22,9 +22,13 @@ namespace Ge
         void updateDescriptor();
         void majIndex();
 		void initDescriptor(VulkanMisc * vM);
+	private:
+		friend class RenderingEngine;
+		void destroyElement();
     private:
         VulkanMisc *vulkanM;
         std::vector<Lights *> m_lights;
+		std::vector<Lights *> m_destroy_lights;
         VmaBuffer m_vmaUniformBuffers;
     };
 }

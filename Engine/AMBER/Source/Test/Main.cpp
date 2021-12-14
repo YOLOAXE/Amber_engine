@@ -9,8 +9,7 @@ int main()
 {
 	Debug::Info("Moteur Graphique");
 	GameEngine engine;
-	Generation gen;
-	ReseauxManager * rm = new ReseauxManager(false);
+	Generation gen;	
 	engine.getPtrClass().settingManager->setName("ProceduralGeneration");
 	if (!engine.initialize())
 	{
@@ -38,7 +37,6 @@ int main()
 		Debug::Error("Exception : %s", e.what());
 		return -1;
 	}
-	delete(rm);
 	engine.release();
 	std::cin.ignore();
 	return 0;

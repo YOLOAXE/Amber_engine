@@ -55,12 +55,27 @@ namespace Ge
 
 	void LightManager::destroyLight(Lights * light)
 	{
-		//TODO faire la conversion si erreur
-		m_lights.erase(std::remove(m_lights.begin(), m_lights.end(), light), m_lights.end());
-        delete(light);
-		vulkanM->str_VulkanDescriptor->lightCount = m_lights.size();
-		updateDescriptor();
-		majIndex();
+		m_destroyElement = true;
+		m_destroy_lights.erase(std::remove(m_destroy_lights.begin(), m_destroy_lights.end(), light), m_destroy_lights.end());
+		m_destroy_lights.push_back(light);
+		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
+	}
+
+	void LightManager::destroyElement()
+	{
+		if (m_destroyElement)
+		{
+			for (int j = 0; j < m_destroy_lights.size(); j++)
+			{
+				m_lights.erase(std::remove(m_lights.begin(), m_lights.end(), m_destroy_lights[j]), m_lights.end());
+				delete (m_destroy_lights[j]);
+			}
+			m_destroy_lights.clear();
+			majIndex();
+			vulkanM->str_VulkanDescriptor->lightCount = m_lights.size();
+			updateDescriptor();
+			m_destroyElement = false;
+		}
 	}
 
 	void LightManager::release()

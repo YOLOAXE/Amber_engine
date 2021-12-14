@@ -203,6 +203,7 @@ namespace Ge
 		{
 			vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);
 			m_modelManager.destroyElement();
+			m_lightManager.destroyElement();
 			m_swapChain.recreatePipeline();
 			RenderingEngine::m_commandBuffer.release();
 			RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass);

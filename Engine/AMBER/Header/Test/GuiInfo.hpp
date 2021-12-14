@@ -3,6 +3,7 @@
 
 #include "Behaviour.hpp"
 #include "GameEngine.hpp"
+#include "Player.hpp"
 
 class GuiInfo : public Behaviour 
 {
@@ -14,6 +15,8 @@ public:
 	void onGUI();
 private:
 	float gammaValue;
+	NetworkManager rm;
+
 };
 
 #endif//__ENGINE_GUI_INFO__

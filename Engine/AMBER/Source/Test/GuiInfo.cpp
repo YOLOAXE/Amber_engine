@@ -3,6 +3,7 @@
 void GuiInfo::start()
 {
 	gammaValue = GameEngine::getPtrClass().settingManager->getGamma();
+	rm.addObject([]() { return static_cast<MirrorComponent*>(new Player()); });
 }
 
 void GuiInfo::fixedUpdate()
@@ -12,8 +13,15 @@ void GuiInfo::fixedUpdate()
 
 void GuiInfo::update()
 {
-	//GameEngine::getPtrClass().cameraManager->getCurrentCamera()->setTarget(glm::vec3(0.0f));
-	
+
+	if (GameEngine::getPtrClass().inputManager->getKeyDown(GLFW_KEY_H))
+	{			
+		rm.initialize(true);
+	}
+	if (GameEngine::getPtrClass().inputManager->getKeyDown(GLFW_KEY_C))
+	{						
+		rm.initialize(false);
+	}
 }
 
 void GuiInfo::stop()
