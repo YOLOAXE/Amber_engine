@@ -3,7 +3,8 @@
 void GuiInfo::start()
 {
 	gammaValue = GameEngine::getPtrClass().settingManager->getGamma();
-	rm.addObject([]() { return static_cast<MirrorComponent*>(new Player()); });
+	rm = new NetworkManager();
+	rm->addObject([]() { return static_cast<MirrorComponent*>(new Player()); });
 }
 
 void GuiInfo::fixedUpdate()
@@ -16,17 +17,17 @@ void GuiInfo::update()
 
 	if (GameEngine::getPtrClass().inputManager->getKeyDown(GLFW_KEY_H))
 	{			
-		rm.initialize(true);
+		rm->initialize(true);
 	}
 	if (GameEngine::getPtrClass().inputManager->getKeyDown(GLFW_KEY_C))
 	{						
-		rm.initialize(false);
+		rm->initialize(false);
 	}
 }
 
 void GuiInfo::stop()
 {
-
+	delete(rm);
 }
 
 void GuiInfo::onGUI()

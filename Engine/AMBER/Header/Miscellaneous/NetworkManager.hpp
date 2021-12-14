@@ -26,14 +26,18 @@ namespace Ge
 	{
 	public:		
 		typedef MirrorComponent*(*mirrorInstanceGenerator)();
+		NetworkManager();
 		bool initialize(bool host, const char* ipAdress = "127.0.0.1", int threadNum = 4, int port = 25565);
 		void addObject(const mirrorInstanceGenerator& mirrorCreate);
-		MirrorComponent * createObject(unsigned short id);
+		MirrorComponent * createObject(unsigned short id, unsigned short idN);
 		void callBackSend(unsigned short id, unsigned char mode, unsigned char indice, const void * data, size_t size);
-		~NetworkManager();
+		~NetworkManager();	
+		static void Connection(const SocketChannelPtr& channel);
+		static void Message(void * data, int size);
 	private:
 		std::map<unsigned short, mirrorInstanceGenerator> m_allObject;
 		std::map<MirrorComponent *, unsigned short> m_mirrorObject;
+		std::map<int, unsigned short> m_fd_link;
 		TcpServer srv;
 		TcpClient cli;
 		bool m_host = false;
@@ -41,6 +45,7 @@ namespace Ge
 		const char* m_ipAdress;
 		int m_file_descriptor;
 		bool m_isInit = false;
+		static NetworkManager * m_NetworkManager;
 		unsigned short m_objectICount = 0;
 		unsigned short m_mirrorICount = 0;
 	};

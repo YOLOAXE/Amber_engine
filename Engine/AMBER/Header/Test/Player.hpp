@@ -14,6 +14,8 @@ public:
 	void stop();
 	void onGUI();
 private:
+	ShapeBuffer * sb;
+	Model * m;
 };
 
 #endif//__ENGINE_PLAYER_INFO__

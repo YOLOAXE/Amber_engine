@@ -15,7 +15,7 @@ public:
 	void onGUI();
 private:
 	float gammaValue;
-	NetworkManager rm;
+	NetworkManager * rm;
 
 };
 

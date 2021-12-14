@@ -187,6 +187,8 @@ namespace Ge
 		RenderingEngine::m_depthResources.release();
 		RenderingEngine::m_colorResources.release();
 		m_swapChain.release();
+		m_modelManager.destroyElement();
+		m_lightManager.destroyElement();
 		m_swapChain.initialize(&m_vulkanMisc, m_ptrClass, &m_shaderUniformBufferDivers);
 		RenderingEngine::m_colorResources.initialize(&m_vulkanMisc);
 		RenderingEngine::m_depthResources.initialize(&m_vulkanMisc);
@@ -201,9 +203,6 @@ namespace Ge
 		m_shaderUniformBufferDivers.updateUniformBufferDiver();
 		if (m_VulkanDescriptor.recreateCommandBuffer)
 		{
-			vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);
-			m_modelManager.destroyElement();
-			m_lightManager.destroyElement();
 			m_swapChain.recreatePipeline();
 			RenderingEngine::m_commandBuffer.release();
 			RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass);

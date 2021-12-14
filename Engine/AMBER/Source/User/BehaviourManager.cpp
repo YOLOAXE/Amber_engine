@@ -5,7 +5,7 @@ namespace Ge
 	void BehaviourManager::addBehaviour(Behaviour * b)
 	{
 		m_behaviours.push_back(b);
-		b->start();
+		m_startBehaviours.push_back(b);
 	}
 
 	void BehaviourManager::removeBehaviour(Behaviour * b)
@@ -16,6 +16,11 @@ namespace Ge
 
 	void BehaviourManager::update()
 	{
+		for(int i = 0; i< m_startBehaviours.size();i++)
+		{
+			m_startBehaviours[i]->start();
+		}
+		m_startBehaviours.clear();
 		for (int i = 0; i < m_behaviours.size(); i++)
 		{
 			m_behaviours[i]->update();

@@ -25,4 +25,9 @@ namespace Ge
 	{
 
 	}
+
+	unsigned short MirrorComponent::getIdN()
+	{
+		return m_id;
+	}
 }

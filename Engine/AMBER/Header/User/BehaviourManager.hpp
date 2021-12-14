@@ -16,6 +16,7 @@ namespace Ge
 		void fixedUpdate();		
 	private:
 		std::vector<Behaviour *>  m_behaviours;
+		std::vector<Behaviour *>  m_startBehaviours;
 	};
 }
 

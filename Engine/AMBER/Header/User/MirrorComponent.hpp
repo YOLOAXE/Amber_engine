@@ -18,12 +18,13 @@ namespace Ge
 		virtual void update();
 		void initialise(int id, NetworkCallBack * callBackSend);
 		void receive(unsigned char mode, unsigned char indice, const void * data, size_t size);
+		unsigned short getIdN();
 	protected:
 		unsigned short m_id;		
 		std::vector<NetV *> m_network_values;
 		NetworkCallBack * m_callBackSend;
 	private:
-		bool m_init = false;
+		bool m_init = false;		
 	};
 }
 #endif //__ENGINE_NETWORK_MIRROR_COMPONENT__
