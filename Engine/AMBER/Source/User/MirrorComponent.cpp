@@ -12,11 +12,37 @@ namespace Ge
 				m_callBackSend->callBackSend(m_id, MODE_VARIABLE,i, m_network_values[i]->getAddr(), m_network_values[i]->getSize());
 			}
 		}
+		if (m_isStart)
+		{
+			mirrorUpdate();
+		}
 	}
 
-	void MirrorComponent::initialise(int id, NetworkCallBack * callBackSend)
+	void MirrorComponent::start()
+	{
+		mirrorStart();
+		m_isStart = true;
+	}
+
+	void MirrorComponent::fixedUpdate()
+	{
+		if (m_isStart)
+		{
+			mirrorFixedUpdate();
+		}
+	}
+
+	void MirrorComponent::stop()
+	{
+		mirrorStop();
+		m_isStart = false;
+	}
+
+	void MirrorComponent::initialise(unsigned short id, unsigned short instanceId, bool isOwner, NetworkCallBack * callBackSend)
 	{
 		m_id = id;
+		m_instanceId = instanceId;
+		m_isOwner = isOwner;
 		m_callBackSend = callBackSend;
 		m_init = true;
 	}
@@ -29,5 +55,10 @@ namespace Ge
 	unsigned short MirrorComponent::getIdN()
 	{
 		return m_id;
+	}
+
+	unsigned short MirrorComponent::getIDInstance()
+	{
+		return m_instanceId;
 	}
 }

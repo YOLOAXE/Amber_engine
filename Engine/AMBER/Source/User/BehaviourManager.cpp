@@ -9,8 +9,8 @@ namespace Ge
 	}
 
 	void BehaviourManager::removeBehaviour(Behaviour * b)
-	{
-		b->stop();
+	{		
+		m_stopBehaviours.push_back(b);
 		m_behaviours.erase(std::remove(m_behaviours.begin(), m_behaviours.end(), b), m_behaviours.end());
 	}
 
@@ -25,6 +25,11 @@ namespace Ge
 		{
 			m_behaviours[i]->update();
 		}
+		for (int i = 0; i < m_stopBehaviours.size(); i++)
+		{
+			m_stopBehaviours[i]->stop();
+		}
+		m_stopBehaviours.clear();
 	}
 
 	void BehaviourManager::fixedUpdate()

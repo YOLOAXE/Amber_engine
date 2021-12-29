@@ -17,6 +17,7 @@ namespace Ge
 	private:
 		std::vector<Behaviour *>  m_behaviours;
 		std::vector<Behaviour *>  m_startBehaviours;
+		std::vector<Behaviour *>  m_stopBehaviours;
 	};
 }
 

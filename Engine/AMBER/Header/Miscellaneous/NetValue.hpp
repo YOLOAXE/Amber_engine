@@ -11,11 +11,11 @@ namespace Ge
 	public:
 		NetValue(float send_time = 0);
 		bool change(float time);
-		T operator=(T d)
+		/*T operator=(T d)
 		{
 			m_changed = m_data == d;
 			m_data = d;
-		}
+		}*/
 	private:
 		T m_data;
 	};

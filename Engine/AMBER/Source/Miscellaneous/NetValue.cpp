@@ -2,14 +2,16 @@
 
 namespace Ge
 {
-	template<class T> NetValue<T>::NetValue(float send_time)
+	template<class T> 
+	NetValue<T>::NetValue(float send_time)
 	{
 		m_send_time = send_time;
-		m_size = sizeof(T);
-		m_adresse = (const void *)m_data;
+		//m_size = sizeof(T);
+		//m_adresse = (const void *)m_data;
 	}
 
-	template<class T> bool NetValue<T>::change(float time)
+	template<class T> 
+	bool NetValue<T>::change(float time)
 	{
 		m_time = time;
 		if (m_time > m_send_time)

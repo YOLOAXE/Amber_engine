@@ -11,6 +11,11 @@ namespace Ge
 
 	bool NetworkManager::initialize(bool host, const char* ipAdress, int threadNum, int port)
 	{
+		if (m_allObject.size() == 0)
+		{
+			Debug::Error("Echec de l'initialisation 0 MirrorComponent");
+			return false;
+		}
 		if (!m_isInit)
 		{			
 			m_host = host;
@@ -33,6 +38,7 @@ namespace Ge
 					}
 					else {
 						Debug::Info("%s disconnected! connfd=%d\n", peeraddr.c_str(), channel->fd());
+						NetworkManager::m_NetworkManager->Deconection(channel);
 					}
 				};
 				srv.onMessage = [](const SocketChannelPtr& channel, Buffer* buf) {
@@ -81,27 +87,48 @@ namespace Ge
 		char * data = (char *)malloc(size);
 		m_NetworkManager->m_fd_link[channel->fd()] = m_NetworkManager->m_mirrorICount++;
 		unsigned short id;
-		unsigned char mode, instance;
+		unsigned char mode;
 		unsigned char* id_p;	
 		mode = MODE_INSTANCE;
 		data[2] = mode;
 		data[4] = 0;
-		for (const auto&[key, value] : m_NetworkManager->m_mirrorObject)
-		{			
-			id = key->getIdN();			
-			instance = value;
-			id_p = reinterpret_cast<unsigned char*>(&id);
-			data[0] = id_p[0];
-			data[1] = id_p[1];			
-			data[3] = instance;					
-			channel->write((void *)data, size);
-		}		
 		id = m_NetworkManager->m_fd_link[channel->fd()];
-		instance = 0;//Player
 		id_p = reinterpret_cast<unsigned char*>(&id);
 		data[0] = id_p[0];
 		data[1] = id_p[1];
-		data[3] = instance;
+		data[3] = 0;//player
+		m_NetworkManager->srv.broadcast((void *)data, size);
+		for (const auto&[key, value] : m_NetworkManager->m_mirrorObject)
+		{			
+			id = value->getIdN();
+			id_p = reinterpret_cast<unsigned char*>(&id);
+			data[0] = id_p[0];
+			data[1] = id_p[1];			
+			data[3] = value->getIDInstance();
+			channel->write((void *)data, size);
+		}		
+		id = m_NetworkManager->m_fd_link[channel->fd()];
+		id_p = reinterpret_cast<unsigned char*>(&id);
+		data[0] = id_p[0];
+		data[1] = id_p[1];
+		data[3] = 0;//player		
+		Message((void *)data, size);
+		free(data);
+	}
+
+	void NetworkManager::Deconection(const SocketChannelPtr& channel)
+	{
+		size_t size = 5;
+		char * data = (char *)malloc(size);		
+		unsigned short id = m_NetworkManager->m_fd_link[channel->fd()];
+		unsigned char* id_p;	
+		id_p = reinterpret_cast<unsigned char*>(&id);
+		data[0] = id_p[0];
+		data[1] = id_p[1];
+		data[2] = MODE_DESTROY;
+		data[3] = 0;
+		data[4] = 0;
+		m_NetworkManager->m_fd_link.erase(channel->fd());
 		m_NetworkManager->srv.broadcast((void *)data, size);
 		Message((void *)data, size);
 		free(data);
@@ -133,6 +160,14 @@ namespace Ge
 				}
 				GameEngine::getPtrClass().behaviourManager->addBehaviour(mc);
 			}
+			else if(mode == MODE_DESTROY)
+			{
+				if (m_NetworkManager->m_mirrorObject.count(id[0]))
+				{
+					GameEngine::getPtrClass().behaviourManager->removeBehaviour(m_NetworkManager->m_mirrorObject[id[0]]);
+					m_NetworkManager->m_mirrorObject.erase(id[0]);
+				}
+			}
 			globalSize -= 5 + readsize;
 			countElement += 5 + readsize;
 		}
@@ -144,14 +179,15 @@ namespace Ge
 
 	}
 
-	MirrorComponent * NetworkManager::createObject(unsigned short id, unsigned short idN)
+	MirrorComponent * NetworkManager::createObject(unsigned short idInstance, unsigned short idN)
 	{
 		MirrorComponent * mc = nullptr;
-		if (id < m_allObject.size())
+		if (idInstance < m_allObject.size())
 		{
-			mc = m_allObject[id]();
-			mc->initialise(idN, (NetworkCallBack *)this);
-			m_mirrorObject[mc] = id;
+			mc = m_allObject[idInstance]();
+			mc->initialise(idN, idInstance,!m_first,(NetworkCallBack *)this);
+			m_mirrorObject[idN] = mc;			
+			m_first = true;
 		}
 		return mc;
 	}
@@ -166,13 +202,16 @@ namespace Ge
 
 	NetworkManager::~NetworkManager()
 	{
-		if (m_host)
+		if (m_isInit)
 		{
-			srv.closesocket();
-		}
-		else
-		{
-			cli.closesocket();
+			if (m_host)
+			{
+				srv.closesocket();
+			}
+			else
+			{
+				cli.closesocket();
+			}
 		}
 		m_allObject.clear();
 		m_mirrorObject.clear();

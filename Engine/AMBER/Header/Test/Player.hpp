@@ -4,18 +4,22 @@
 #include "Behaviour.hpp"
 #include "GameEngine.hpp"
 #include "MirrorComponent.hpp"
+#include "NetValue.hpp"
 
 class Player : public MirrorComponent
 {
 public:
-	void start();
-	void fixedUpdate();
-	void update();
-	void stop();
+	void mirrorStart();
+	void mirrorFixedUpdate();
+	void mirrorUpdate();
+	void mirrorStop();
 	void onGUI();
 private:
 	ShapeBuffer * sb;
 	Model * m;
+	/*NetValue<float> posX;
+	NetValue<float> posY;
+	NetValue<float> posZ;*/
 };
 
 #endif//__ENGINE_PLAYER_INFO__
