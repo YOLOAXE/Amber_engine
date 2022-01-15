@@ -1,4 +1,4 @@
-# Install script for directory: /home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3
+# Install script for directory: /home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/hv
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -35,22 +35,5 @@ endif()
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
-endif()
-
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3/bullet.pc")
-endif()
-
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/bullet" TYPE FILE FILES
-    "/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3/UseBullet.cmake"
-    "/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3/BulletConfig.cmake"
-    )
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for each subdirectory.
-  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3/src/cmake_install.cmake")
-
 endif()
 

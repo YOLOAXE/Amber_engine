@@ -196,7 +196,7 @@ namespace Ge
 		std::ifstream file(filename, std::ios::ate | std::ios::binary);
 		if (!file.is_open())
 		{
-			Debug::Error("Echec de l'ouverture du fichier %s", nullptr, filename.c_str());
+			Debug::Error("Echec de l'ouverture du fichier %s", filename.c_str());
 		}
 
 		size_t fileSize = (size_t)file.tellg();

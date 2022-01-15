@@ -183,383 +183,6 @@ glfw/fast:
 .PHONY : glfw/fast
 
 #=============================================================================
-# Target rules for targets named boing
-
-# Build rule for target.
-boing: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 boing
-.PHONY : boing
-
-# fast build rule for target.
-boing/fast:
-	$(MAKE) -f ThirdParty/glfw/examples/CMakeFiles/boing.dir/build.make ThirdParty/glfw/examples/CMakeFiles/boing.dir/build
-.PHONY : boing/fast
-
-#=============================================================================
-# Target rules for targets named gears
-
-# Build rule for target.
-gears: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 gears
-.PHONY : gears
-
-# fast build rule for target.
-gears/fast:
-	$(MAKE) -f ThirdParty/glfw/examples/CMakeFiles/gears.dir/build.make ThirdParty/glfw/examples/CMakeFiles/gears.dir/build
-.PHONY : gears/fast
-
-#=============================================================================
-# Target rules for targets named heightmap
-
-# Build rule for target.
-heightmap: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 heightmap
-.PHONY : heightmap
-
-# fast build rule for target.
-heightmap/fast:
-	$(MAKE) -f ThirdParty/glfw/examples/CMakeFiles/heightmap.dir/build.make ThirdParty/glfw/examples/CMakeFiles/heightmap.dir/build
-.PHONY : heightmap/fast
-
-#=============================================================================
-# Target rules for targets named sharing
-
-# Build rule for target.
-sharing: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sharing
-.PHONY : sharing
-
-# fast build rule for target.
-sharing/fast:
-	$(MAKE) -f ThirdParty/glfw/examples/CMakeFiles/sharing.dir/build.make ThirdParty/glfw/examples/CMakeFiles/sharing.dir/build
-.PHONY : sharing/fast
-
-#=============================================================================
-# Target rules for targets named particles
-
-# Build rule for target.
-particles: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 particles
-.PHONY : particles
-
-# fast build rule for target.
-particles/fast:
-	$(MAKE) -f ThirdParty/glfw/examples/CMakeFiles/particles.dir/build.make ThirdParty/glfw/examples/CMakeFiles/particles.dir/build
-.PHONY : particles/fast
-
-#=============================================================================
-# Target rules for targets named simple
-
-# Build rule for target.
-simple: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 simple
-.PHONY : simple
-
-# fast build rule for target.
-simple/fast:
-	$(MAKE) -f ThirdParty/glfw/examples/CMakeFiles/simple.dir/build.make ThirdParty/glfw/examples/CMakeFiles/simple.dir/build
-.PHONY : simple/fast
-
-#=============================================================================
-# Target rules for targets named splitview
-
-# Build rule for target.
-splitview: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 splitview
-.PHONY : splitview
-
-# fast build rule for target.
-splitview/fast:
-	$(MAKE) -f ThirdParty/glfw/examples/CMakeFiles/splitview.dir/build.make ThirdParty/glfw/examples/CMakeFiles/splitview.dir/build
-.PHONY : splitview/fast
-
-#=============================================================================
-# Target rules for targets named offscreen
-
-# Build rule for target.
-offscreen: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 offscreen
-.PHONY : offscreen
-
-# fast build rule for target.
-offscreen/fast:
-	$(MAKE) -f ThirdParty/glfw/examples/CMakeFiles/offscreen.dir/build.make ThirdParty/glfw/examples/CMakeFiles/offscreen.dir/build
-.PHONY : offscreen/fast
-
-#=============================================================================
-# Target rules for targets named wave
-
-# Build rule for target.
-wave: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 wave
-.PHONY : wave
-
-# fast build rule for target.
-wave/fast:
-	$(MAKE) -f ThirdParty/glfw/examples/CMakeFiles/wave.dir/build.make ThirdParty/glfw/examples/CMakeFiles/wave.dir/build
-.PHONY : wave/fast
-
-#=============================================================================
-# Target rules for targets named triangle-vulkan
-
-# Build rule for target.
-triangle-vulkan: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 triangle-vulkan
-.PHONY : triangle-vulkan
-
-# fast build rule for target.
-triangle-vulkan/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/triangle-vulkan.dir/build.make ThirdParty/glfw/tests/CMakeFiles/triangle-vulkan.dir/build
-.PHONY : triangle-vulkan/fast
-
-#=============================================================================
-# Target rules for targets named tearing
-
-# Build rule for target.
-tearing: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tearing
-.PHONY : tearing
-
-# fast build rule for target.
-tearing/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/tearing.dir/build.make ThirdParty/glfw/tests/CMakeFiles/tearing.dir/build
-.PHONY : tearing/fast
-
-#=============================================================================
-# Target rules for targets named title
-
-# Build rule for target.
-title: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 title
-.PHONY : title
-
-# fast build rule for target.
-title/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/title.dir/build.make ThirdParty/glfw/tests/CMakeFiles/title.dir/build
-.PHONY : title/fast
-
-#=============================================================================
-# Target rules for targets named opacity
-
-# Build rule for target.
-opacity: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 opacity
-.PHONY : opacity
-
-# fast build rule for target.
-opacity/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/opacity.dir/build.make ThirdParty/glfw/tests/CMakeFiles/opacity.dir/build
-.PHONY : opacity/fast
-
-#=============================================================================
-# Target rules for targets named clipboard
-
-# Build rule for target.
-clipboard: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 clipboard
-.PHONY : clipboard
-
-# fast build rule for target.
-clipboard/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/clipboard.dir/build.make ThirdParty/glfw/tests/CMakeFiles/clipboard.dir/build
-.PHONY : clipboard/fast
-
-#=============================================================================
-# Target rules for targets named msaa
-
-# Build rule for target.
-msaa: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 msaa
-.PHONY : msaa
-
-# fast build rule for target.
-msaa/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/msaa.dir/build.make ThirdParty/glfw/tests/CMakeFiles/msaa.dir/build
-.PHONY : msaa/fast
-
-#=============================================================================
-# Target rules for targets named glfwinfo
-
-# Build rule for target.
-glfwinfo: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 glfwinfo
-.PHONY : glfwinfo
-
-# fast build rule for target.
-glfwinfo/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/glfwinfo.dir/build.make ThirdParty/glfw/tests/CMakeFiles/glfwinfo.dir/build
-.PHONY : glfwinfo/fast
-
-#=============================================================================
-# Target rules for targets named iconify
-
-# Build rule for target.
-iconify: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 iconify
-.PHONY : iconify
-
-# fast build rule for target.
-iconify/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/iconify.dir/build.make ThirdParty/glfw/tests/CMakeFiles/iconify.dir/build
-.PHONY : iconify/fast
-
-#=============================================================================
-# Target rules for targets named reopen
-
-# Build rule for target.
-reopen: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 reopen
-.PHONY : reopen
-
-# fast build rule for target.
-reopen/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/reopen.dir/build.make ThirdParty/glfw/tests/CMakeFiles/reopen.dir/build
-.PHONY : reopen/fast
-
-#=============================================================================
-# Target rules for targets named gamma
-
-# Build rule for target.
-gamma: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 gamma
-.PHONY : gamma
-
-# fast build rule for target.
-gamma/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/gamma.dir/build.make ThirdParty/glfw/tests/CMakeFiles/gamma.dir/build
-.PHONY : gamma/fast
-
-#=============================================================================
-# Target rules for targets named monitors
-
-# Build rule for target.
-monitors: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 monitors
-.PHONY : monitors
-
-# fast build rule for target.
-monitors/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/monitors.dir/build.make ThirdParty/glfw/tests/CMakeFiles/monitors.dir/build
-.PHONY : monitors/fast
-
-#=============================================================================
-# Target rules for targets named windows
-
-# Build rule for target.
-windows: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 windows
-.PHONY : windows
-
-# fast build rule for target.
-windows/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/windows.dir/build.make ThirdParty/glfw/tests/CMakeFiles/windows.dir/build
-.PHONY : windows/fast
-
-#=============================================================================
-# Target rules for targets named timeout
-
-# Build rule for target.
-timeout: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 timeout
-.PHONY : timeout
-
-# fast build rule for target.
-timeout/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/timeout.dir/build.make ThirdParty/glfw/tests/CMakeFiles/timeout.dir/build
-.PHONY : timeout/fast
-
-#=============================================================================
-# Target rules for targets named inputlag
-
-# Build rule for target.
-inputlag: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 inputlag
-.PHONY : inputlag
-
-# fast build rule for target.
-inputlag/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/inputlag.dir/build.make ThirdParty/glfw/tests/CMakeFiles/inputlag.dir/build
-.PHONY : inputlag/fast
-
-#=============================================================================
-# Target rules for targets named threads
-
-# Build rule for target.
-threads: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 threads
-.PHONY : threads
-
-# fast build rule for target.
-threads/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/threads.dir/build.make ThirdParty/glfw/tests/CMakeFiles/threads.dir/build
-.PHONY : threads/fast
-
-#=============================================================================
-# Target rules for targets named cursor
-
-# Build rule for target.
-cursor: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 cursor
-.PHONY : cursor
-
-# fast build rule for target.
-cursor/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/cursor.dir/build.make ThirdParty/glfw/tests/CMakeFiles/cursor.dir/build
-.PHONY : cursor/fast
-
-#=============================================================================
-# Target rules for targets named empty
-
-# Build rule for target.
-empty: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 empty
-.PHONY : empty
-
-# fast build rule for target.
-empty/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/empty.dir/build.make ThirdParty/glfw/tests/CMakeFiles/empty.dir/build
-.PHONY : empty/fast
-
-#=============================================================================
-# Target rules for targets named icon
-
-# Build rule for target.
-icon: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 icon
-.PHONY : icon
-
-# fast build rule for target.
-icon/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/icon.dir/build.make ThirdParty/glfw/tests/CMakeFiles/icon.dir/build
-.PHONY : icon/fast
-
-#=============================================================================
-# Target rules for targets named events
-
-# Build rule for target.
-events: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 events
-.PHONY : events
-
-# fast build rule for target.
-events/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/events.dir/build.make ThirdParty/glfw/tests/CMakeFiles/events.dir/build
-.PHONY : events/fast
-
-#=============================================================================
-# Target rules for targets named joysticks
-
-# Build rule for target.
-joysticks: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 joysticks
-.PHONY : joysticks
-
-# fast build rule for target.
-joysticks/fast:
-	$(MAKE) -f ThirdParty/glfw/tests/CMakeFiles/joysticks.dir/build.make ThirdParty/glfw/tests/CMakeFiles/joysticks.dir/build
-.PHONY : joysticks/fast
-
-#=============================================================================
 # Target rules for targets named tinyobjloader
 
 # Build rule for target.
@@ -742,56 +365,17 @@ Bullet3Common/fast:
 .PHONY : Bullet3Common/fast
 
 #=============================================================================
-# Target rules for targets named alrecord
+# Target rules for targets named common
 
 # Build rule for target.
-alrecord: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 alrecord
-.PHONY : alrecord
+common: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 common
+.PHONY : common
 
 # fast build rule for target.
-alrecord/fast:
-	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/alrecord.dir/build.make ThirdParty/openal-soft/CMakeFiles/alrecord.dir/build
-.PHONY : alrecord/fast
-
-#=============================================================================
-# Target rules for targets named altonegen
-
-# Build rule for target.
-altonegen: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 altonegen
-.PHONY : altonegen
-
-# fast build rule for target.
-altonegen/fast:
-	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/altonegen.dir/build.make ThirdParty/openal-soft/CMakeFiles/altonegen.dir/build
-.PHONY : altonegen/fast
-
-#=============================================================================
-# Target rules for targets named ex-common
-
-# Build rule for target.
-ex-common: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ex-common
-.PHONY : ex-common
-
-# fast build rule for target.
-ex-common/fast:
-	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/ex-common.dir/build.make ThirdParty/openal-soft/CMakeFiles/ex-common.dir/build
-.PHONY : ex-common/fast
-
-#=============================================================================
-# Target rules for targets named openal-info
-
-# Build rule for target.
-openal-info: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 openal-info
-.PHONY : openal-info
-
-# fast build rule for target.
-openal-info/fast:
-	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/openal-info.dir/build.make ThirdParty/openal-soft/CMakeFiles/openal-info.dir/build
-.PHONY : openal-info/fast
+common/fast:
+	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/common.dir/build.make ThirdParty/openal-soft/CMakeFiles/common.dir/build
+.PHONY : common/fast
 
 #=============================================================================
 # Target rules for targets named OpenAL
@@ -807,17 +391,43 @@ OpenAL/fast:
 .PHONY : OpenAL/fast
 
 #=============================================================================
-# Target rules for targets named common
+# Target rules for targets named openal-info
 
 # Build rule for target.
-common: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 common
-.PHONY : common
+openal-info: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 openal-info
+.PHONY : openal-info
 
 # fast build rule for target.
-common/fast:
-	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/common.dir/build.make ThirdParty/openal-soft/CMakeFiles/common.dir/build
-.PHONY : common/fast
+openal-info/fast:
+	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/openal-info.dir/build.make ThirdParty/openal-soft/CMakeFiles/openal-info.dir/build
+.PHONY : openal-info/fast
+
+#=============================================================================
+# Target rules for targets named ex-common
+
+# Build rule for target.
+ex-common: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ex-common
+.PHONY : ex-common
+
+# fast build rule for target.
+ex-common/fast:
+	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/ex-common.dir/build.make ThirdParty/openal-soft/CMakeFiles/ex-common.dir/build
+.PHONY : ex-common/fast
+
+#=============================================================================
+# Target rules for targets named altonegen
+
+# Build rule for target.
+altonegen: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 altonegen
+.PHONY : altonegen
+
+# fast build rule for target.
+altonegen/fast:
+	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/altonegen.dir/build.make ThirdParty/openal-soft/CMakeFiles/altonegen.dir/build
+.PHONY : altonegen/fast
 
 #=============================================================================
 # Target rules for targets named build_version
@@ -833,6 +443,32 @@ build_version/fast:
 .PHONY : build_version/fast
 
 #=============================================================================
+# Target rules for targets named alrecord
+
+# Build rule for target.
+alrecord: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 alrecord
+.PHONY : alrecord
+
+# fast build rule for target.
+alrecord/fast:
+	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/alrecord.dir/build.make ThirdParty/openal-soft/CMakeFiles/alrecord.dir/build
+.PHONY : alrecord/fast
+
+#=============================================================================
+# Target rules for targets named alloopback
+
+# Build rule for target.
+alloopback: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 alloopback
+.PHONY : alloopback
+
+# fast build rule for target.
+alloopback/fast:
+	$(MAKE) -f ThirdParty/openal-soft/CMakeFiles/alloopback.dir/build.make ThirdParty/openal-soft/CMakeFiles/alloopback.dir/build
+.PHONY : alloopback/fast
+
+#=============================================================================
 # Target rules for targets named AMBER
 
 # Build rule for target.
@@ -844,19 +480,6 @@ AMBER: cmake_check_build_system
 AMBER/fast:
 	$(MAKE) -f AMBER/CMakeFiles/AMBER.dir/build.make AMBER/CMakeFiles/AMBER.dir/build
 .PHONY : AMBER/fast
-
-#=============================================================================
-# Target rules for targets named AMBERDLL
-
-# Build rule for target.
-AMBERDLL: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 AMBERDLL
-.PHONY : AMBERDLL
-
-# fast build rule for target.
-AMBERDLL/fast:
-	$(MAKE) -f AMBERDLL/CMakeFiles/AMBERDLL.dir/build.make AMBERDLL/CMakeFiles/AMBERDLL.dir/build
-.PHONY : AMBERDLL/fast
 
 # Help Target
 help:
@@ -872,35 +495,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... uninstall"
 	@echo "... glfw"
-	@echo "... boing"
-	@echo "... gears"
-	@echo "... heightmap"
-	@echo "... sharing"
-	@echo "... particles"
-	@echo "... simple"
-	@echo "... splitview"
-	@echo "... offscreen"
-	@echo "... wave"
-	@echo "... triangle-vulkan"
-	@echo "... tearing"
-	@echo "... title"
-	@echo "... opacity"
-	@echo "... clipboard"
-	@echo "... msaa"
-	@echo "... glfwinfo"
-	@echo "... iconify"
-	@echo "... reopen"
-	@echo "... gamma"
-	@echo "... monitors"
-	@echo "... windows"
-	@echo "... timeout"
-	@echo "... inputlag"
-	@echo "... threads"
-	@echo "... cursor"
-	@echo "... empty"
-	@echo "... icon"
-	@echo "... events"
-	@echo "... joysticks"
 	@echo "... tinyobjloader"
 	@echo "... stb"
 	@echo "... ImGUI"
@@ -915,15 +509,15 @@ help:
 	@echo "... BulletDynamics"
 	@echo "... LinearMath"
 	@echo "... Bullet3Common"
-	@echo "... alrecord"
-	@echo "... altonegen"
-	@echo "... ex-common"
-	@echo "... openal-info"
-	@echo "... OpenAL"
 	@echo "... common"
+	@echo "... OpenAL"
+	@echo "... openal-info"
+	@echo "... ex-common"
+	@echo "... altonegen"
 	@echo "... build_version"
+	@echo "... alrecord"
+	@echo "... alloopback"
 	@echo "... AMBER"
-	@echo "... AMBERDLL"
 .PHONY : help
 
 

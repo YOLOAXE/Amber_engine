@@ -10,7 +10,7 @@ void Player::mirrorStart()
 	m = GameEngine::getPtrClass().modelManager->createModel(sb, name);
 	m->getMaterial()->setColor(glm::vec3(1, 0, 0));
 	m->setScale(glm::vec3(3));
-	m_network_values.push_back(new NetValue<float>());
+	//m_network_values.push_back(new NetValue<float>());
 	if (m_isOwner)
 	{
 		Debug::Log("%s est mon proprietaire", name.c_str());

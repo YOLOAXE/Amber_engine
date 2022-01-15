@@ -4,6 +4,7 @@
 #include "VulkanMisc.hpp"
 #include "BufferManager.hpp"
 #include "VertexVulkan.hpp"
+#include <memory.h>
 
 namespace Ge
 {

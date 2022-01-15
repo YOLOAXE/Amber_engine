@@ -1,5 +1,6 @@
 #include "ShaderUniformBufferDivers.hpp"
 #include "Time.hpp"
+#include <memory.h>
 
 namespace Ge
 {

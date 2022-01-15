@@ -5,7 +5,7 @@ class NetV
 {
 public:
 	virtual bool change(float time) = 0;	
-	size_t getSize()
+	unsigned int getSize()
 	{
 		return m_size;
 	}
@@ -15,7 +15,7 @@ public:
 	}
 protected:
 	const void * m_adresse;
-	size_t m_size;
+	unsigned int m_size;
 	float m_send_time = 0.0f;
 	float m_time = 0.0f;
 	bool m_changed = false;

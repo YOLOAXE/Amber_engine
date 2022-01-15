@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "Debug")
+    set(CMAKE_INSTALL_CONFIG_NAME "Release")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -47,6 +47,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/imgui-cmake/cmake_install.cmake")
   include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/Bullet3/cmake_install.cmake")
   include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/openal-soft/cmake_install.cmake")
+  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/hv/cmake_install.cmake")
 
 endif()
 

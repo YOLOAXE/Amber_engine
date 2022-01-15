@@ -12,7 +12,7 @@ namespace Ge
         p_vM = vM;
 		if (CreateDebugUtilsMessengerEXT(vM->str_VulkanDeviceMisc->str_instance, &createInfo, nullptr, &m_debugMessenger) != VK_SUCCESS)
 		{
-			Debug::Error("Echec de la configuration du ValidationLayer");
+			//Debug::Error("Echec de la configuration du ValidationLayer");
 		}
 		Debug::INITSUCCESS("ValidationLayer");
 		return true;

@@ -1,6 +1,6 @@
 #include "NetValue.hpp"
 
-namespace Ge
+/*namespace Ge
 {
 	template<class T> 
 	NetValue<T>::NetValue(float send_time)
@@ -25,4 +25,4 @@ namespace Ge
 		}
 		return false;
 	}
-}
+}*/

@@ -171,6 +171,33 @@ ImGUI/fast:
 	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build
 .PHONY : ImGUI/fast
 
+Source/binary_to_compressed_c.o: Source/binary_to_compressed_c.cpp.o
+
+.PHONY : Source/binary_to_compressed_c.o
+
+# target to build an object file
+Source/binary_to_compressed_c.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/binary_to_compressed_c.cpp.o
+.PHONY : Source/binary_to_compressed_c.cpp.o
+
+Source/binary_to_compressed_c.i: Source/binary_to_compressed_c.cpp.i
+
+.PHONY : Source/binary_to_compressed_c.i
+
+# target to preprocess a source file
+Source/binary_to_compressed_c.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/binary_to_compressed_c.cpp.i
+.PHONY : Source/binary_to_compressed_c.cpp.i
+
+Source/binary_to_compressed_c.s: Source/binary_to_compressed_c.cpp.s
+
+.PHONY : Source/binary_to_compressed_c.s
+
+# target to generate assembly for a file
+Source/binary_to_compressed_c.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/binary_to_compressed_c.cpp.s
+.PHONY : Source/binary_to_compressed_c.cpp.s
+
 Source/imgui.o: Source/imgui.cpp.o
 
 .PHONY : Source/imgui.o
@@ -252,6 +279,33 @@ Source/imgui_draw.cpp.s:
 	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_draw.cpp.s
 .PHONY : Source/imgui_draw.cpp.s
 
+Source/imgui_freetype.o: Source/imgui_freetype.cpp.o
+
+.PHONY : Source/imgui_freetype.o
+
+# target to build an object file
+Source/imgui_freetype.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_freetype.cpp.o
+.PHONY : Source/imgui_freetype.cpp.o
+
+Source/imgui_freetype.i: Source/imgui_freetype.cpp.i
+
+.PHONY : Source/imgui_freetype.i
+
+# target to preprocess a source file
+Source/imgui_freetype.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_freetype.cpp.i
+.PHONY : Source/imgui_freetype.cpp.i
+
+Source/imgui_freetype.s: Source/imgui_freetype.cpp.s
+
+.PHONY : Source/imgui_freetype.s
+
+# target to generate assembly for a file
+Source/imgui_freetype.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_freetype.cpp.s
+.PHONY : Source/imgui_freetype.cpp.s
+
 Source/imgui_impl_glfw.o: Source/imgui_impl_glfw.cpp.o
 
 .PHONY : Source/imgui_impl_glfw.o
@@ -306,6 +360,60 @@ Source/imgui_impl_vulkan.cpp.s:
 	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_impl_vulkan.cpp.s
 .PHONY : Source/imgui_impl_vulkan.cpp.s
 
+Source/imgui_stdlib.o: Source/imgui_stdlib.cpp.o
+
+.PHONY : Source/imgui_stdlib.o
+
+# target to build an object file
+Source/imgui_stdlib.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_stdlib.cpp.o
+.PHONY : Source/imgui_stdlib.cpp.o
+
+Source/imgui_stdlib.i: Source/imgui_stdlib.cpp.i
+
+.PHONY : Source/imgui_stdlib.i
+
+# target to preprocess a source file
+Source/imgui_stdlib.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_stdlib.cpp.i
+.PHONY : Source/imgui_stdlib.cpp.i
+
+Source/imgui_stdlib.s: Source/imgui_stdlib.cpp.s
+
+.PHONY : Source/imgui_stdlib.s
+
+# target to generate assembly for a file
+Source/imgui_stdlib.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_stdlib.cpp.s
+.PHONY : Source/imgui_stdlib.cpp.s
+
+Source/imgui_tables.o: Source/imgui_tables.cpp.o
+
+.PHONY : Source/imgui_tables.o
+
+# target to build an object file
+Source/imgui_tables.cpp.o:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_tables.cpp.o
+.PHONY : Source/imgui_tables.cpp.o
+
+Source/imgui_tables.i: Source/imgui_tables.cpp.i
+
+.PHONY : Source/imgui_tables.i
+
+# target to preprocess a source file
+Source/imgui_tables.cpp.i:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_tables.cpp.i
+.PHONY : Source/imgui_tables.cpp.i
+
+Source/imgui_tables.s: Source/imgui_tables.cpp.s
+
+.PHONY : Source/imgui_tables.s
+
+# target to generate assembly for a file
+Source/imgui_tables.cpp.s:
+	cd /home/m/Documents/Moteur/AMBER_ENGINE/Engine && $(MAKE) -f ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/build.make ThirdParty/imgui-cmake/CMakeFiles/ImGUI.dir/Source/imgui_tables.cpp.s
+.PHONY : Source/imgui_tables.cpp.s
+
 Source/imgui_widgets.o: Source/imgui_widgets.cpp.o
 
 .PHONY : Source/imgui_widgets.o
@@ -346,6 +454,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/strip"
 	@echo "... ImGUI"
+	@echo "... Source/binary_to_compressed_c.o"
+	@echo "... Source/binary_to_compressed_c.i"
+	@echo "... Source/binary_to_compressed_c.s"
 	@echo "... Source/imgui.o"
 	@echo "... Source/imgui.i"
 	@echo "... Source/imgui.s"
@@ -355,12 +466,21 @@ help:
 	@echo "... Source/imgui_draw.o"
 	@echo "... Source/imgui_draw.i"
 	@echo "... Source/imgui_draw.s"
+	@echo "... Source/imgui_freetype.o"
+	@echo "... Source/imgui_freetype.i"
+	@echo "... Source/imgui_freetype.s"
 	@echo "... Source/imgui_impl_glfw.o"
 	@echo "... Source/imgui_impl_glfw.i"
 	@echo "... Source/imgui_impl_glfw.s"
 	@echo "... Source/imgui_impl_vulkan.o"
 	@echo "... Source/imgui_impl_vulkan.i"
 	@echo "... Source/imgui_impl_vulkan.s"
+	@echo "... Source/imgui_stdlib.o"
+	@echo "... Source/imgui_stdlib.i"
+	@echo "... Source/imgui_stdlib.s"
+	@echo "... Source/imgui_tables.o"
+	@echo "... Source/imgui_tables.i"
+	@echo "... Source/imgui_tables.s"
 	@echo "... Source/imgui_widgets.o"
 	@echo "... Source/imgui_widgets.i"
 	@echo "... Source/imgui_widgets.s"

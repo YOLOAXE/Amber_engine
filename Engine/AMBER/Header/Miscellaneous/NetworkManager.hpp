@@ -53,4 +53,4 @@ namespace Ge
 	};
 }
 
-#endif __ENGINE_RESEAUX_MANAGER__
+#endif //__ENGINE_RESEAUX_MANAGER__

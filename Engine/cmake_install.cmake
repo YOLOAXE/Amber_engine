@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "Debug")
+    set(CMAKE_INSTALL_CONFIG_NAME "Release")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -41,7 +41,6 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/ThirdParty/cmake_install.cmake")
   include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/AMBER/cmake_install.cmake")
-  include("/home/m/Documents/Moteur/AMBER_ENGINE/Engine/AMBERDLL/cmake_install.cmake")
 
 endif()
 
