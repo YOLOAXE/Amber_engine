@@ -23,7 +23,7 @@ namespace Ge
 
 	bool BufferManager::initialize(VulkanMisc * vM)
 	{
-		VmaAllocatorCreateInfo allocatorInfo = {};
+		VmaAllocatorCreateInfo allocatorInfo = {};		
 		allocatorInfo.vulkanApiVersion = GetVulkanApiVersion();
 		allocatorInfo.physicalDevice = vM->str_VulkanDeviceMisc->str_physicalDevice;
 		allocatorInfo.device = vM->str_VulkanDeviceMisc->str_device;
