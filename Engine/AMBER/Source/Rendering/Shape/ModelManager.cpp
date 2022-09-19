@@ -233,7 +233,7 @@ namespace Ge
 
 			vertex.texCoord = {
 				texCord[2 * i + 0],
-				texCord[2 * i + 0] };
+				texCord[2 * i + 1] };
 
 			vertex.normal = {
 				normal[3 * i + 0],
@@ -296,7 +296,7 @@ namespace Ge
 
 				indices.push_back(uniqueVertices[vertex]);
 			}
-		}
+		}		
 		ShapeBuffer *buffer = new ShapeBuffer(vertices, indices, vulkanM);
 		m_shapeBuffers.push_back(buffer);
 		return buffer;

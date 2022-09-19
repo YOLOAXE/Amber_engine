@@ -13,7 +13,8 @@ struct Vertex
 {
     glm::vec3 pos;
     glm::vec3 normal;
-    glm::vec2 texCoord;
+    glm::vec3 color;
+    glm::vec2 texCoord;    
 
     static VkVertexInputBindingDescription getBindingDescription()
     {
@@ -25,9 +26,9 @@ struct Vertex
         return bindingDescription;
     }
 
-    static std::array<VkVertexInputAttributeDescription, 3> getAttributeDescriptions()
+    static std::array<VkVertexInputAttributeDescription, 4> getAttributeDescriptions()
     {
-        std::array<VkVertexInputAttributeDescription, 3> attributeDescriptions{};
+        std::array<VkVertexInputAttributeDescription, 4> attributeDescriptions{};
 
         attributeDescriptions[0].binding = 0;
         attributeDescriptions[0].location = 0;
@@ -41,25 +42,40 @@ struct Vertex
 
         attributeDescriptions[2].binding = 0;
         attributeDescriptions[2].location = 2;
-        attributeDescriptions[2].format = VK_FORMAT_R32G32_SFLOAT;
-        attributeDescriptions[2].offset = offsetof(Vertex, texCoord);
+        attributeDescriptions[2].format = VK_FORMAT_R32G32B32_SFLOAT;
+        attributeDescriptions[2].offset = offsetof(Vertex, color);
+
+        attributeDescriptions[3].binding = 0;
+        attributeDescriptions[3].location = 3;
+        attributeDescriptions[3].format = VK_FORMAT_R32G32_SFLOAT;
+        attributeDescriptions[3].offset = offsetof(Vertex, texCoord);
 
         return attributeDescriptions;
     }
 
     bool operator==(const Vertex &other) const
     {
-        return pos == other.pos && normal == other.normal && texCoord == other.texCoord;
+        return pos == other.pos && normal == other.normal && color == other.color && texCoord == other.texCoord;
+    }
+
+    static void hashCombine(std::size_t& hash, std::size_t v)
+    {        
+        hash ^= v + 0x9e3779b9 + (hash << 6) + (hash >> 2);
     }
 };
 
 namespace std //pour combiner correctement les champs d'une structure
 {
 	template<> struct hash<Vertex>
-	{
+	{    
 		size_t operator()(Vertex const& vertex) const
-		{
-			return ((hash<glm::vec3>()(vertex.pos) ^ (hash<glm::vec3>()(vertex.normal) << 1)) >> 1) ^ (hash<glm::vec2>()(vertex.texCoord) << 1);
+		{			
+            auto hash = std::size_t{0};
+            Vertex::hashCombine(hash,std::hash<glm::vec3>()(vertex.pos));
+            Vertex::hashCombine(hash,std::hash<glm::vec3>()(vertex.normal));
+            Vertex::hashCombine(hash,std::hash<glm::vec3>()(vertex.color));
+            Vertex::hashCombine(hash,std::hash<glm::vec2>()(vertex.texCoord));
+            return hash;
 		}
 	};
 }

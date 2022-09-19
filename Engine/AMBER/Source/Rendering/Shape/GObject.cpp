@@ -113,6 +113,11 @@ namespace Ge
 		return glm::degrees(m_transform.eulerAngles);
 	}
 
+	glm::vec3 GObject::getDirection()
+	{
+		return m_transform.direction;
+	}
+
 	glm::vec3 GObject::getScale()
 	{
 		return m_transform.scale;
@@ -207,7 +212,7 @@ namespace Ge
 
 		if (ImGui::DragFloat3("Direction", (float *)&m_transform.direction, 0.2f))
 		{
-			setScale(m_transform.scale);
+			//setScale(m_transform.scale);
 		}
 
 		for (Component *comp : m_component)

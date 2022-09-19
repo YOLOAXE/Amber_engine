@@ -10,7 +10,7 @@ namespace Ge
     {
         std::vector<std::string> supportedInstanceExtensions;
         std::vector<const char *> extensions = ValidationLayer::getRequiredExtensions();
-        uint32_t extCount = 0;
+        uint32_t extCount = 0;                
         vkEnumerateInstanceExtensionProperties(nullptr, &extCount, nullptr);
         if (extCount > 0)
         {

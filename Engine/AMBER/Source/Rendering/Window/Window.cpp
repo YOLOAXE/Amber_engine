@@ -11,17 +11,17 @@ namespace Ge
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);/*ne cree pas de context OpenGl*/
 
 		this->m_window = glfwCreateWindow(Width, Height, name, nullptr, nullptr);/*3: Moniteur 4: Specifique a OpenGl*/
-		glfwSetWindowUserPointer(this->m_window, this);//on fournie la class a la fenetre
+		glfwSetWindowUserPointer(this->m_window, this);//;on fournie la class a la fenetre
 		glfwSetFramebufferSizeCallback(this->m_window, this->framebufferResizeCallback);//utiliser une fonction statique car GLFW ne sait pas correctement appeler une fonction membre
 		vM->str_VulkanDeviceMisc->str_window = this->m_window;
-		Debug::INITSUCCESS("Window");
-		if (iconPath != "")
-		{
+		Debug::INITSUCCESS("Window");		
+		if (iconPath && iconPath[0])
+		{									
 			GLFWimage images;
 			images.pixels = stbi_load(iconPath, &images.width, &images.height, 0, 4);
 			glfwSetWindowIcon(this->m_window, 1, &images);
 			stbi_image_free(images.pixels);
-		}
+		}		
 		return true;
 	}
 

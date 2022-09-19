@@ -17,7 +17,7 @@ namespace Ge
         {
             Debug::Error("ptrClass nullptr RenderingEngine");
             return false;
-        }		
+        }
 		m_ptrClass = p_ptrClass;
 		p_ptrClass->cameraManager = &m_cameraManager;		
 		p_ptrClass->lightManager = &m_lightManager;
@@ -31,7 +31,7 @@ namespace Ge
         {
             Debug::INITFAILED("Window");
             return false;
-        }
+        }        
         if (!RenderingEngine::m_instanceVulkan.initialize(p_ptrClass->settingManager->getName(), p_ptrClass->settingManager->getVersion(), &m_vulkanMisc))
         {
             Debug::INITFAILED("InstanceVulkan");

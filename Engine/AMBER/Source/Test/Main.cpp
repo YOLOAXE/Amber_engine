@@ -1,23 +1,23 @@
 
 #include <iostream>
 #include "GameEngine.hpp"
-#include "Generation.hpp"
+#include "WorldGeneration.hpp"
 
 using namespace Ge;
+using namespace lia;
 
 int main()
 {
-	Debug::Info("Moteur Graphique");
-	GameEngine engine;
-	Generation gen;	
-	engine.getPtrClass().settingManager->setName("ProceduralGeneration");
+	Debug::Info("Moteur Graphique");	
+	GameEngine engine;	
+	WorldGeneration worldGeneration;
+	engine.getPtrClass().settingManager->setName("LIA");
 	if (!engine.initialize())
 	{
 		Debug::Error("Erreur d'intialisation du moteur graphique");
 		return -1;
-	}	
-	GameEngine::getPtrClass().sceneManager->addScene("Generation",&gen);
-
+	}		
+	engine.getPtrClass().sceneManager->addScene("WorldGeneration",&worldGeneration);		
 	try
 	{
 		engine.start();

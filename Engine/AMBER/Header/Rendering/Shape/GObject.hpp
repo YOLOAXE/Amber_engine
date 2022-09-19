@@ -35,6 +35,7 @@ namespace Ge
 		glm::vec3 getPosition();
 		glm::quat getRotation();
 		glm::vec3 getEulerAngles();
+		glm::vec3 getDirection();
 		glm::vec3 getScale();
 		virtual void mapMemory() = 0;
 		glm::vec3 transformDirectionAxeX();
