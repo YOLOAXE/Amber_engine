@@ -20,16 +20,16 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
 {
 	vec3  albedo;
 	vec2 offset;
-	float metallic;//shiniess
-	float hdr;
+	float metallic;
+    float roughness;	
 	float normal;
 	float ao;
 	uint albedoMap;
 	uint normalMap;
 	uint metallicMap;
-	uint hdrMap;
+    uint roughnessMap;
 	uint aoMap;
-	uint light;
+	uint castShadow;
 } ubm[];
 
 layout(set = 4, binding = 0) uniform UniformBufferLight
@@ -59,6 +59,7 @@ layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec3 inNormal;
 layout(location = 2) in vec3 inColor;
 layout(location = 3) in vec2 inTexCoord;
+layout(location = 4) in vec3 inTangent;
 
 layout (location = 0) out vec3 outUVW;
 
@@ -66,6 +67,6 @@ void main()
 {
 	outUVW = inPosition;
 	mat4 modelView = ubc.view;
-	modelView[3] = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	modelView[3] = vec4(0.0, 0.0, 0.0, 1.0);
 	gl_Position = ubc.proj * modelView * vec4(inPosition.xyz, 1.0);
 }

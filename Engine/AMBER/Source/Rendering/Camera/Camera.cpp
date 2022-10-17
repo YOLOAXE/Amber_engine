@@ -11,14 +11,14 @@ namespace Ge
 		}
 		else
 		{
-			m_uniformBufferCamera.proj = glm::perspective(glm::radians(m_fov), 16.0f/9.0f, m_near, m_far);
+			m_uniformBufferCamera.proj = glm::perspective(glm::radians(m_fov), (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.width/ (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height, m_near, m_far);
 		}
-		m_uniformBufferCamera.proj[1][1] *= -1;
+		//m_uniformBufferCamera.proj[1][1] *= -1;
 		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(UniformBufferCamera));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
-	Camera::Camera(VulkanMisc * vM) : GObject(false)
+	Camera::Camera(VulkanMisc * vM) : GObject()
 	{
 		if (!BufferManager::createBuffer(sizeof(UniformBufferCamera), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM->str_VulkanDeviceMisc)) 
 		{

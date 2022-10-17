@@ -1,7 +1,6 @@
 #ifndef __ENGINE_GAME_ENGINE___
 #define __ENGINE_GAME_ENGINE___
 
-#include "NetworkManager.hpp"
 #include "Initializer.hpp"
 #include "PointeurClass.hpp"
 #include "Debug.hpp"

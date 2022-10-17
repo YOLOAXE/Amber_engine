@@ -8,7 +8,6 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/Struct)
 #User
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/User)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/User/Input)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/Test)
 
 #Rendue
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/AMBER/Header/Rendering)
@@ -61,7 +60,7 @@ IF (VULKAN_FOUND)
 	ELSEIF(UNIX)
 		TARGET_INCLUDE_DIRECTORIES(AMBER PRIVATE $ENV{Vulkan_INCLUDE_DIRS})
 	ENDIF()
-    TARGET_LINK_LIBRARIES(AMBER PRIVATE glfw glfw3 termcolor tinyobjloader stb glm OpenAL ImGUI BulletDynamics BulletCollision LinearMath BulletSoftBody BulletDynamics BulletCollision LinearMath ${hv_LIB} ${Vulkan_LIBRARIES})	
+    TARGET_LINK_LIBRARIES(AMBER PRIVATE glfw glfw3 termcolor tinyobjloader stb glm ImGUI BulletDynamics BulletCollision LinearMath BulletSoftBody BulletDynamics BulletCollision LinearMath ${hv_LIB} ${Vulkan_LIBRARIES})	
 ELSE ()
     MESSAGE(FATAL_ERROR "Impossible de trouver Vulkan")
 ENDIF ()

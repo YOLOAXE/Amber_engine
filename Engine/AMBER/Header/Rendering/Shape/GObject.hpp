@@ -23,7 +23,7 @@ namespace Ge
 	class GObject
 	{
 	public:
-		GObject(bool inverse = false);
+		GObject();
 		~GObject();
 		void setName(std::string nom);
 		std::string * getName();
@@ -50,12 +50,11 @@ namespace Ge
 		virtual void onGUI();
 	protected:
 		static std::vector<GObject *> s_gobjects;
-		std::vector<GObject *> m_childs;//implementer
+		GObject * m_parents;
 		std::string m_nom;
-		bool m_flipY = false;
-		bool m_inversePos = false;
 		Transform m_transform{};
 		std::vector<Component *> m_component;
+
 	};
 }
 

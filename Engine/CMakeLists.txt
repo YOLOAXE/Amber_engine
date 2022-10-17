@@ -3,8 +3,9 @@ PROJECT(AMBER)
 
 # Param�tres
 
-SET(CMAKE_CXX_STANDARD 20)
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Build/Out)
+SET(CMAKE_CXX_STANDARD 17)
+#SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Build/Out)
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Build)
 SET(ThirdParty ${CMAKE_SOURCE_DIR}/ThirdParty)
 SET(AMBER_SOURCE ${CMAKE_SOURCE_DIR}/AMBER)
 # lib Extern 
@@ -94,23 +95,7 @@ ELSE()
 ENDIF()
 
 # Compilation mode
-IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
-
-    # Debug
-    ADD_DEFINITIONS(-D AMBER_DEBUG)
-    SET(AMBER_BIN_OUTPUT ${AMBER_BIN_DIR_DBG})
-    SET(AMBER_LIB_OUTPUT ${AMBER_LIB_DIR_DBG})
-
-    MESSAGE(STATUS "Compilation mode  : Debug")
-    MESSAGE(STATUS "Project binary  output : ${AMBER_BIN_OUTPUT}")
-    MESSAGE(STATUS "Project library output : ${AMBER_LIB_OUTPUT}")
-
-    # Param�tres flags
-    IF(COMPILER_GCC)
-        # GCC
-        set(CMAKE_CXX_FLAGS_DEBUG ${CXX_DEBUG_FLAGS} CACHE STRING "DBG" FORCE)
-    ENDIF()
-ELSEIF(${CMAKE_BUILD_TYPE} MATCHES Release)
+IF(${CMAKE_BUILD_TYPE} MATCHES Release)
 
     # Release mode
     ADD_DEFINITIONS(-D AMBER_RELEASE)
@@ -128,7 +113,19 @@ ELSEIF(${CMAKE_BUILD_TYPE} MATCHES Release)
     ENDIF()
 ELSE()
 
-    # No mode
-    MESSAGE(FATAL_ERROR "Pas de mode de compilation exemple debug ou release.")
+        # Debug
+        ADD_DEFINITIONS(-D AMBER_DEBUG)
+        SET(AMBER_BIN_OUTPUT ${AMBER_BIN_DIR_DBG})
+        SET(AMBER_LIB_OUTPUT ${AMBER_LIB_DIR_DBG})
+    
+        MESSAGE(STATUS "Compilation mode  : Debug")
+        MESSAGE(STATUS "Project binary  output : ${AMBER_BIN_OUTPUT}")
+        MESSAGE(STATUS "Project library output : ${AMBER_LIB_OUTPUT}")
+    
+        # Param�tres flags
+        IF(COMPILER_GCC)
+            # GCC
+            set(CMAKE_CXX_FLAGS_DEBUG ${CXX_DEBUG_FLAGS} CACHE STRING "DBG" FORCE)
+        ENDIF()
 
 ENDIF()

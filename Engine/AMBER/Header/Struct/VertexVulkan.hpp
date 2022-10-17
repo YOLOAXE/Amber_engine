@@ -14,7 +14,8 @@ struct Vertex
     glm::vec3 pos;
     glm::vec3 normal;
     glm::vec3 color;
-    glm::vec2 texCoord;    
+    glm::vec2 texCoord;
+    glm::vec3 tangents;
 
     static VkVertexInputBindingDescription getBindingDescription()
     {
@@ -26,9 +27,9 @@ struct Vertex
         return bindingDescription;
     }
 
-    static std::array<VkVertexInputAttributeDescription, 4> getAttributeDescriptions()
+    static std::array<VkVertexInputAttributeDescription, 5> getAttributeDescriptions()
     {
-        std::array<VkVertexInputAttributeDescription, 4> attributeDescriptions{};
+        std::array<VkVertexInputAttributeDescription, 5> attributeDescriptions{};
 
         attributeDescriptions[0].binding = 0;
         attributeDescriptions[0].location = 0;
@@ -49,6 +50,11 @@ struct Vertex
         attributeDescriptions[3].location = 3;
         attributeDescriptions[3].format = VK_FORMAT_R32G32_SFLOAT;
         attributeDescriptions[3].offset = offsetof(Vertex, texCoord);
+
+        attributeDescriptions[4].binding = 0;
+        attributeDescriptions[4].location = 4;
+        attributeDescriptions[4].format = VK_FORMAT_R32G32B32_SFLOAT;
+        attributeDescriptions[4].offset = offsetof(Vertex, tangents);
 
         return attributeDescriptions;
     }
@@ -75,6 +81,7 @@ namespace std //pour combiner correctement les champs d'une structure
             Vertex::hashCombine(hash,std::hash<glm::vec3>()(vertex.normal));
             Vertex::hashCombine(hash,std::hash<glm::vec3>()(vertex.color));
             Vertex::hashCombine(hash,std::hash<glm::vec2>()(vertex.texCoord));
+            Vertex::hashCombine(hash, std::hash<glm::vec3>()(vertex.tangents));
             return hash;
 		}
 	};

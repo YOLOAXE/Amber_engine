@@ -26,6 +26,7 @@ namespace Ge
         void updateDescriptor();		
 		void initDescriptor(VulkanMisc * vM) override;
 		static std::vector<Model *> GetModels();
+        void ComputationTangent(std::vector<Vertex>& vertices);
 	private:
 		friend class RenderingEngine;
 		void destroyElement();

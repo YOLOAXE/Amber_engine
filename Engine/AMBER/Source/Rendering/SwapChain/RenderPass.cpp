@@ -104,6 +104,7 @@ namespace Ge
 			}
 		}
 		Debug::Error("findSupportedFormat n'a pas trouve de format supporte");
+		return VkFormat::VK_FORMAT_UNDEFINED;
 	}
 
 	VkFormat RenderPass::findDepthFormat(VulkanMisc * vM)

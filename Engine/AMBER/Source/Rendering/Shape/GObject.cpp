@@ -3,10 +3,8 @@
 namespace Ge
 {
 	std::vector<GObject *> GObject::s_gobjects;
-	GObject::GObject(bool inverse)
+	GObject::GObject()
 	{
-		m_inversePos = inverse;
-		m_flipY = false;
 		m_nom = "NoName";
 		s_gobjects.push_back(this);
 	}
@@ -33,25 +31,15 @@ namespace Ge
 
 	void GObject::setPosition(glm::vec3 pos)
 	{
-		float inv = m_inversePos ? -1.0f : 1.0f;
-		m_transform.position = pos * inv;
-		if (m_flipY)
-		{
-			m_transform.position.y *= -1.0f;
-			m_transform.translateMatrix = glm::translate(glm::mat4(1.0f), m_transform.position);
-			m_transform.position = pos * inv;
-		}
-		else
-		{
-			m_transform.translateMatrix = glm::translate(glm::mat4(1.0f), m_transform.position);
-		}
+		m_transform.position = pos;
+		m_transform.translateMatrix = glm::translate(glm::mat4(1.0f), m_transform.position);
 		mapMemory();
 	}
 
 	void GObject::setEulerAngles(glm::vec3 eul)
 	{
 		m_transform.eulerAngles = eul;
-		float yaw = glm::radians(m_transform.eulerAngles.x * (m_flipY ? -1.0f : 1.0f));
+		float yaw = glm::radians(m_transform.eulerAngles.x);
 		float pitch = glm::radians(m_transform.eulerAngles.y);
 		float roll = glm::radians(m_transform.eulerAngles.z);
 		m_transform.rotationMatrix = glm::rotate(glm::mat4(1.0f), yaw, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -88,7 +76,7 @@ namespace Ge
 		m_transform.rotationMatrix = glm::lookAt(m_transform.position, m_transform.target, glm::vec3(0.0f, 0.0f, 1.0f));
 		m_transform.rotation = toQuat(m_transform.rotationMatrix);
 		extractEulerAngleXYZ(m_transform.rotationMatrix, m_transform.eulerAngles.x, m_transform.eulerAngles.y, m_transform.eulerAngles.z);
-		float yaw = glm::radians(m_transform.eulerAngles.x * (m_flipY ? -1.0f : 1.0f));
+		float yaw = glm::radians(m_transform.eulerAngles.x);
 		float pitch = glm::radians(m_transform.eulerAngles.y);
 		float roll = glm::radians(m_transform.eulerAngles.z);
 		m_transform.direction.x = sin(yaw);
@@ -99,8 +87,7 @@ namespace Ge
 
 	glm::vec3 GObject::getPosition()
 	{
-		float inv = m_inversePos ? -1.0f : 1.0f;
-		return m_transform.position * inv;
+		return m_transform.position;
 	}
 
 	glm::quat GObject::getRotation()
@@ -168,12 +155,11 @@ namespace Ge
 
 	bool GObject::getFlipY()
 	{
-		return m_flipY;
+		return false;
 	}
 
 	void GObject::setFlipY(bool state)
 	{
-		m_flipY = state;
 		setPosition(getPosition());
 		setRotation(getRotation());
 	}

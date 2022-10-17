@@ -9,16 +9,16 @@ namespace Ge
 		m_color[0] = m_ubm.albedo.x;
 		m_color[1] = m_ubm.albedo.y;
 		m_color[2] = m_ubm.albedo.z;
-		m_ubm.metallic = 1.0f;
+		m_ubm.metallic = 1.0f;		
+		m_ubm.roughness = 1.0f;
 		m_ubm.normal = 1.0f;
-		m_ubm.hdr = 1.0f;
 		m_ubm.ao = 1.0f;
 		m_ubm.albedoMap = 0;
-		m_ubm.metallicMap = 0;
-		m_ubm.aoMap = 0;
 		m_ubm.normalMap = 0;
-		m_ubm.hdrMap = 0;
-		m_ubm.light = true;
+		m_ubm.metallicMap = 0;
+		m_ubm.roughnessMap = 0;
+		m_ubm.aoMap = 0;				
+		m_ubm.castShadow = true;
 		m_ubm.offset = glm::vec2(1.0f);
 		m_offset[0] = m_ubm.offset.x;
 		m_offset[1] = m_ubm.offset.y;
@@ -43,9 +43,9 @@ namespace Ge
 		m_ubm.metallic = metal;
 	}
 
-	void Materials::setHDR(float roug)
+	void Materials::setRoughness(float roug)
 	{
-		m_ubm.hdr = roug;
+		m_ubm.roughness = roug;
 	}
 
 	void Materials::setNormal(float normal)
@@ -89,10 +89,10 @@ namespace Ge
 		updateUniformBufferMaterial();
 	}
 
-	void Materials::setHDRTexture(Textures * hdr)
+	void Materials::setRoughness(Textures * roug)
 	{
-		m_ubm.hdr = hdr->getIndex();
-		m_hdrMap = hdr;
+		m_ubm.roughnessMap = roug->getIndex();
+		m_RoughnessMap = roug;
 		updateUniformBufferMaterial();
 	}
 
@@ -113,9 +113,9 @@ namespace Ge
 		return m_ubm.metallic;
 	}
 
-	float Materials::getHDR()
+	float Materials::getRoughness()
 	{
-		return m_ubm.hdr;
+		return m_ubm.roughness;
 	}
 
 	float Materials::getNormal()
@@ -143,9 +143,9 @@ namespace Ge
 		return m_metallicMap;
 	}
 
-	Textures * Materials::getHDRTexture()
+	Textures * Materials::getRoughnessTexture()
 	{
-		return m_hdrMap;
+		return m_RoughnessMap;
 	}
 
 	Textures * Materials::getOclusionTexture()
@@ -187,9 +187,9 @@ namespace Ge
 		{
 			m_ubm.metallicMap = m_metallicMap->getIndex();
 		}
-		if (m_hdrMap)
+		if (m_RoughnessMap)
 		{
-			m_ubm.hdrMap = m_hdrMap->getIndex();
+			m_ubm.roughnessMap = m_RoughnessMap->getIndex();
 		}
 		if (m_aoMap)
 		{
@@ -198,14 +198,14 @@ namespace Ge
 		updateUniformBufferMaterial();
 	}
 
-	bool Materials::getLightActive()
+	bool Materials::getShadowCast()
 	{
-		return m_ubm.light;
+		return m_ubm.castShadow;
 	}
 
-	void Materials::setLightActive(bool state)
+	void Materials::setShadowCast(bool state)
 	{
-		m_ubm.light = state;
+		m_ubm.castShadow = state;
 		updateUniformBufferMaterial();
 	}
 
@@ -231,10 +231,22 @@ namespace Ge
 		{
 			updateUniformBufferMaterial();
 		}
-		ImGui::DragFloat("Specular", &m_ubm.metallic, 0.2f);
-		ImGui::DragFloat("Normal", &m_ubm.normal, 0.2f);
-		ImGui::DragFloat("HDR", &m_ubm.hdr, 0.2f);
-		ImGui::DragFloat("AO", &m_ubm.ao, 0.2f);
+		if (ImGui::DragFloat("Metallic", &m_ubm.metallic, 0.05f))
+		{
+			updateUniformBufferMaterial();
+		}
+		if (ImGui::DragFloat("Roughness", &m_ubm.roughness, 0.05f))
+		{
+			updateUniformBufferMaterial();
+		}
+		if (ImGui::DragFloat("Normal", &m_ubm.normal, 0.05f))
+		{
+			updateUniformBufferMaterial();
+		}
+		if (ImGui::DragFloat("AO", &m_ubm.ao, 0.05f))
+		{
+			updateUniformBufferMaterial();
+		}
 	}
 
 	Materials::~Materials()

@@ -245,9 +245,42 @@ namespace Ge
 		{
 			indices.push_back(indice[i]);
 		}		
+		//ComputationTangent(vertices);
 		ShapeBuffer *buffer = new ShapeBuffer(vertices, indices, vulkanM);
 		m_shapeBuffers.push_back(buffer);
 		return buffer;
+	}
+
+	void ModelManager::ComputationTangent(std::vector<Vertex> &vertices)
+	{
+		glm::vec3 edge1;
+		glm::vec3 edge2;
+		glm::vec2 deltaUV1;
+		glm::vec2 deltaUV2;
+		glm::vec3 tangents;
+		
+		float r;
+		for (int i = 0; i+2 < vertices.size(); i+=3)
+		{
+			edge1 = vertices[i + 1].pos - vertices[i].pos;
+			edge2 = vertices[i + 2].pos - vertices[i].pos;
+
+			deltaUV1 = vertices[i + 1].texCoord - vertices[i].texCoord;
+			deltaUV2 = vertices[i + 2].texCoord - vertices[i].texCoord;
+
+			r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+			tangents.x = r * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+			tangents.y = r * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+			tangents.z = r * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+
+			tangents = glm::normalize(tangents);
+			Debug::Log("%f  %f  %f", tangents.x, tangents.y, tangents.z);
+
+			vertices[i + 0].tangents = tangents;
+			vertices[i + 1].tangents = tangents;
+			vertices[i + 2].tangents = tangents;
+		}
 	}
 
 	ShapeBuffer *ModelManager::allocateBuffer(const char *path)
@@ -257,6 +290,7 @@ namespace Ge
 		std::vector<tinyobj::material_t> materials;
 		std::string warn, err;
 		std::vector<Vertex> vertices;
+		std::vector<Vertex> verticesTTT;
 		std::vector<uint32_t> indices;
 		glm::vec3 normalResult;
 
@@ -288,15 +322,32 @@ namespace Ge
 					attrib.normals[3 * index.normal_index + 1],
 					attrib.normals[3 * index.normal_index + 2]};
 
+				vertex.color = {1,1,1};
+
+				vertex.tangents = { 0,0,0 };
+
+				verticesTTT.push_back(vertex);
+
 				if (uniqueVertices.count(vertex) == 0)
 				{
 					uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
-					vertices.push_back(vertex);					
+					vertices.push_back(vertex);
 				}
 
 				indices.push_back(uniqueVertices[vertex]);
 			}
 		}		
+		ComputationTangent(verticesTTT);
+		for (int i = 0; i < verticesTTT.size(); i++)
+		{
+			for (int j = 0; j < vertices.size(); j++)
+			{
+				if (verticesTTT[i] == vertices[j])
+				{
+					vertices[j] = verticesTTT[i];
+				}
+			}
+		}
 		ShapeBuffer *buffer = new ShapeBuffer(vertices, indices, vulkanM);
 		m_shapeBuffers.push_back(buffer);
 		return buffer;

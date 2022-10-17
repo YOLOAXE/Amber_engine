@@ -1,23 +1,36 @@
 
 #include <iostream>
 #include "GameEngine.hpp"
-#include "WorldGeneration.hpp"
 
 using namespace Ge;
-using namespace lia;
 
 int main()
 {
 	Debug::Info("Moteur Graphique");	
 	GameEngine engine;	
-	WorldGeneration worldGeneration;
 	engine.getPtrClass().settingManager->setName("LIA");
 	if (!engine.initialize())
 	{
 		Debug::Error("Erreur d'intialisation du moteur graphique");
 		return -1;
 	}		
-	engine.getPtrClass().sceneManager->addScene("WorldGeneration",&worldGeneration);		
+
+	ShapeBuffer * sb = engine.getPtrClass().modelManager->allocateBuffer("../Model/cube.obj");
+	Model * m = engine.getPtrClass().modelManager->createModel(sb,"Test");
+	m->setScale(glm::vec3(20,20,20));
+	m->setPosition(glm::vec3(0, -20, 0));
+	Lights * l = engine.getPtrClass().lightManager->createPointLight(glm::vec3(0, 5, 0), glm::vec3(1, 1, 1));
+	Materials* mat = engine.getPtrClass().materialManager->createMaterial();
+	Textures* albedo = engine.getPtrClass().textureManager->createTexture("../Texture/pbrAlbedo.png");
+	Textures* metallic = engine.getPtrClass().textureManager->createTexture("../Texture/pbrMetallic.png");
+	Textures* normal = engine.getPtrClass().textureManager->createTexture("../Texture/pbrNormal.png");
+	mat->setAlbedoTexture(albedo);
+	mat->setNormalTexture(normal);
+	mat->setMetallicTexture(metallic);
+	mat->setMetallic(0.7f);
+	mat->setRoughness(0.1f);	
+	mat->setOffset(glm::vec2(10, 10));
+	m->setMaterial(mat);
 	try
 	{
 		engine.start();

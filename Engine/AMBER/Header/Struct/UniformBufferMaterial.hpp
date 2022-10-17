@@ -8,15 +8,15 @@ struct UniformBufferMaterial
     glm::vec3 albedo;
 	alignas(16) glm::vec2 offset;
     float metallic;
-    float hdr;
+    float roughness;
     float normal;
     float ao;
     int albedoMap;
     int normalMap;
     int metallicMap;
-    int hdrMap;
+    int roughnessMap;
     int aoMap;
-    int light;
+    int castShadow;
 };
 
 #endif //__ENGINE_UNIFORM_BUFFER_MATERIAL__

@@ -19,16 +19,16 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
 {
 	vec3  albedo;
 	vec2 offset;
-	float metallic;//shiniess
-	float hdr;
+	float metallic;
+    float roughness;	
 	float normal;
 	float ao;
 	uint albedoMap;
 	uint normalMap;
 	uint metallicMap;
-	uint hdrMap;
+    uint roughnessMap;
 	uint aoMap;
-	uint light;
+	uint castShadow;
 } ubm[];
 
 layout(set = 4, binding = 0) uniform UniformBufferLight

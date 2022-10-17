@@ -1,5 +1,0 @@
-2022-01-15 08:08:17.994 INFO  EventLoopThread started, tid=10416 [EventLoopThread.h:89:hv::EventLoopThread::loop_thread]
-2022-01-15 08:08:17.995 INFO  EventLoopThread started, tid=8172 [EventLoopThread.h:89:hv::EventLoopThread::loop_thread]
-2022-01-15 08:08:17.995 INFO  EventLoopThread started, tid=3832 [EventLoopThread.h:89:hv::EventLoopThread::loop_thread]
-2022-01-15 08:08:17.995 INFO  EventLoopThread started, tid=7440 [EventLoopThread.h:89:hv::EventLoopThread::loop_thread]
-2022-01-15 08:08:17.997 INFO  EventLoopThread started, tid=8568 [EventLoopThread.h:89:hv::EventLoopThread::loop_thread]
