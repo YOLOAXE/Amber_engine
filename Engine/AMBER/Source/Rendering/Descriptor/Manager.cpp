@@ -2,7 +2,7 @@
 
 namespace Ge
 {
-	Descriptor* Manager::getDescriptor()
+	std::vector<Descriptor*> Manager::getDescriptor()
 	{
 		return m_descriptor;
 	}

@@ -14,6 +14,8 @@
 #include "SceneManager.hpp"
 #include "GraphiquePipelineManager.hpp"
 #include "SkyboxManager.hpp"
+#include "PhysicsEngine.hpp"
+#include "ShadowManager.hpp"
 
 using namespace Ge;
 
@@ -22,6 +24,7 @@ struct ptrClass
 	SettingManager * settingManager;
     InputManager * inputManager;	
 	Time * time;
+	PhysicsEngine* physicsEngine;
 	ModelManager * modelManager;
 	TextureManager * textureManager;
 	LightManager * lightManager;
@@ -32,6 +35,7 @@ struct ptrClass
 	SkyboxManager * skyboxManager;
 	Hud * hud;	
 	GraphiquePipelineManager * graphiquePipelineManager;
+	ShadowManager* shadowManager;
 };
 
 #endif //__ENGINE_POINTEUR_CLASS__

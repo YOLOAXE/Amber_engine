@@ -27,6 +27,18 @@ struct Vertex
         return bindingDescription;
     }
 
+    static VkVertexInputAttributeDescription getShadowAttributeDescriptions()
+    {
+        VkVertexInputAttributeDescription attributeDescriptions{};
+
+        attributeDescriptions.binding = 0;
+        attributeDescriptions.location = 0;
+        attributeDescriptions.format = VK_FORMAT_R32G32B32_SFLOAT;
+        attributeDescriptions.offset = offsetof(Vertex, pos);
+
+        return attributeDescriptions;
+    }
+
     static std::array<VkVertexInputAttributeDescription, 5> getAttributeDescriptions()
     {
         std::array<VkVertexInputAttributeDescription, 5> attributeDescriptions{};

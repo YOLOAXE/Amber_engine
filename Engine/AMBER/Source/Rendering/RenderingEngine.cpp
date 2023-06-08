@@ -26,6 +26,7 @@ namespace Ge
 		p_ptrClass->textureManager = &m_textureManager;
 		p_ptrClass->hud = &m_hud;
 		p_ptrClass->skyboxManager = &m_skyboxManager;
+        p_ptrClass->shadowManager = &m_shadowManager;
         Debug::Info("Initialisation du moteur de rendu");
         if (!RenderingEngine::m_window.initialize(p_ptrClass->settingManager->getWindowWidth(), p_ptrClass->settingManager->getWindowHeight(), p_ptrClass->settingManager->getName(), p_ptrClass->settingManager->getIconPath(), &m_vulkanMisc))
         {
@@ -118,12 +119,17 @@ namespace Ge
             Debug::INITFAILED("ShaderUniformBufferDivers");
             return false;
         }
+        if (!RenderingEngine::m_shadowManager.initialize(&m_vulkanMisc))
+        {
+            Debug::INITFAILED("ShadowManager");
+            return false;
+        }
 		if (!RenderingEngine::m_skyboxManager.initialize(&m_vulkanMisc, &m_modelManager, p_ptrClass->graphiquePipelineManager))
 		{
 			Debug::INITFAILED("SkyboxManager");
 			return false;
 		}
-        if (!RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, p_ptrClass))
+        if (!RenderingEngine::m_commandBuffer.initialize(&m_shadowManager,&m_vulkanMisc, p_ptrClass))
 		{
             Debug::INITFAILED("CommandBuffer");
             return false;
@@ -139,6 +145,7 @@ namespace Ge
 			return false;
 		}
         Debug::INITSUCCESS("RenderingEngine");
+
         return true;
     }
 
@@ -149,6 +156,7 @@ namespace Ge
 		RenderingEngine::m_syncObjects.release();
 		RenderingEngine::m_commandBuffer.release();
 		RenderingEngine::m_skyboxManager.release();
+        RenderingEngine::m_shadowManager.release();
         RenderingEngine::m_shaderUniformBufferDivers.release();
         RenderingEngine::m_lightManager.release();
 		RenderingEngine::m_modelManager.release();
@@ -180,7 +188,7 @@ namespace Ge
 			glfwWaitEvents();
 		}
 		m_ptrClass->settingManager->setWindowHeight(height);
-		m_ptrClass->settingManager->setWindowWidth(width);
+		m_ptrClass->settingManager->setWindowWidth(width);        
 		vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);
 		RenderingEngine::m_commandBuffer.release();
 		RenderingEngine::m_frameBuffers.release();
@@ -191,8 +199,9 @@ namespace Ge
 		RenderingEngine::m_colorResources.initialize(&m_vulkanMisc);
 		RenderingEngine::m_depthResources.initialize(&m_vulkanMisc);
 		RenderingEngine::m_frameBuffers.initialize(&m_vulkanMisc);
-		RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass);
+		RenderingEngine::m_commandBuffer.initialize(&m_shadowManager,&m_vulkanMisc, m_ptrClass);        
 		m_hud.recreateSwapChain();
+        m_cameraManager.getCurrentCamera()->mapMemory();
 	}
 
     void RenderingEngine::drawFrame()
@@ -201,13 +210,18 @@ namespace Ge
 		m_shaderUniformBufferDivers.updateUniformBufferDiver();
 		if (m_VulkanDescriptor.recreateCommandBuffer)
 		{
-			vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);
+			vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);            
 			m_modelManager.destroyElement();
 			m_lightManager.destroyElement();
 			m_swapChain.recreatePipeline();
-			RenderingEngine::m_commandBuffer.release();
-			RenderingEngine::m_commandBuffer.initialize(&m_vulkanMisc, m_ptrClass);
-			m_VulkanDescriptor.recreateCommandBuffer = false;
+			RenderingEngine::m_commandBuffer.release();  
+            if (m_VulkanDescriptor.recreateShadowPipeline)
+            {
+                m_shadowManager.recreatePipeline();
+                m_VulkanDescriptor.recreateShadowPipeline = false;
+            }
+			RenderingEngine::m_commandBuffer.initialize(&m_shadowManager,&m_vulkanMisc, m_ptrClass);
+			m_VulkanDescriptor.recreateCommandBuffer = false;            
 		}		
 		vkWaitForFences(m_vulkanDeviceMisc.str_device, 1, &m_syncObjects.m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
 		
@@ -280,7 +294,7 @@ namespace Ge
 		{
 			Debug::Error("Echec l'or de la presentation");
 		}
-		m_currentFrame = (m_currentFrame + 1) % m_VulkanSynchronisation.MAX_FRAMES_IN_FLIGHT;		
+		m_currentFrame = (m_currentFrame + 1) % m_VulkanSynchronisation.MAX_FRAMES_IN_FLIGHT;	
     }
 
     VulkanMisc *RenderingEngine::getVulkanMisc()

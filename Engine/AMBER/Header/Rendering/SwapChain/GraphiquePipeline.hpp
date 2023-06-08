@@ -20,8 +20,7 @@ namespace Ge
         GraphiquePipeline(VulkanMisc *vM, ShaderPair * sp);
         ~GraphiquePipeline();
 		int getIndex();
-		ShaderPair * getShaderPair();
-    private:
+		ShaderPair * getShaderPair();    
         static ShaderElement LoadShader(const std::string &filename, const char *entry, VkDevice device, bool isVertex,VulkanMisc * vM);
         static void DestroyShaderElement(VkDevice device, ShaderElement se);
         static std::vector<char> readFile(const std::string &filename);
@@ -29,7 +28,7 @@ namespace Ge
     public:
         GraphiquePipelineElement m_graphiquePipelineElement;		
     private:
-		ShaderPair * m_sahderPair;
+		ShaderPair * m_shaderPair;
         VulkanMisc *vulkanM;
 		int m_index;
     };

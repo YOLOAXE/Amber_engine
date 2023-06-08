@@ -25,16 +25,16 @@ namespace Ge
 	{
 	public:
 		Model(ShapeBuffer * buffer, int indexUbo, VulkanMisc * vM);
-		~Model();
-		void render(VkCommandBuffer CmdBuffer, std::vector<VkDescriptorSet> descriptorSets, VkPipelineLayout pipelineLayout, VkShaderStageFlags pushConstantShaderFlags);
+		~Model();		
 		VkBuffer getUniformBuffers();
 		ShapeBuffer * getShapeBuffer();
 		UniformBufferObject getUBO();
 		void setMaterial(Materials * m);
 		Materials * getMaterial();
-		void majMaterialIndex();
+		PushConstants getPushConstants();
+		void majMaterialIndex(int pi_mat);
 		void mapMemory() override;
-		void setIndexUbo(int index);		
+		void setIndexUbo(int index);
 	private:
 		VulkanMisc * vulkanM;
 		ShapeBuffer * m_buffer;

@@ -8,7 +8,7 @@ namespace Ge
 	class TextureCubeMap
 	{
 	public:
-		TextureCubeMap(std::vector<unsigned char *> pc, int Width, int Height, int ind, VulkanMisc * vM);
+		TextureCubeMap(std::vector<unsigned char *> pc, int Width, int Height, int ind,bool filter, VulkanMisc * vM);
 		~TextureCubeMap();
 		VkImageView getVkImageView();
 		VkSampler getVkSampler();

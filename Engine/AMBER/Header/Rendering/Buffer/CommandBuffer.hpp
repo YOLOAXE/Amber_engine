@@ -6,6 +6,7 @@
 #include <array>
 #include "Model.hpp"
 #include "PointeurClass.hpp"
+#include "ShadowManager.hpp"
 
 namespace Ge
 {
@@ -13,11 +14,14 @@ namespace Ge
     {
     private:
         friend class RenderingEngine;
-        bool initialize(VulkanMisc * vM, ptrClass * ptrC);
+        bool initialize(ShadowManager* shadowManager,VulkanMisc * vM, ptrClass * ptrC);
+        VmaBuffer createInstanceBuffer(std::vector<Model*> models);
         void release();
     private:
         VulkanMisc * vulkanM;
 		std::vector<VkCommandBuffer> m_commandBuffers;
+        std::vector<VmaBuffer> m_instancedBuffer;
+        VmaBuffer m_instancedBufferSkybox;
     };
 }
 

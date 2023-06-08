@@ -47,6 +47,19 @@ namespace Ge
 		depthAttachmentRef.attachment = 1;
 		depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
+		VkSubpassDescription postProcessingSubpass{};
+		postProcessingSubpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+		postProcessingSubpass.colorAttachmentCount = 1;
+		postProcessingSubpass.pColorAttachments = &colorAttachmentRef;
+
+		VkSubpassDependency postProcessingDependency{};
+		postProcessingDependency.srcSubpass = 0;
+		postProcessingDependency.dstSubpass = 1; // Numéro de la sous-passe de post-traitement
+		postProcessingDependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		postProcessingDependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		postProcessingDependency.srcAccessMask = 0;
+		postProcessingDependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+
 		VkSubpassDescription subpass{};
 		subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 		subpass.colorAttachmentCount = 1;
@@ -63,14 +76,16 @@ namespace Ge
 		dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 
 		std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
+		std::array<VkSubpassDescription, 1> subpassDescritions = { subpass };//,postProcessingSubpass };
+		std::array<VkSubpassDependency, 1> subpassDependencys = { dependency };//,postProcessingDependency };
 		VkRenderPassCreateInfo renderPassInfo{};
 		renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
 		renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
 		renderPassInfo.pAttachments = attachments.data();
-		renderPassInfo.subpassCount = 1;
-		renderPassInfo.pSubpasses = &subpass;
-		renderPassInfo.dependencyCount = 1;
-		renderPassInfo.pDependencies = &dependency;
+		renderPassInfo.subpassCount = static_cast<uint32_t>(subpassDescritions.size());
+		renderPassInfo.pSubpasses = subpassDescritions.data();
+		renderPassInfo.dependencyCount = static_cast<uint32_t>(subpassDependencys.size());
+		renderPassInfo.pDependencies = subpassDependencys.data();
 
 		if (vkCreateRenderPass(vM->str_VulkanDeviceMisc->str_device, &renderPassInfo, nullptr, &m_renderPass) != VK_SUCCESS)
 		{

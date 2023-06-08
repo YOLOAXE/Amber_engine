@@ -4,17 +4,20 @@ namespace Ge
 {
 	int Descriptor::countDescriptor = 0;
 	std::vector<Descriptor *> Descriptor::s_Descriptor;
-    Descriptor::Descriptor(VulkanMisc *vM, VkDescriptorType descriptorType, int baseCount)
+    Descriptor::Descriptor(VulkanMisc *vM, VkDescriptorType descriptorType, int baseCount, bool ignoreDescriptorList)
     {
         m_count = baseCount;                
         vulkanM = vM;
 		m_countDescriptor = countDescriptor;
 		countDescriptor++;
         m_descriptorType = descriptorType;
-        m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,baseCount,descriptorType, m_countDescriptor); //TODO swapchain image X3 a verifier si X1 fonctionne 
+        m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,baseCount,descriptorType, m_countDescriptor);
         m_DescriptorPool = createVkDescriptorPool(vM,baseCount,descriptorType); 
-        m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool);    
-		s_Descriptor.push_back(this);
+        m_DescriptorSets = createVkDescriptorSet(vM,m_DescriptorSetLayout,m_DescriptorPool); 
+        if (!ignoreDescriptorList)
+        {
+            s_Descriptor.push_back(this);
+        }
     }
 
 	std::vector<Descriptor *> Descriptor::GetAllDescriptor()
@@ -25,7 +28,7 @@ namespace Ge
 	Descriptor::~Descriptor()
 	{
 		s_Descriptor.erase(std::remove(s_Descriptor.begin(), s_Descriptor.end(), this), s_Descriptor.end());
-		//destroyVkDescriptorSet(vulkanM,m_DescriptorSets,m_DescriptorPool);
+		destroyVkDescriptorSet(vulkanM,m_DescriptorSets,m_DescriptorPool);
 		destroyVkDescriptorPool(vulkanM, m_DescriptorPool);
 		destroyVkVkDescriptorSetLayout(vulkanM, m_DescriptorSetLayout);
 	}
@@ -40,7 +43,7 @@ namespace Ge
         return m_DescriptorPool;
     }
 
-    std::vector<VkDescriptorSet> Descriptor::getDescriptorSets()
+    VkDescriptorSet Descriptor::getDescriptorSets()
     {
         return m_DescriptorSets;
     }
@@ -49,6 +52,7 @@ namespace Ge
     {
         if(m_count != count)
         {
+            vkQueueWaitIdle(vulkanM->str_VulkanDeviceMisc->str_graphicsQueue);
             destroyVkDescriptorPool(vulkanM,m_DescriptorPool);
             destroyVkVkDescriptorSetLayout(vulkanM,m_DescriptorSetLayout);
             m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,count,m_descriptorType, m_countDescriptor);
@@ -57,17 +61,14 @@ namespace Ge
         }
         m_count = count;
         VkWriteDescriptorSet descriptorWrites{};
-        for(int i = 0; i < vM->str_VulkanSwapChainMisc->str_swapChainImages.size();i++)
-        {
-            descriptorWrites.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-			descriptorWrites.dstSet = m_DescriptorSets[i];
-			descriptorWrites.dstBinding = 0;
-			descriptorWrites.dstArrayElement = 0;
-			descriptorWrites.descriptorType = m_descriptorType;
-			descriptorWrites.descriptorCount = static_cast<uint32_t>(bufferInfo.size());
-			descriptorWrites.pBufferInfo = bufferInfo.data();
-            vkUpdateDescriptorSets(vM->str_VulkanDeviceMisc->str_device, static_cast<uint32_t>(1), &descriptorWrites, 0, nullptr);
-        }
+        descriptorWrites.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        descriptorWrites.dstSet = m_DescriptorSets;
+        descriptorWrites.dstBinding = 0;
+        descriptorWrites.dstArrayElement = 0;
+        descriptorWrites.descriptorType = m_descriptorType;
+        descriptorWrites.descriptorCount = static_cast<uint32_t>(bufferInfo.size());
+        descriptorWrites.pBufferInfo = bufferInfo.data();
+        vkUpdateDescriptorSets(vM->str_VulkanDeviceMisc->str_device, static_cast<uint32_t>(1), &descriptorWrites, 0, nullptr);
 		vM->str_VulkanDescriptor->recreateCommandBuffer = true;
     }
 
@@ -75,6 +76,7 @@ namespace Ge
     {
         if(m_count != count)
         {
+            vkQueueWaitIdle(vulkanM->str_VulkanDeviceMisc->str_graphicsQueue);
             destroyVkDescriptorPool(vulkanM,m_DescriptorPool);
             destroyVkVkDescriptorSetLayout(vulkanM,m_DescriptorSetLayout);
             m_DescriptorSetLayout = createVkDescriptorSetLayout(vM,count,m_descriptorType, m_countDescriptor);
@@ -84,17 +86,14 @@ namespace Ge
         }
         m_count = count;
         VkWriteDescriptorSet descriptorWrites{};
-        for(int i = 0; i < vM->str_VulkanSwapChainMisc->str_swapChainImages.size();i++)
-        {
-            descriptorWrites.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-			descriptorWrites.dstSet = m_DescriptorSets[i];
-			descriptorWrites.dstBinding = 0;
-			descriptorWrites.dstArrayElement = 0;
-			descriptorWrites.descriptorType = m_descriptorType;
-			descriptorWrites.descriptorCount = static_cast<uint32_t>(bufferInfo.size());
-			descriptorWrites.pImageInfo = bufferInfo.data();
-            vkUpdateDescriptorSets(vM->str_VulkanDeviceMisc->str_device, static_cast<uint32_t>(1), &descriptorWrites, 0, nullptr);
-        }
+        descriptorWrites.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        descriptorWrites.dstSet = m_DescriptorSets;
+        descriptorWrites.dstBinding = 0;
+        descriptorWrites.dstArrayElement = 0;
+        descriptorWrites.descriptorType = m_descriptorType;
+        descriptorWrites.descriptorCount = static_cast<uint32_t>(bufferInfo.size());
+        descriptorWrites.pImageInfo = bufferInfo.data();
+        vkUpdateDescriptorSets(vM->str_VulkanDeviceMisc->str_device, static_cast<uint32_t>(1), &descriptorWrites, 0, nullptr);
     }
 
     VkDescriptorPool Descriptor::createVkDescriptorPool(VulkanMisc *vM,int count,VkDescriptorType type)
@@ -146,28 +145,25 @@ namespace Ge
         return m_descriptorSetLayout;
     }
 
-    std::vector<VkDescriptorSet> Descriptor::createVkDescriptorSet(VulkanMisc *vM,VkDescriptorSetLayout descriptorSetLayout,VkDescriptorPool descriptorPool)
+    VkDescriptorSet Descriptor::createVkDescriptorSet(VulkanMisc *vM,VkDescriptorSetLayout descriptorSetLayout,VkDescriptorPool descriptorPool)
     {
-        std::vector<VkDescriptorSet> m_descriptorSets; 
-        int sizeSC = vM->str_VulkanSwapChainMisc->str_swapChainImages.size();
-        std::vector<VkDescriptorSetLayout> layouts(sizeSC, descriptorSetLayout);
+        VkDescriptorSet m_descriptorSets; 
         VkDescriptorSetAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
 		allocInfo.descriptorPool = descriptorPool;
-		allocInfo.descriptorSetCount = static_cast<uint32_t>(sizeSC);
-		allocInfo.pSetLayouts = layouts.data();
+		allocInfo.descriptorSetCount = static_cast<uint32_t>(1);
+		allocInfo.pSetLayouts = &descriptorSetLayout;
 
-		m_descriptorSets.resize(sizeSC);
-		if (vkAllocateDescriptorSets(vM->str_VulkanDeviceMisc->str_device, &allocInfo, m_descriptorSets.data()) != VK_SUCCESS)
+		if (vkAllocateDescriptorSets(vM->str_VulkanDeviceMisc->str_device, &allocInfo, &m_descriptorSets) != VK_SUCCESS)
 		{
 			Debug::Error("Echec de l'allocation du descriptor sets");			
 		}
         return m_descriptorSets;
     }
 
-    void Descriptor::destroyVkDescriptorSet(VulkanMisc *vM, std::vector<VkDescriptorSet> descriptorSets,VkDescriptorPool descriptorPool)
+    void Descriptor::destroyVkDescriptorSet(VulkanMisc *vM, VkDescriptorSet descriptorSets,VkDescriptorPool descriptorPool)
     {
-        vkFreeDescriptorSets(vM->str_VulkanDeviceMisc->str_device, descriptorPool, static_cast<uint32_t>(descriptorSets.size()), descriptorSets.data());
+        //vkFreeDescriptorSets(vM->str_VulkanDeviceMisc->str_device, descriptorPool, 1, &descriptorSets);
     }
 
     void Descriptor::destroyVkDescriptorPool(VulkanMisc *vM,VkDescriptorPool descriptorPool)

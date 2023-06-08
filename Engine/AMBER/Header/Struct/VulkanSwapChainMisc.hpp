@@ -18,13 +18,15 @@ struct VulkanSwapChainMisc
     VkSwapchainKHR str_swapChain;
     std::vector<VkImageView> str_swapChainImageViews;
     VkRenderPass str_renderPass = VK_NULL_HANDLE;
-    std::vector<VkDescriptorSetLayout> str_descriptorSetLayout;
+    std::vector<VkDescriptorSetLayout> str_descriptorSetLayout;    
     std::vector<GraphiquePipelineElement *> str_graphiquePipelineElement;   
     std::map<std::string,std::vector<char>> str_shaderLoader;
     VkSurfaceFormatKHR str_surfaceFormatKHR;
     VkPresentModeKHR str_presentModeKHR;
     uint32_t str_imageCount;
-	SwapChainRecreate * swapChainRecreate;
+	SwapChainRecreate * swapChainRecreate;    
+    VkDescriptorSetLayout str_descriptorSetLayoutModel;
+    VkDescriptorSet str_descriptorSetModel;
 };
 
 #endif //__ENGINE_VULKAN_SWAP_CHAIN_MISC__

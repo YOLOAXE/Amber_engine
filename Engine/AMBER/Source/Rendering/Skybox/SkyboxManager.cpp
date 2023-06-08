@@ -27,9 +27,9 @@ namespace Ge
 
 	void SkyboxManager::initDescriptor(VulkanMisc * vM)
 	{
-		if (m_descriptor == nullptr)
+		if (m_descriptor.size() == 0)
 		{
-			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1);
+			m_descriptor.push_back(new Descriptor(vM, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1));
 		}
 	}
 
@@ -44,26 +44,53 @@ namespace Ge
 			imageI.sampler = currentSkybox->getTextureCubeMap()->getVkSampler();
 			imageInfo.push_back(imageI);
 		}
-		m_descriptor->updateCount(vulkanM, 1, imageInfo);
+		m_descriptor[0]->updateCount(vulkanM, 1, imageInfo);
 	}
 
-	void SkyboxManager::loadSkybox(TextureCubeMap * tCM)
+	Skybox * SkyboxManager::loadSkybox(TextureCubeMap * tCM)
 	{		
 		if (currentSkybox != nullptr)
 		{
+			m_skybox.erase(std::find(m_skybox.begin(), m_skybox.end(), currentSkybox), m_skybox.end());
 			delete(currentSkybox);
 		}
 		currentSkybox = new Skybox(tCM, cubeMapBaseModel, m_skyboxPipeline->getIndex());
+		m_skybox.push_back(currentSkybox);
+		updateDescriptor();
+		return currentSkybox;
+	}
+
+	Skybox* SkyboxManager::createSkybox(TextureCubeMap* tCM)
+	{
+		return new Skybox(tCM, cubeMapBaseModel, m_skyboxPipeline->getIndex());
+	}
+	
+	void SkyboxManager::changeSkybox(Skybox* sky)
+	{
+		if (sky == nullptr)
+		{
+			currentSkybox = m_skybox[0];
+		}
+		else
+		{
+			currentSkybox = sky;
+		}
 		updateDescriptor();
 	}
 
 	void SkyboxManager::release()
 	{
-		if (currentSkybox != nullptr)
+		currentSkybox = nullptr;
+		for (int i = 0; i < m_skybox.size(); i++)
 		{
-			delete(currentSkybox);
+			delete(m_skybox[i]);
 		}
-		delete (m_descriptor);
+		m_skybox.clear();
+		for (int i = 0; i < m_descriptor.size(); i++)
+		{
+			delete m_descriptor[i];
+		}
+		m_descriptor.clear();
 		Debug::RELEASESUCCESS("SkyboxManager");
 	}
 }

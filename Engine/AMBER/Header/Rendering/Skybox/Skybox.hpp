@@ -11,7 +11,7 @@ namespace Ge
 	public:
 		Skybox(TextureCubeMap * tCM, ShapeBuffer * m, int indexPipeline);
 		TextureCubeMap * getTextureCubeMap();
-		void render(VkCommandBuffer CmdBuffer, GraphiquePipeline * pipeline, std::vector<VkDescriptorSet> descriptorSets, VkShaderStageFlags pushConstantShaderFlags);
+		void render(VkCommandBuffer CmdBuffer, GraphiquePipeline * pipeline, std::vector<VkDescriptorSet> descriptorSets, VkShaderStageFlags pushConstantShaderFlags,VmaBuffer instanceBuffer);
 		int getIndexPipeline();
 	private:
 		TextureCubeMap * m_textureCubeMap;

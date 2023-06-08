@@ -15,6 +15,7 @@ namespace Ge
 		void loadScene(std::string name);
 		void loadEntryScene();
 	private:
+		std::string entryScene = "";
 		std::map<std::string,Scene *> m_mapScene;
 		Scene * currentScene;
 	};

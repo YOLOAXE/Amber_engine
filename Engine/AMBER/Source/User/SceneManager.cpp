@@ -4,19 +4,31 @@ namespace Ge
 {
 	void SceneManager::addScene(std::string name, Scene * s)
 	{
-		m_mapScene[name] = s;
+		if (entryScene == "")
+		{
+			entryScene = name;
+		}
+		m_mapScene.emplace(name, s);
 	}
 
 	void SceneManager::removeScene(std::string name)
 	{
+		if (entryScene == name)
+		{
+			entryScene = "";
+			if (m_mapScene.size() > 1)
+			{
+				entryScene = m_mapScene.begin()->first;
+			}
+		}
 		m_mapScene.erase(name);
 	}
 
 	void SceneManager::loadEntryScene()
 	{
-		if (m_mapScene.size() > 0)
+		if (m_mapScene.size() > 0 && entryScene != "")
 		{
-			currentScene = m_mapScene.begin()->second;
+			currentScene = m_mapScene[entryScene];
 			currentScene->load();
 		}
 	}

@@ -8,6 +8,7 @@ namespace Ge
 		m_pointeurClass.settingManager = &m_settingManager;
 		m_pointeurClass.inputManager = &m_inputManager;
 		m_pointeurClass.time = &m_time;
+        m_pointeurClass.physicsEngine = &m_physicsEngine;
 		m_pointeurClass.behaviourManager = &m_behaviourManager;
 		m_pointeurClass.sceneManager = &m_sceneManager;
 	}
@@ -38,13 +39,15 @@ namespace Ge
 		m_renderingEngine.release();
         m_time.release();
         m_inputManager.release();
+        m_physicsEngine.Shutdown();
         Debug::RELEASESUCCESS("GameEngine");
     }
 
     void GameEngine::start()
-    {
-        Debug::Info("Moteur Start");
+    {        
         m_time.startTime();
+        m_physicsEngine.Initialize(m_settingManager.getGravity());
+        Debug::Info("Moteur Start");
 		m_sceneManager.loadEntryScene();
         GameEngine::update();
     }
@@ -54,16 +57,17 @@ namespace Ge
         while (!glfwWindowShouldClose(m_VulkanMisc->str_VulkanDeviceMisc->str_window))/*gestion d'evenement lier a la fermeture de la fenetre via la croix */
 		{
 			glfwPollEvents();/*event de recuperation*/
-            m_time.fixedUpdateTime();
-			m_lag += m_time.getFixedDeltaTime();						
+            m_time.fixedUpdateTime();        
+            m_physicsEngine.Update(m_time.getFixedDeltaTime());
+			m_lag += m_time.getFixedDeltaTime();
 			m_behaviourManager.fixedUpdate();
-			if (m_lag >= 1/m_settingManager.getFps())
+			if (m_lag >= 1.0/m_settingManager.getFps())
 			{
-				m_time.updateTime();		
+				m_time.updateTime();                
 				m_inputManager.updateAxis();
 				m_behaviourManager.update();
 				m_renderingEngine.drawFrame();
-				m_lag -= 1/m_settingManager.getFps();
+				m_lag -= 1.0/m_settingManager.getFps();
 			}
 		}
     }

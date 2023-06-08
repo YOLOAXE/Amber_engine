@@ -21,6 +21,7 @@ namespace Ge
 	void ShaderUniformBufferDivers::updateUniformBufferDiver()
 	{		
 		m_ubd.maxLight = vulkanM->str_VulkanDescriptor->lightCount;
+		m_ubd.maxShadow = vulkanM->str_VulkanDescriptor->shadowCount;
 		m_ubd.u_time = Time::GetTime();
 		m_ubd.gamma = settingM->getGamma();
 		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubd, sizeof(UniformBufferDiver));
@@ -29,9 +30,9 @@ namespace Ge
 
 	void ShaderUniformBufferDivers::initDescriptor(VulkanMisc * vM)
 	{
-		if (m_descriptor == nullptr)
+		if (m_descriptor.size() == 0)
 		{
-			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+			m_descriptor.push_back(new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1));
 		}
 	}
 
@@ -43,13 +44,17 @@ namespace Ge
 		bufferI.offset = 0;
 		bufferI.range = sizeof(UniformBufferDiver);
 		bufferInfo.push_back(bufferI);
-		m_descriptor->updateCount(vulkanM, 1, bufferInfo);
+		m_descriptor[0]->updateCount(vulkanM, 1, bufferInfo);
 	}
 
 	void ShaderUniformBufferDivers::release()
 	{
 		BufferManager::destroyBuffer(m_vmaUniformBuffer);
-		delete(m_descriptor);
+		for (int i = 0; i < m_descriptor.size(); i++)
+		{
+			delete m_descriptor[i];
+		}
+		m_descriptor.clear();
 		Debug::RELEASESUCCESS("UniformBufferDiver");
 	}
 }

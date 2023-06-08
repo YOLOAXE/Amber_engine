@@ -12,6 +12,8 @@
 #include "VulkanMisc.hpp"
 #include "BufferManager.hpp"
 #include "GObject.hpp"
+#include "LightData.hpp"
+#include "Shadow.hpp"
 
 namespace Ge
 {
@@ -21,12 +23,10 @@ namespace Ge
 		Lights(int index, VulkanMisc *vM);
 		void setColors(glm::vec3 color);
 		glm::vec3 getColors();
-		void setSpecular(glm::vec3 spec);
-		glm::vec3 getSpecular();
-		void setAmbiant(glm::vec3 ambiant);
-		glm::vec3 getAmbiant();
 		void setRange(float r);
 		float getRange();
+		void setSpotAngle(float r);
+		float getSpotAngle();
 		int getStatus(); //Statut directional spotlight pointlight
 		int getIndex();
 		void setIndex(int i);
@@ -37,12 +37,13 @@ namespace Ge
 		void setShadow(bool state);
 		bool getShadow();
 		virtual ~Lights();
-
 	protected:
 		UniformBufferLight m_ubl{};
 		VulkanMisc *vMisc;
 		VmaBuffer m_vmaUniformBuffer;
 		VmaBuffer m_vmaOffScreenShadowBuffer;
+		Shadow* m_shadowData;
+		LightData m_lightData;
 		float m_nearPlane = 1.0f;
 		float m_farPlane = 7.5f;
 		int m_index = 0;

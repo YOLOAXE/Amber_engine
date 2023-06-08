@@ -3,7 +3,7 @@
 
 namespace Ge
 {
-	TextureCubeMap::TextureCubeMap(std::vector<unsigned char *> pc, int Width, int Height, int ind, VulkanMisc * vM)
+	TextureCubeMap::TextureCubeMap(std::vector<unsigned char *> pc, int Width, int Height, int ind,bool filter, VulkanMisc * vM)
 	{
 		index = ind;
 		vulkanM = vM->str_VulkanDeviceMisc;
@@ -153,8 +153,16 @@ namespace Ge
 
 		VkSamplerCreateInfo samplerInfo{};
 		samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-		samplerInfo.magFilter = VK_FILTER_LINEAR;
-		samplerInfo.minFilter = VK_FILTER_LINEAR;
+		if (filter)
+		{
+			samplerInfo.magFilter = VK_FILTER_LINEAR;
+			samplerInfo.minFilter = VK_FILTER_LINEAR;
+		}
+		else
+		{
+			samplerInfo.magFilter = VK_FILTER_NEAREST;
+			samplerInfo.minFilter = VK_FILTER_NEAREST;
+		}
 		samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 		samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
 		samplerInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;

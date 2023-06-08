@@ -12,7 +12,7 @@ namespace Ge
 	class Textures
 	{
 	public:
-		Textures(stbi_uc* pc, int Width,int Height,int ind, VulkanMisc * vM);
+		Textures(stbi_uc* pc, int Width,int Height,int ind,bool filter, VulkanMisc * vM);
 		~Textures();
 		VkImageView getVkImageView();
 		VkSampler getVkSampler();

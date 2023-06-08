@@ -2,7 +2,7 @@
 
 namespace Ge
 {
-	Time * Time::s_pInstance = nullptr;
+	Time* Time::s_pInstance = nullptr;
 
 	Time::Time()
 	{
@@ -12,24 +12,24 @@ namespace Ge
 
 	void Time::startTime()
 	{
-		m_startTime = std::chrono::high_resolution_clock::now();
-		m_currentTime = std::chrono::high_resolution_clock::now();
-		m_currentTimeF = std::chrono::high_resolution_clock::now();
+		m_startTime = glfwGetTime();
+		m_currentTime = m_startTime;
+		m_currentTimeF = m_startTime;
 	}
 
 	void Time::fixedUpdateTime()
 	{
 		m_lastTimeF = m_currentTimeF;
-		m_currentTimeF = std::chrono::high_resolution_clock::now();
-		m_time = std::chrono::duration<float, std::chrono::seconds::period>(m_currentTimeF - m_startTime).count();
-		m_fixedDeltaTime = std::chrono::duration<float, std::chrono::seconds::period>(m_currentTimeF - m_lastTimeF).count();
+		m_currentTimeF = glfwGetTime();
+		m_time = static_cast<float>(m_currentTimeF - m_startTime);
+		m_fixedDeltaTime = static_cast<float>(m_currentTimeF - m_lastTimeF);
 	}
 
 	void Time::updateTime()
 	{
 		m_lastTime = m_currentTime;
-		m_currentTime = std::chrono::high_resolution_clock::now();
-		m_deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(m_currentTime - m_lastTime).count();
+		m_currentTime = glfwGetTime();
+		m_deltaTime = static_cast<float>(m_currentTime - m_lastTime);
 	}
 
 	void Time::release()
@@ -66,6 +66,4 @@ namespace Ge
 	{
 		return Time::s_pInstance->m_time;
 	}
-
-
 }

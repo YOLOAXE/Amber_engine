@@ -6,6 +6,10 @@ namespace Ge
 	GObject::GObject()
 	{
 		m_nom = "NoName";
+		m_transform.position = glm::vec3(0.0f);
+		m_transform.rotation = glm::quat(0,0,0,0);
+		m_eulerAngles = glm::vec3(0.0f);
+		m_transform.scale = glm::vec3(1.0f);		
 		s_gobjects.push_back(this);
 	}
 
@@ -32,35 +36,20 @@ namespace Ge
 	void GObject::setPosition(glm::vec3 pos)
 	{
 		m_transform.position = pos;
-		m_transform.translateMatrix = glm::translate(glm::mat4(1.0f), m_transform.position);
 		mapMemory();
 	}
 
-	void GObject::setEulerAngles(glm::vec3 eul)
+	void GObject::setEulerAngles(glm::vec3 euler)
 	{
-		m_transform.eulerAngles = eul;
-		float yaw = glm::radians(m_transform.eulerAngles.x);
-		float pitch = glm::radians(m_transform.eulerAngles.y);
-		float roll = glm::radians(m_transform.eulerAngles.z);
-		m_transform.rotationMatrix = glm::rotate(glm::mat4(1.0f), yaw, glm::vec3(1.0f, 0.0f, 0.0f));
-		m_transform.rotationMatrix = glm::rotate(m_transform.rotationMatrix, pitch, glm::vec3(0.0f, 1.0f, 0.0f));
-		m_transform.rotationMatrix = glm::rotate(m_transform.rotationMatrix, roll, glm::vec3(0.0f, 0.0f, 1.0f));
-		m_transform.rotation = toQuat(m_transform.rotationMatrix);
-		m_transform.direction.x = sin(yaw);
-		m_transform.direction.y = -(sin(pitch)*cos(yaw));
-		m_transform.direction.z = -(cos(pitch)*cos(yaw));
+		m_eulerAngles = euler;
+		m_transform.rotation = glm::quat(glm::radians(euler));
 		mapMemory();
 	}
 
 	void GObject::setRotation(glm::quat rot)
-	{
+	{		
 		m_transform.rotation = rot;
-		m_transform.rotationMatrix = toMat4(m_transform.rotation);
-		extractEulerAngleXYZ(m_transform.rotationMatrix, m_transform.eulerAngles.x, m_transform.eulerAngles.y, m_transform.eulerAngles.z);
-		m_transform.direction.x = sin(m_transform.eulerAngles.x);
-		m_transform.direction.y = -(sin(m_transform.eulerAngles.y)*cos(m_transform.eulerAngles.x));
-		m_transform.direction.z = -(cos(m_transform.eulerAngles.y)*cos(m_transform.eulerAngles.x));
-		m_transform.eulerAngles = glm::degrees(m_transform.eulerAngles);
+		m_eulerAngles = GObject::getEulerAngles();
 		mapMemory();
 	}
 
@@ -72,16 +61,10 @@ namespace Ge
 
 	void GObject::setTarget(glm::vec3 target)
 	{
-		m_transform.target = target;
-		m_transform.rotationMatrix = glm::lookAt(m_transform.position, m_transform.target, glm::vec3(0.0f, 0.0f, 1.0f));
-		m_transform.rotation = toQuat(m_transform.rotationMatrix);
-		extractEulerAngleXYZ(m_transform.rotationMatrix, m_transform.eulerAngles.x, m_transform.eulerAngles.y, m_transform.eulerAngles.z);
-		float yaw = glm::radians(m_transform.eulerAngles.x);
-		float pitch = glm::radians(m_transform.eulerAngles.y);
-		float roll = glm::radians(m_transform.eulerAngles.z);
-		m_transform.direction.x = sin(yaw);
-		m_transform.direction.y = -(sin(pitch)*cos(yaw));
-		m_transform.direction.z = -(cos(pitch)*cos(yaw));
+		glm::vec3 direction = glm::normalize(target - m_transform.position);
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::mat4 rotationMatrix = glm::lookAt(m_transform.position, target, up);		
+		m_transform.rotation = glm::quat_cast(rotationMatrix);
 		mapMemory();
 	}
 
@@ -97,12 +80,12 @@ namespace Ge
 
 	glm::vec3 GObject::getEulerAngles()
 	{
-		return glm::degrees(m_transform.eulerAngles);
+		return glm::degrees(glm::eulerAngles(m_transform.rotation));
 	}
 
 	glm::vec3 GObject::getDirection()
 	{
-		return m_transform.direction;
+		return glm::rotate(m_transform.rotation, glm::vec3(0.0f, 0.0f, -1.0f));
 	}
 
 	glm::vec3 GObject::getScale()
@@ -112,56 +95,72 @@ namespace Ge
 
 	glm::vec3 GObject::transformDirectionAxeX()
 	{
-		glm::vec3 front;
-		front.x = -cos(glm::radians(m_transform.eulerAngles.x)) * sin(glm::radians(m_transform.eulerAngles.y));
-		front.y = sin(glm::radians(m_transform.eulerAngles.x));
-		front.z = cos(glm::radians(m_transform.eulerAngles.x)) * cos(glm::radians(m_transform.eulerAngles.y));
-		front = glm::normalize(front);
-		return front;
+		return glm::rotate(m_transform.rotation, glm::vec3(-1.0f, 0.0f, 0.0f));
 	}
 
 	glm::vec3 GObject::transformDirectionAxeY()
 	{
-		glm::vec3 front;
-		front.x = -cos(glm::radians(m_transform.eulerAngles.x)) * sin(glm::radians(m_transform.eulerAngles.y));
-		front.y = sin(glm::radians(m_transform.eulerAngles.x));
-		front.z = cos(glm::radians(m_transform.eulerAngles.x)) * cos(glm::radians(m_transform.eulerAngles.y));
-		front = glm::normalize(front);
-		front = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
-		return front;
+		return glm::rotate(m_transform.rotation, glm::vec3(0.0f, -1.0f, 0.0f));
 	}
 
 	glm::vec3 GObject::transformDirectionAxeZ()
 	{
-		glm::vec3 front;
-		front.x = -cos(glm::radians(m_transform.eulerAngles.x)) * sin(glm::radians(m_transform.eulerAngles.y));
-		front.y = sin(glm::radians(m_transform.eulerAngles.x));
-		front.z = cos(glm::radians(m_transform.eulerAngles.x)) * cos(glm::radians(m_transform.eulerAngles.y));
-		front = glm::normalize(front);
-		front = glm::normalize(glm::cross(front, glm::vec3(1.0f, 0.0f, 0.0f)));
-		return front;
+		return glm::rotate(m_transform.rotation, glm::vec3(0.0f, 0.0f, -1.0f));
 	}
 
 	glm::vec3 GObject::transformDirectionAxe(glm::vec3 dir)
 	{
-		glm::vec3 front;
-		front.x = -cos(glm::radians(m_transform.eulerAngles.x)) * sin(glm::radians(m_transform.eulerAngles.y));
-		front.y = sin(glm::radians(m_transform.eulerAngles.x));
-		front.z = cos(glm::radians(m_transform.eulerAngles.x)) * cos(glm::radians(m_transform.eulerAngles.y));
-		front = glm::normalize(front);
-		front = glm::normalize(glm::cross(front, glm::vec3(dir.x, dir.y, dir.z)));
-		return front;
+		return glm::rotate(m_transform.rotation, dir);
 	}
 
-	bool GObject::getFlipY()
-	{
-		return false;
+	Transform GObject::globalTransform(const glm::vec3& localPosition, const glm::quat& localRotation, const glm::vec3& localScale,const glm::vec3& parentPosition, const glm::quat& parentRotation, const glm::vec3& parentScale)
+	{		
+		Transform globalTransform;
+		glm::mat4 localMatrix = glm::translate(glm::mat4(1.0f), localPosition) * glm::mat4_cast(localRotation) * glm::scale(glm::mat4(1.0f), localScale);
+		glm::mat4 parentMatrix = glm::translate(glm::mat4(1.0f), parentPosition) * glm::mat4_cast(parentRotation) * glm::scale(glm::mat4(1.0f), parentScale);	
+		glm::mat4 globalMatrix = parentMatrix * localMatrix;
+		globalTransform.position = glm::vec3(globalMatrix[3][0], globalMatrix[3][1], globalMatrix[3][2]);
+		globalTransform.rotation = glm::quat_cast(globalMatrix);
+		globalTransform.scale = localScale;
+		return globalTransform;
 	}
 
-	void GObject::setFlipY(bool state)
+	Transform GObject::globalTransform(const glm::vec3& localPosition, const glm::quat& localRotation, const GObject* parent)
 	{
-		setPosition(getPosition());
-		setRotation(getRotation());
+		Transform globalTransform;
+		glm::mat4 localMatrix = glm::translate(glm::mat4(1.0f), localPosition) * glm::mat4_cast(localRotation) * glm::scale(glm::mat4(1.0f), m_transform.scale);
+		glm::mat4 parentMatrix = glm::translate(glm::mat4(1.0f), parent->m_transform.position) * glm::mat4_cast(parent->m_transform.rotation) * glm::scale(glm::mat4(1.0f), parent->m_transform.scale);
+		glm::mat4 globalMatrix = parentMatrix * localMatrix;
+		globalTransform.position = glm::vec3(globalMatrix[3][0], globalMatrix[3][1], globalMatrix[3][2]);
+		globalTransform.rotation = glm::quat_cast(globalMatrix);
+		globalTransform.scale = m_transform.scale;
+		return globalTransform;
+	}
+
+	void GObject::applyTransform(const glm::vec3& localPosition, const glm::quat& localRotation,const GObject * parent)
+	{
+		glm::mat4 localMatrix = glm::translate(glm::mat4(1.0f), localPosition) * glm::mat4_cast(localRotation) * glm::scale(glm::mat4(1.0f), m_transform.scale);
+		glm::mat4 parentMatrix = glm::translate(glm::mat4(1.0f), parent->m_transform.position) * glm::mat4_cast(parent->m_transform.rotation) * glm::scale(glm::mat4(1.0f), parent->m_transform.scale);
+		glm::mat4 globalMatrix = parentMatrix * localMatrix;
+		m_transform.position = glm::vec3(globalMatrix[3][0], globalMatrix[3][1], globalMatrix[3][2]);
+		m_transform.rotation = glm::quat_cast(globalMatrix);
+		m_eulerAngles = getEulerAngles();
+		mapMemory();
+	}
+
+	Transform GObject::globalTransform(const glm::vec3& localPosition, const glm::vec3& localEuler, const glm::vec3& localScale, const glm::vec3& parentPosition, const glm::quat& parentRotation, const glm::vec3& parentScale)
+	{
+		return globalTransform(localPosition, glm::quat(glm::radians(localEuler)), localScale, parentPosition, parentRotation, parentScale);
+	}
+
+	Transform GObject::globalTransform(const glm::vec3& localPosition, const glm::vec3& localEuler, const GObject* parent)
+	{
+		return globalTransform(localPosition, glm::quat(glm::radians(localEuler)), parent);
+	}
+
+	void GObject::applyTransform(const glm::vec3& localPosition, const glm::vec3& localEuler, const GObject* parent)
+	{
+		applyTransform(localPosition, glm::quat(glm::radians(localEuler)),parent);
 	}
 
 	void GObject::addComponent(Component *c)
@@ -174,6 +173,14 @@ namespace Ge
 		m_component.erase(std::remove(m_component.begin(), m_component.end(), c), m_component.end());
 	}
 
+	glm::mat4 GObject::getModelMatrix() const
+	{
+		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), m_transform.position);
+		glm::mat4 rotationMatrix = glm::toMat4(glm::quat(m_transform.rotation));
+		glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), m_transform.scale);
+		return translationMatrix * rotationMatrix * scaleMatrix;
+	}
+
 	void GObject::onGUI()
 	{
 		if (ImGui::DragFloat3("Position", (float *)&m_transform.position, 0.2f))
@@ -181,9 +188,9 @@ namespace Ge
 			setPosition(m_transform.position);
 		}
 
-		if (ImGui::DragFloat3("EulerAngles", (float *)&m_transform.eulerAngles, 0.2f))
+		if (ImGui::DragFloat3("EulerAngles", (float*)&m_eulerAngles, 0.2f))
 		{
-			setEulerAngles(m_transform.eulerAngles);
+			setEulerAngles(m_eulerAngles);
 		}
 
 		if (ImGui::DragFloat4("Rotation", (float *)&m_transform.rotation, 0.2f))
@@ -196,10 +203,10 @@ namespace Ge
 			setScale(m_transform.scale);
 		}
 
-		if (ImGui::DragFloat3("Direction", (float *)&m_transform.direction, 0.2f))
+		/*if (ImGui::DragFloat3("Direction", (float*)&m_transform.direction, 0.2f))
 		{
-			//setScale(m_transform.scale);
-		}
+			
+		}*/
 
 		for (Component *comp : m_component)
 		{

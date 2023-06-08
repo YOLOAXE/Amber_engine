@@ -16,13 +16,13 @@ namespace Ge
         return true;
     }
 
-    SpotLight * LightManager::createSpotLight(glm::vec3 position, glm::vec3 color, glm::vec3 direction, float cutOff, float outerCutOff, std::string name)
+    SpotLight * LightManager::createSpotLight(glm::vec3 position, glm::vec3 color, glm::vec3 euler, float angle, std::string name)
 	{
 		SpotLight * light = new SpotLight(m_lights.size(), vulkanM);
 		light->setPosition(position);
+		light->setEulerAngles(euler);
 		light->setColors(color);
-		light->setCutOff(cutOff);
-		light->setOuterCutOff(outerCutOff);
+		light->setSpotAngle(angle);
 		light->setName(name);
 		m_lights.push_back(light);
 		vulkanM->str_VulkanDescriptor->lightCount = m_lights.size();
@@ -30,10 +30,11 @@ namespace Ge
 		return (SpotLight *)light;
 	}
 
-	DirectionalLight * LightManager::createDirectionalLight(glm::vec3 direction, glm::vec3 color, std::string name)
+	DirectionalLight * LightManager::createDirectionalLight(glm::vec3 euler, glm::vec3 color, std::string name)
 	{
 		DirectionalLight * light = new DirectionalLight(m_lights.size(), vulkanM);
 		light->setColors(color);
+		light->setEulerAngles(euler);
 		light->setName(name);		
 		m_lights.push_back(light);
 		vulkanM->str_VulkanDescriptor->lightCount = m_lights.size();
@@ -87,7 +88,11 @@ namespace Ge
 		m_lights.clear();
         vulkanM->str_VulkanDescriptor->lightCount = 0;
 		BufferManager::destroyBuffer(m_vmaUniformBuffers);
-		delete(m_descriptor);
+		for (int i = 0; i < m_descriptor.size(); i++)
+		{
+			delete m_descriptor[i];
+		}
+		m_descriptor.clear();
 		Debug::RELEASESUCCESS("light Manager");
 	}
 
@@ -110,14 +115,14 @@ namespace Ge
 			bufferInfoLight.push_back(bufferIL);
 		}
 				
-		m_descriptor->updateCount(vulkanM, bufferInfoLight.size(),bufferInfoLight);
+		m_descriptor[0]->updateCount(vulkanM, bufferInfoLight.size(),bufferInfoLight);
 	}
 
 	void LightManager::initDescriptor(VulkanMisc * vM) 
 	{
-		if (m_descriptor == nullptr)
+		if (m_descriptor.size() == 0)
 		{
-			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+			m_descriptor.push_back(new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1));
 		}
 	}
 

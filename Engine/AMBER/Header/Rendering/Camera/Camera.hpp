@@ -32,10 +32,11 @@ namespace Ge
 		float getFar();
 		void mapMemory() override;
 		int getPriority();
+		float aspectRatio() const;
+		glm::mat4 getViewMatrix() const;
+		glm::mat4 getProjectionMatrix() const;
 		void onGUI() override;
 		VkBuffer getUniformBuffer();
-	private:
-		void updatePerspective();
 	protected:
 		VulkanMisc * vulkanM;
 		UniformBufferCamera m_uniformBufferCamera;
@@ -45,6 +46,7 @@ namespace Ge
 		float m_far = 300.0f;
 		int m_priority = 0;
 		bool m_ortho = false;
+		float m_orthoSize;
 	};
 }
 

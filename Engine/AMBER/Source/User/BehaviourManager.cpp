@@ -8,9 +8,12 @@ namespace Ge
 		m_startBehaviours.push_back(b);
 	}
 
-	void BehaviourManager::removeBehaviour(Behaviour * b)
+	void BehaviourManager::removeBehaviour(Behaviour * b,bool ignoreStop)
 	{		
-		m_stopBehaviours.push_back(b);
+		if (!ignoreStop)
+		{
+			m_stopBehaviours.push_back(b);
+		}
 		m_behaviours.erase(std::remove(m_behaviours.begin(), m_behaviours.end(), b), m_behaviours.end());
 	}
 
@@ -27,13 +30,16 @@ namespace Ge
 		}
 		for (int i = 0; i < m_stopBehaviours.size(); i++)
 		{
-			m_stopBehaviours[i]->stop();
+			if (m_stopBehaviours[i] != nullptr)
+			{
+				m_stopBehaviours[i]->stop();
+			}
 		}
 		m_stopBehaviours.clear();
 	}
 
 	void BehaviourManager::fixedUpdate()
-	{
+	{	
 		for (int i = 0; i < m_behaviours.size(); i++)
 		{
 			m_behaviours[i]->fixedUpdate();

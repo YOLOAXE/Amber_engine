@@ -14,14 +14,17 @@ namespace Ge
 		m_ubm.normal = 1.0f;
 		m_ubm.ao = 1.0f;
 		m_ubm.albedoMap = 0;
-		m_ubm.normalMap = 0;
+		m_ubm.normalMap = 1;
 		m_ubm.metallicMap = 0;
 		m_ubm.roughnessMap = 0;
 		m_ubm.aoMap = 0;				
 		m_ubm.castShadow = true;
-		m_ubm.offset = glm::vec2(1.0f);
+		m_ubm.tilling = glm::vec2(1.0f);
+		m_ubm.offset = glm::vec2(0.0f);
 		m_offset[0] = m_ubm.offset.x;
 		m_offset[1] = m_ubm.offset.y;
+		m_tilling[0] = m_ubm.tilling.x;
+		m_tilling[1] = m_ubm.tilling.y;
 
 		if (!BufferManager::createBuffer(sizeof(UniformBufferMaterial), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM->str_VulkanDeviceMisc))
 		{
@@ -41,21 +44,25 @@ namespace Ge
 	void Materials::setMetallic(float metal)
 	{
 		m_ubm.metallic = metal;
+		updateUniformBufferMaterial();
 	}
 
 	void Materials::setRoughness(float roug)
 	{
 		m_ubm.roughness = roug;
+		updateUniformBufferMaterial();
 	}
 
 	void Materials::setNormal(float normal)
 	{
 		m_ubm.normal = normal;
+		updateUniformBufferMaterial();
 	}
 
 	void Materials::setOclusion(float ao)
 	{
 		m_ubm.ao = ao;
+		updateUniformBufferMaterial();
 	}
 
 	void Materials::setPipeline(GraphiquePipeline * p)
@@ -89,7 +96,7 @@ namespace Ge
 		updateUniformBufferMaterial();
 	}
 
-	void Materials::setRoughness(Textures * roug)
+	void Materials::setRoughnessTexture(Textures * roug)
 	{
 		m_ubm.roughnessMap = roug->getIndex();
 		m_RoughnessMap = roug;
@@ -214,9 +221,20 @@ namespace Ge
 		return m_ubm.offset;
 	}
 
+	glm::vec2 Materials::getTilling()
+	{
+		return m_ubm.tilling;
+	}
+
 	void Materials::setOffset(glm::vec2 off)
 	{
 		m_ubm.offset = off;
+		updateUniformBufferMaterial();
+	}
+
+	void Materials::setTilling(glm::vec2 tilling)
+	{
+		m_ubm.tilling = tilling;
 		updateUniformBufferMaterial();
 	}
 
@@ -224,6 +242,10 @@ namespace Ge
 	{
 		ImGui::TextColored(ImVec4(0.2f, 1, 0.2f, 1), "Material\n");
 		if (ImGui::ColorEdit3("Albedo", (float *)&m_ubm.albedo))
+		{
+			updateUniformBufferMaterial();
+		}
+		if (ImGui::DragFloat2("Tilling", (float*)&m_ubm.tilling, 0.2f))
 		{
 			updateUniformBufferMaterial();
 		}

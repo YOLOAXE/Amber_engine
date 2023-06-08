@@ -16,7 +16,9 @@ namespace Ge
 		bool initialize(VulkanMisc * vM, ModelManager* mM, GraphiquePipelineManager * gPM);
 		void release();
 		void initDescriptor(VulkanMisc * vM);
-		void loadSkybox(TextureCubeMap * tCM);		
+		Skybox * loadSkybox(TextureCubeMap * tCM);
+		Skybox* createSkybox(TextureCubeMap* tCM);
+		void changeSkybox(Skybox * sky);
 		void updateDescriptor();		
 		static Skybox * GetCurrentSkybox();
 	private:
@@ -24,6 +26,7 @@ namespace Ge
 		ShapeBuffer * cubeMapBaseModel;
 		GraphiquePipeline * m_skyboxPipeline;
 		static Skybox * currentSkybox;
+		std::vector<Skybox*> m_skybox;
 	};
 }
 

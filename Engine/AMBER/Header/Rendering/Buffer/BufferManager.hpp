@@ -17,7 +17,7 @@ namespace Ge
 
     public:
         static bool createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags flags, VmaBuffer &buffer, VulkanDeviceMisc *vM);
-        static bool createImageBuffer(uint32_t width, uint32_t height, VkImageType imageType, uint32_t arrayLayers, uint32_t mipLevels, VkSampleCountFlagBits numSamples, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VmaBufferImage& image, VkImageCreateFlags flags, VulkanMisc * vM);
+        static bool createImageBuffer(uint32_t width, uint32_t height, VkImageType imageType, uint32_t arrayLayers, uint32_t mipLevels, VkSampleCountFlagBits numSamples, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VmaBufferImage& image, VkImageCreateFlags flags, VulkanMisc * vM, VkImageLayout initiallayout = VK_IMAGE_LAYOUT_UNDEFINED);
         static void destroyBuffer(VmaBuffer &buffer);
         static void destroyImageBuffer(VmaBufferImage &buffer);
         static void *mapMemory(VmaBuffer &buffer);

@@ -25,6 +25,7 @@
 #include "Hud.hpp"
 #include "SyncObjects.hpp"
 #include "SkyboxManager.hpp"
+#include "ShadowManager.hpp"
 
 namespace Ge
 {
@@ -68,6 +69,7 @@ namespace Ge
 		Hud m_hud;
 		SyncObjects m_syncObjects;
 		SkyboxManager m_skyboxManager;
+        ShadowManager m_shadowManager;
 		size_t m_currentFrame = 0;
     };
 }

@@ -2,14 +2,14 @@
 #define __ENGINE_TIME__
 
 #include "Debug.hpp"
-#include <chrono>
+#include <GLFW/glfw3.h>
 
 namespace Ge
 {
 	class Time
 	{
 	private:
-		friend class GameEngine;		
+		friend class GameEngine;
 		void startTime();
 		void fixedUpdateTime();
 		void updateTime();
@@ -23,22 +23,14 @@ namespace Ge
 		static float GetDeltaTime();
 		static float GetTime();
 	private:
-		static Time * s_pInstance;
-#ifdef _WIN32 //TODO tester le win32 sur unix
-		std::chrono::steady_clock::time_point m_startTime;
-		std::chrono::steady_clock::time_point m_currentTimeF;
-		std::chrono::steady_clock::time_point m_lastTimeF;
-		std::chrono::steady_clock::time_point m_currentTime;
-		std::chrono::steady_clock::time_point m_lastTime;
-#elif __unix__
-		std::chrono::_V2::system_clock::time_point m_startTime;
-		std::chrono::_V2::system_clock::time_point m_currentTimeF;
-		std::chrono::_V2::system_clock::time_point m_lastTimeF;
-		std::chrono::_V2::system_clock::time_point m_currentTime;
-		std::chrono::_V2::system_clock::time_point m_lastTime;
-#endif
+		static Time* s_pInstance;
+		double m_startTime;
+		double m_currentTimeF;
+		double m_lastTimeF;
+		double m_currentTime;
+		double m_lastTime;
 		float m_time = 0.0f;
-		float m_deltaTime = 0.0f;		
+		float m_deltaTime = 0.0f;
 		float m_fixedDeltaTime = 0.0f;
 	};
 }

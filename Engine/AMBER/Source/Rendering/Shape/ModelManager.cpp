@@ -6,7 +6,8 @@
 
 namespace Ge
 {
-	std::vector<Model *> ModelManager::m_models;
+	std::vector<Model*> ModelManager::m_models;
+	std::map<ShapeBuffer*, std::map<int, std::vector<Model*>>> ModelManager::m_instancing;
 	bool ModelManager::initiliaze(VulkanMisc *vM)
 	{
 		vulkanM = vM;		
@@ -37,12 +38,14 @@ namespace Ge
 			bufferIM.offset = 0;
 			bufferIM.range = sizeof(UniformBufferObject);
 			bufferInfoModel.push_back(bufferIM);
-			m_descriptor->updateCount(vulkanM, 1, bufferInfoModel);			
+			m_descriptor[0]->updateCount(vulkanM, 1, bufferInfoModel);			
 		}
 		else
-		{
-			m_descriptor->updateCount(vulkanM, m_models.size(), bufferInfoModel);
+		{			
+			m_descriptor[0]->updateCount(vulkanM, m_models.size(), bufferInfoModel);
 		}
+		vulkanM->str_VulkanSwapChainMisc->str_descriptorSetLayoutModel = m_descriptor[0]->getDescriptorSetLayout();
+		vulkanM->str_VulkanSwapChainMisc->str_descriptorSetModel = m_descriptor[0]->getDescriptorSets();
 	}
 
 	void ModelManager::release()
@@ -57,8 +60,13 @@ namespace Ge
 			delete (m_models[i]);
 		}
 		m_models.clear();
+		m_instancing.clear();
 		BufferManager::destroyBuffer(m_vmaUniformBuffers);
-		delete(m_descriptor);
+		for (int i = 0; i < m_descriptor.size(); i++)
+		{
+			delete m_descriptor[i];
+		}
+		m_descriptor.clear();
 		Debug::RELEASESUCCESS("ModelManager");
 	}
 
@@ -70,11 +78,14 @@ namespace Ge
 			return nullptr;
 		}
 		Model * Mesh = new Model(buffer, m_models.size(), vulkanM);
+		m_instancing[buffer][0].push_back(Mesh);
 		Mesh->setName(nom);
 		Mesh->setMaterial(MaterialManager::getDefaultMaterial());
 		m_models.push_back(Mesh);
-		vulkanM->str_VulkanDescriptor->modelCount = m_models.size();
+		vulkanM->str_VulkanDescriptor->modelCount = m_models.size();		
 		updateDescriptor();
+		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
+		vulkanM->str_VulkanDescriptor->recreateShadowPipeline = true;
 		return Mesh;
 	}
 
@@ -84,6 +95,7 @@ namespace Ge
 		m_destroymodels.erase(std::remove(m_destroymodels.begin(), m_destroymodels.end(), model), m_destroymodels.end());
 		m_destroymodels.push_back(model);
 		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
+		vulkanM->str_VulkanDescriptor->recreateShadowPipeline = true;
 	}
 
 	void ModelManager::destroyBuffer(ShapeBuffer *buffer)
@@ -92,16 +104,31 @@ namespace Ge
 		m_destroyshapeBuffers.erase(std::remove(m_destroyshapeBuffers.begin(), m_destroyshapeBuffers.end(), buffer), m_destroyshapeBuffers.end());
 		m_destroyshapeBuffers.push_back(buffer);
 		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
+		vulkanM->str_VulkanDescriptor->recreateShadowPipeline = true;
 	}
 
 	void ModelManager::destroyElement()
 	{		
 		if (m_destroyElement)
 		{
+			ShapeBuffer* sb;
+			int pi;
 			for (int j = 0; j < m_destroymodels.size(); j++)
 			{
 				m_models.erase(std::remove(m_models.begin(), m_models.end(), m_destroymodels[j]), m_models.end());
-				delete (m_destroymodels[j]);				
+				sb = m_destroymodels[j]->getShapeBuffer();
+				pi = m_destroymodels[j]->getMaterial()->getPipelineIndex();
+				m_instancing[sb][pi].erase(std::remove(m_instancing[sb][pi].begin(), m_instancing[sb][pi].end(), m_destroymodels[j]), m_instancing[sb][pi].end());
+				auto& modelVector = m_instancing[sb][pi];
+				if (modelVector.empty())
+				{
+					m_instancing[sb].erase(pi);
+					if (m_instancing[sb].empty())
+					{
+						m_instancing.erase(sb);
+					}
+				}
+				delete (m_destroymodels[j]);
 			}
 
 			for (int j = 0; j < m_destroyshapeBuffers.size(); j++)
@@ -115,6 +142,11 @@ namespace Ge
 						delete (m);
 						i--;
 					}
+				}
+				auto it = m_instancing.find(m_destroyshapeBuffers[j]);
+				if (it != m_instancing.end()) 
+				{
+					m_instancing.erase(it);
 				}
 				m_shapeBuffers.erase(std::remove(m_shapeBuffers.begin(), m_shapeBuffers.end(), m_destroyshapeBuffers[j]), m_shapeBuffers.end());
 				delete (m_destroyshapeBuffers[j]);
@@ -132,16 +164,45 @@ namespace Ge
 		}
 	}
 
-	std::vector<Model *> ModelManager::GetModels()
+	std::map<ShapeBuffer*, std::map<int, std::vector<Model*>>> ModelManager::GetModelInstancing()
+	{
+		return m_instancing;
+	}
+
+	std::vector<Model*> ModelManager::GetModels()
 	{
 		return m_models;
 	}
 
+	void ModelManager::updateInstanced(ShapeBuffer* sb, Model* m,int pi_Start,int pi_End,VulkanMisc * vm)
+	{
+		if (pi_Start == pi_End)
+		{
+			return;
+		}
+		auto& modelVector = m_instancing[sb][pi_Start];
+		modelVector.erase(std::remove(modelVector.begin(), modelVector.end(), m), modelVector.end());
+
+		m_instancing[sb][pi_End].push_back(m);
+
+		if (modelVector.empty())
+		{
+			m_instancing[sb].erase(pi_Start);
+			if (m_instancing[sb].empty())
+			{
+				m_instancing.erase(sb);
+			}
+		}
+		vm->str_VulkanDescriptor->recreateCommandBuffer = true;
+	}
+
 	void ModelManager::initDescriptor(VulkanMisc * vM)
 	{
-		if (m_descriptor == nullptr)
+		if (m_descriptor.size() == 0)
 		{
-			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+			m_descriptor.push_back(new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1));
+			vM->str_VulkanSwapChainMisc->str_descriptorSetLayoutModel = m_descriptor[0]->getDescriptorSetLayout();
+			vM->str_VulkanSwapChainMisc->str_descriptorSetModel = m_descriptor[0]->getDescriptorSets();
 		}
 	}
 
@@ -221,7 +282,10 @@ namespace Ge
 	ShapeBuffer * ModelManager::allocateBuffer(float * pos, float * texCord, float * normal, unsigned int * indice, unsigned vertexSize, unsigned indiceSize)
 	{
 		std::vector<Vertex> vertices;
-		std::vector<uint32_t> indices;
+		std::vector<uint32_t> indices(indice, indice + indiceSize);
+
+		vertices.reserve(vertexSize/3);
+		indices.reserve(vertexSize);
 		for (int i = 0; i < vertexSize; i++)
 		{
 			Vertex vertex{};
@@ -241,11 +305,36 @@ namespace Ge
 				normal[3 * i + 2] };
 			vertices.push_back(vertex);
 		}
-		for (int i = 0; i < indiceSize; i++)
+
+		uint32_t index0, index1, index2;
+		glm::vec3 edge1, edge2, tangent;
+		glm::vec2 deltaUV1, deltaUV2;
+		float r;
+		for (size_t i = 0; i < indices.size(); i += 3)
 		{
-			indices.push_back(indice[i]);
-		}		
-		//ComputationTangent(vertices);
+			index0 = indices[i];
+			index1 = indices[i + 1];
+			index2 = indices[i + 2];
+
+			Vertex& vertex0 = vertices[index0];
+			Vertex& vertex1 = vertices[index1];
+			Vertex& vertex2 = vertices[index2];
+
+			edge1 = vertex1.pos - vertex0.pos;
+			edge2 = vertex2.pos - vertex0.pos;
+
+			deltaUV1 = vertex1.texCoord - vertex0.texCoord;
+			deltaUV2 = vertex2.texCoord - vertex0.texCoord;
+
+			r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+			tangent = glm::normalize(r * (deltaUV2.y * edge1 - deltaUV1.y * edge2));
+
+			vertex0.tangents = tangent;
+			vertex1.tangents = tangent;
+			vertex2.tangents = tangent;
+		}
+
 		ShapeBuffer *buffer = new ShapeBuffer(vertices, indices, vulkanM);
 		m_shapeBuffers.push_back(buffer);
 		return buffer;
@@ -275,7 +364,6 @@ namespace Ge
 			tangents.z = r * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
 
 			tangents = glm::normalize(tangents);
-			Debug::Log("%f  %f  %f", tangents.x, tangents.y, tangents.z);
 
 			vertices[i + 0].tangents = tangents;
 			vertices[i + 1].tangents = tangents;
@@ -283,72 +371,92 @@ namespace Ge
 		}
 	}
 
-	ShapeBuffer *ModelManager::allocateBuffer(const char *path)
+	ShapeBuffer* ModelManager::allocateBuffer(const char* path)
 	{
 		tinyobj::attrib_t attrib;
 		std::vector<tinyobj::shape_t> shapes;
 		std::vector<tinyobj::material_t> materials;
 		std::string warn, err;
-		std::vector<Vertex> vertices;
-		std::vector<Vertex> verticesTTT;
-		std::vector<uint32_t> indices;
-		glm::vec3 normalResult;
 
 		if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path))
 		{
 			Debug::Warn("%s  %s", nullptr, warn.c_str(), err.c_str());
 			return nullptr;
 		}
-		
-		std::unordered_map<Vertex, uint32_t> uniqueVertices{};
 
-		for (const auto &shape : shapes)
+		std::vector<Vertex> vertices;
+		std::vector<uint32_t> indices;
+		std::unordered_map<Vertex, uint32_t> uniqueVertices;
+
+		vertices.reserve(attrib.vertices.size() / 3);
+		indices.reserve(attrib.vertices.size());
+
+		for (const auto& shape : shapes)
 		{
-			for (const auto &index : shape.mesh.indices)
+			for (const auto& index : shape.mesh.indices)
 			{
 				Vertex vertex{};
-				
+
 				vertex.pos = {
 					attrib.vertices[3 * index.vertex_index + 0],
 					attrib.vertices[3 * index.vertex_index + 1],
-					attrib.vertices[3 * index.vertex_index + 2]};
+					attrib.vertices[3 * index.vertex_index + 2]
+				};
 
 				vertex.texCoord = {
 					attrib.texcoords[2 * index.texcoord_index + 0],
-					1.0f - attrib.texcoords[2 * index.texcoord_index + 1]};
+					1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
+				};
 
 				vertex.normal = {
 					attrib.normals[3 * index.normal_index + 0],
 					attrib.normals[3 * index.normal_index + 1],
-					attrib.normals[3 * index.normal_index + 2]};
+					attrib.normals[3 * index.normal_index + 2]
+				};
 
-				vertex.color = {1,1,1};
-
-				vertex.tangents = { 0,0,0 };
-
-				verticesTTT.push_back(vertex);
+				vertex.color = { 1, 1, 1 };
+				vertex.tangents = { 0, 0, 0 };
 
 				if (uniqueVertices.count(vertex) == 0)
 				{
 					uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
-					vertices.push_back(vertex);
+					vertices.emplace_back(vertex);
 				}
 
-				indices.push_back(uniqueVertices[vertex]);
-			}
-		}		
-		ComputationTangent(verticesTTT);
-		for (int i = 0; i < verticesTTT.size(); i++)
-		{
-			for (int j = 0; j < vertices.size(); j++)
-			{
-				if (verticesTTT[i] == vertices[j])
-				{
-					vertices[j] = verticesTTT[i];
-				}
+				indices.emplace_back(uniqueVertices[vertex]);
 			}
 		}
-		ShapeBuffer *buffer = new ShapeBuffer(vertices, indices, vulkanM);
+
+		uint32_t index0, index1, index2;
+		glm::vec3 edge1, edge2, tangent;
+		glm::vec2 deltaUV1, deltaUV2;
+		float r;
+		for (size_t i = 0; i < indices.size(); i += 3)
+		{
+			index0 = indices[i];
+			index1 = indices[i + 1];
+			index2 = indices[i + 2];
+
+			Vertex& vertex0 = vertices[index0];
+			Vertex& vertex1 = vertices[index1];
+			Vertex& vertex2 = vertices[index2];
+
+			edge1 = vertex1.pos - vertex0.pos;
+			edge2 = vertex2.pos - vertex0.pos;
+
+			deltaUV1 = vertex1.texCoord - vertex0.texCoord;
+			deltaUV2 = vertex2.texCoord - vertex0.texCoord;
+
+			 r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+			tangent = glm::normalize(r * (deltaUV2.y * edge1 - deltaUV1.y * edge2));
+
+			vertex0.tangents = tangent;
+			vertex1.tangents = tangent;
+			vertex2.tangents = tangent;
+		}
+
+		ShapeBuffer* buffer = new ShapeBuffer(vertices, indices, vulkanM);
 		m_shapeBuffers.push_back(buffer);
 		return buffer;
 	}

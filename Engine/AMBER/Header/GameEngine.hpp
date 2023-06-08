@@ -8,6 +8,7 @@
 #include "SettingManager.hpp"
 #include "Time.hpp"
 #include "InputManager.hpp"
+#include "PhysicsEngine.hpp"
 
 namespace Ge
 {
@@ -28,6 +29,7 @@ namespace Ge
         Debug m_debug;
         SettingManager m_settingManager;        
         Time m_time;
+        PhysicsEngine m_physicsEngine;
         InputManager m_inputManager;
 		BehaviourManager m_behaviourManager;
 		SceneManager m_sceneManager;

@@ -20,6 +20,7 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
 {
 	vec3  albedo;
 	vec2 offset;
+	vec2 tilling;
 	float metallic;
     float roughness;	
 	float normal;
@@ -49,17 +50,15 @@ layout(set = 5, binding = 0) uniform UniformBufferDiver
 
 layout (set = 6, binding = 0) uniform samplerCube samplerCubeMap;
 
-layout(push_constant) uniform PushConstants
-{
-    uint ubo;
-	uint material;
-} index;
-
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec3 inNormal;
 layout(location = 2) in vec3 inColor;
 layout(location = 3) in vec2 inTexCoord;
 layout(location = 4) in vec3 inTangent;
+
+//Instanced
+layout(location = 5) in int index_ubo;
+layout(location = 6) in int index_material;
 
 layout (location = 0) out vec3 outUVW;
 

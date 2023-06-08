@@ -23,15 +23,18 @@ namespace Ge
         Model *createModel(ShapeBuffer *buffer, std::string nom = "Model");
         void destroyModel(Model *model);
         void destroyBuffer(ShapeBuffer *buffer);
-        void updateDescriptor();		
+        void updateDescriptor();		        
 		void initDescriptor(VulkanMisc * vM) override;
-		static std::vector<Model *> GetModels();
+        static std::map<ShapeBuffer*, std::map<int, std::vector<Model*>>> GetModelInstancing();
+        static std::vector<Model*> GetModels();
+        static void updateInstanced(ShapeBuffer* sb, Model* m, int pi_Start, int pi_End, VulkanMisc* vm);
         void ComputationTangent(std::vector<Vertex>& vertices);
 	private:
 		friend class RenderingEngine;
 		void destroyElement();
-    private:
-		static std::vector<Model *> m_models;
+    private:		
+        static std::map<ShapeBuffer*, std::map<int, std::vector<Model*>>> m_instancing;
+        static std::vector<Model*> m_models;
         std::vector<ShapeBuffer *> m_shapeBuffers;        
 		std::vector<Model *> m_destroymodels;
 		std::vector<ShapeBuffer *> m_destroyshapeBuffers;

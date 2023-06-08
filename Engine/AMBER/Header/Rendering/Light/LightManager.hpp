@@ -15,8 +15,8 @@ namespace Ge
     public:
         bool initialize(VulkanMisc *vM);
         void release();
-        SpotLight *createSpotLight(glm::vec3 position, glm::vec3 color, glm::vec3 direction, float cutOff, float outerCutOff, std::string name = "SpotLight");
-        DirectionalLight *createDirectionalLight(glm::vec3 direction, glm::vec3 color, std::string name = "DirectionalLight");
+        SpotLight *createSpotLight(glm::vec3 position, glm::vec3 color, glm::vec3 euler, float angle, std::string name = "SpotLight");
+        DirectionalLight *createDirectionalLight(glm::vec3 euler, glm::vec3 color, std::string name = "DirectionalLight");
         PointLight *createPointLight(glm::vec3 position, glm::vec3 color, std::string name = "PointLight");
         void destroyLight(Lights *light);
         void updateDescriptor();

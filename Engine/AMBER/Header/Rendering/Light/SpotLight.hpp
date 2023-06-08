@@ -9,16 +9,6 @@ namespace Ge
 	{
 	public:
 		SpotLight(int index, VulkanMisc * vM);
-		float getConstant();
-		void setConstant(float constant);
-		float getLinear();
-		void setLinear(float linear);
-		float getQuadratic();
-		void setQuadratic(float quadratic);
-		float getCutOff();
-		void setCutOff(float cutOff);
-		float getOuterCutOff();
-		void setOuterCutOff(float outerCutOff);
 	};
 }
 

@@ -89,6 +89,7 @@ namespace Ge
 		ptrC->lightManager->initDescriptor(vM);
 		sUBD->initDescriptor(vM);	
 		ptrC->skyboxManager->initDescriptor(vM);
+		ptrC->shadowManager->initDescriptor(vM);
 		if (!SwapChain::initPipeline())
 		{
 			Debug::INITFAILED("InitializeLayout");

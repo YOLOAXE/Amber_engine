@@ -27,23 +27,28 @@ namespace Ge
 		~GObject();
 		void setName(std::string nom);
 		std::string * getName();
-		void setPosition(glm::vec3 pos);
-		void setRotation(glm::quat rot);
-		void setEulerAngles(glm::vec3 eul);
-		void setScale(glm::vec3 scale);
-		void setTarget(glm::vec3 target);
-		glm::vec3 getPosition();
-		glm::quat getRotation();
-		glm::vec3 getEulerAngles();
-		glm::vec3 getDirection();
-		glm::vec3 getScale();
+		virtual glm::mat4 getModelMatrix() const;
+		virtual void setPosition(glm::vec3 pos);
+		virtual void setRotation(glm::quat rot);
+		virtual void setEulerAngles(glm::vec3 eul);
+		virtual void setScale(glm::vec3 scale);
+		virtual void setTarget(glm::vec3 target);
+		virtual glm::vec3 getPosition();
+		virtual glm::quat getRotation();
+		virtual glm::vec3 getEulerAngles();
+		virtual glm::vec3 getDirection();
+		virtual glm::vec3 getScale();
 		virtual void mapMemory() = 0;
 		glm::vec3 transformDirectionAxeX();
 		glm::vec3 transformDirectionAxeY();
 		glm::vec3 transformDirectionAxeZ();
 		glm::vec3 transformDirectionAxe(glm::vec3 dir);
-		bool getFlipY();
-		void setFlipY(bool state);
+		Transform globalTransform(const glm::vec3& localPosition, const glm::quat& localRotation, const glm::vec3& localScale, const glm::vec3& parentPosition, const glm::quat& parentRotation, const glm::vec3& parentScale);
+		Transform globalTransform(const glm::vec3& localPosition, const glm::quat& localRotation, const GObject* parent);		
+		Transform globalTransform(const glm::vec3& localPosition, const glm::vec3& localEuler, const glm::vec3& localScale, const glm::vec3& parentPosition, const glm::quat& parentRotation, const glm::vec3& parentScale);
+		Transform globalTransform(const glm::vec3& localPosition, const glm::vec3& localEuler, const GObject* parent);
+		void applyTransform(const glm::vec3& localPosition, const glm::quat& localRotation, const GObject* parent);
+		void applyTransform(const glm::vec3& localPosition, const glm::vec3& localEuler, const GObject* parent);
 		void addComponent(Component * c);
 		void removeComponent(Component * c);
 		static std::vector<GObject *> GetGObjects();
@@ -53,6 +58,7 @@ namespace Ge
 		GObject * m_parents;
 		std::string m_nom;
 		Transform m_transform{};
+		glm::vec3 m_eulerAngles;//only UI
 		std::vector<Component *> m_component;
 
 	};

@@ -20,6 +20,7 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
 {
 	vec3  albedo;
 	vec2 offset;
+	vec2 tilling;
 	float metallic;
     float roughness;	
 	float normal;
@@ -35,25 +36,31 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
 layout(set = 4, binding = 0) uniform UniformBufferLight
 {
 	vec3 position;
-    vec3 lightColor;
+    vec3 color;
+	vec3 direction;
 	float range;
+	float spotAngle;
 	uint status;//DirLight = 0 ; PointLight = 1 ; SpotLight = 2
 } ubl[];
 
 layout(set = 5, binding = 0) uniform UniformBufferDiver
 {
 	uint maxLight;
+	uint maxShadow;
 	float u_time;
 	float gamma;
 }ubd;
 
 layout (set = 6, binding = 0) uniform samplerCube samplerCubeMap;
 
-layout(push_constant) uniform PushConstants
+layout(set = 7, binding = 0) uniform sampler2D shadowSampler[];
+
+layout(set = 8, binding = 0) uniform UniformBufferShadow
 {
-    uint ubo;
-	uint material;
-} index;
+    mat4 view;
+    mat4 proj;
+    vec3 position;
+} ubs[];
 
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec3 inNormal;
@@ -61,21 +68,26 @@ layout(location = 2) in vec3 inColor;
 layout(location = 3) in vec2 inTexCoord;
 layout(location = 4) in vec3 inTangent;
 
+//Instanced
+layout(location = 5) in int index_ubo;
+layout(location = 6) in int index_material;
+
 layout(location = 0) out vec2 fragTexCoord;
-layout(location = 1) out vec3 Normal;
-layout(location = 2) out vec3 Color;
-layout(location = 3) out vec3 WorldPos;
-layout(location = 4) out mat3 TBN;
+layout(location = 1) out vec3 Color;
+layout(location = 2) out vec3 WorldPos;
+layout(location = 3) out mat3 TBN;
+layout(location = 6) out int imaterial;
 
 void main() 
 {
-	fragTexCoord = inTexCoord * ubm[index.material].offset;
-	WorldPos = vec3(ubo[index.ubo].model * vec4(inPosition, 1.0));
-	Normal = mat3(transpose(ubo[index.ubo].model)) * inNormal;
+	fragTexCoord = ubm[index_material].offset +inTexCoord * ubm[index_material].tilling;
+	WorldPos = vec3(ubo[index_ubo].model * vec4(inPosition, 1.0));
 	Color = inColor;
-	vec3 T = normalize(vec3(ubo[index.ubo].model * vec4(inTangent, 0.0)));
-	vec3 N = normalize(vec3(ubo[index.ubo].model * vec4(inNormal, 0.0)));	
+	vec3 T = normalize(vec3(ubo[index_ubo].model * vec4(inTangent, 0.0)));
+	vec3 N = normalize(vec3(ubo[index_ubo].model * vec4(inNormal, 0.0)));	
 	T = normalize(T - dot(T, N) * N);
-	TBN = transpose(mat3(T, cross(N, T), N));
-    gl_Position = ubc.proj * ubc.view * ubo[index.ubo].model * vec4(inPosition, 1.0);
+	vec3 B = cross(N, T);
+	TBN = mat3(T, B, N);
+	imaterial = index_material;
+    gl_Position = ubc.proj * ubc.view * ubo[index_ubo].model * vec4(inPosition, 1.0);
 }

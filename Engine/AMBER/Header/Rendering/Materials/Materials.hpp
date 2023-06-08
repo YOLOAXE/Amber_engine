@@ -24,7 +24,7 @@ namespace Ge
 		void setAlbedoTexture(Textures * albedo);
 		void setNormalTexture(Textures * normal);
 		void setMetallicTexture(Textures * metallic);
-		void setRoughness(Textures * roughness);
+		void setRoughnessTexture(Textures * roughness);
 		void setOclusionTexture(Textures * oclu);
 		glm::vec3 getColor();
 		float getMetallic();
@@ -44,7 +44,9 @@ namespace Ge
 		bool getShadowCast();
 		void setShadowCast(bool state);
 		glm::vec2 getOffset();
+		glm::vec2 getTilling();
 		void setOffset(glm::vec2 off);
+		void setTilling(glm::vec2 tilling);
 		void setPipeline(GraphiquePipeline * p);
 		int getPipelineIndex();
 		void onGUI();
@@ -61,6 +63,7 @@ namespace Ge
 		int m_pipelineIndex;
 		float m_color[3];
 		float m_offset[2];
+		float m_tilling[2];
 		int m_index = 0;
 	};
 }

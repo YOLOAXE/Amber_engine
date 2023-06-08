@@ -1,5 +1,7 @@
 #version 450
 
+const float PI = 3.14159265359;
+
 layout(set = 0, binding = 0) uniform UniformBufferCamera 
 {
 	vec3 camPos;
@@ -19,6 +21,7 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
 {
 	vec3  albedo;
 	vec2 offset;
+	vec2 tilling;
 	float metallic;
     float roughness;	
 	float normal;
@@ -48,17 +51,11 @@ layout(set = 5, binding = 0) uniform UniformBufferDiver
 
 layout (set = 6, binding = 0) uniform samplerCube samplerCubeMap;
 
-layout(push_constant) uniform PushConstants
-{
-    uint ubo;
-	uint material;
-} index;
-
 layout (location = 0) in vec3 inUVW;
 
 layout(location = 0) out vec4 outColor;
 
 void main() 
 {
-	outColor = texture(samplerCubeMap, inUVW);
+	outColor = vec4(texture(samplerCubeMap, inUVW).rgb,1.0);
 }

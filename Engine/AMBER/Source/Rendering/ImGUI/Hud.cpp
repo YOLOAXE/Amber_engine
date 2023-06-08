@@ -7,9 +7,9 @@ namespace Ge
 {
 	Hud::Hud()
 	{		
-		m_imguiBlock.push_back(&m_engineInfo);
-		m_imguiBlock.push_back(&m_console);
-		m_imguiBlock.push_back(&m_hiearchy);
+		//m_imguiBlock.push_back(&m_engineInfo);
+		//m_imguiBlock.push_back(&m_console);
+		//m_imguiBlock.push_back(&m_hiearchy);
 	}
 
 	bool Hud::initialize(VulkanMisc* vM)
@@ -18,6 +18,7 @@ namespace Ge
 		vulkanM = vM;
 		//vulkanM = vM;
 		ImGui::CreateContext();
+		ImPlot::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
@@ -303,6 +304,7 @@ namespace Ge
 		ImGui_ImplVulkan_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
+		ImPlot::DestroyContext();
 		Debug::RELEASESUCCESS("ImGUI");
 	}
 

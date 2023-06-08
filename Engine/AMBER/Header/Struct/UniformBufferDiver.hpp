@@ -4,6 +4,7 @@
 struct UniformBufferDiver
 {
     int maxLight;
+    int maxShadow;
     float u_time;
     float gamma;
 };

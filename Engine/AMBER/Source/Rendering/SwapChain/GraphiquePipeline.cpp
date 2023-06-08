@@ -5,7 +5,7 @@ namespace Ge
 	GraphiquePipeline::GraphiquePipeline(VulkanMisc *vM, ShaderPair * sp)
 	{
 		vulkanM = vM;
-		m_sahderPair = sp;
+		m_shaderPair = sp;
 		ShaderElement VertShader = LoadShader(sp->Vert, "main", vM->str_VulkanDeviceMisc->str_device, true,vM);
 		ShaderElement FragShader = LoadShader(sp->Frag, "main", vM->str_VulkanDeviceMisc->str_device, false,vM);
 		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
@@ -15,12 +15,17 @@ namespace Ge
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 
-		auto bindingDescription = Vertex::getBindingDescription();
-		auto attributeDescriptions = Vertex::getAttributeDescriptions();
+		std::vector<VkVertexInputBindingDescription> bindingDescription = { Vertex::getBindingDescription(), PushConstants::getBindingDescription()};
+		std::array<VkVertexInputAttributeDescription, 7> attributeDescriptions;
+		std::array<VkVertexInputAttributeDescription, 5> arr1 = Vertex::getAttributeDescriptions();
+		std::array<VkVertexInputAttributeDescription, 2> arr2 = PushConstants::getAttributeDescriptions(5);
 
-		vertexInputInfo.vertexBindingDescriptionCount = 1;
+		std::copy(arr1.begin(), arr1.end(), attributeDescriptions.begin());
+		std::copy(arr2.begin(), arr2.end(), attributeDescriptions.begin() + arr1.size());
+
+		vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescription.size());
 		vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
-		vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
+		vertexInputInfo.pVertexBindingDescriptions = bindingDescription.data();
 		vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
 		VkPipelineInputAssemblyStateCreateInfo inputAssembly{};
@@ -59,14 +64,14 @@ namespace Ge
 
 		VkPipelineMultisampleStateCreateInfo multisampling{};
 		multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-		multisampling.sampleShadingEnable = VK_TRUE; // Activation du sample shading dans la pipeline
+		multisampling.sampleShadingEnable = m_shaderPair->multiSampling ? VK_TRUE : VK_FALSE; // Activation du sample shading dans la pipeline
 		multisampling.rasterizationSamples = vM->str_VulkanDeviceMisc->str_msaaSamples;
 		multisampling.minSampleShading = .2f; // Fraction minimale pour le sample shading; plus proche de 1 lisse d'autant plus
 
 		VkPipelineDepthStencilStateCreateInfo depthStencil{};
 		depthStencil.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
-		depthStencil.depthTestEnable = m_sahderPair->back ? VK_FALSE : VK_TRUE;
-		depthStencil.depthWriteEnable = m_sahderPair->back ? VK_FALSE : VK_TRUE;
+		depthStencil.depthTestEnable = m_shaderPair->back ? VK_FALSE : VK_TRUE;
+		depthStencil.depthWriteEnable = m_shaderPair->back ? VK_FALSE : VK_TRUE;
 		depthStencil.depthCompareOp = VK_COMPARE_OP_LESS;
 		depthStencil.depthBoundsTestEnable = VK_FALSE;
 		depthStencil.stencilTestEnable = VK_FALSE;
@@ -115,6 +120,13 @@ namespace Ge
 			Debug::Error("Echec de la creation d'un cache pour le pipeline");
 		}
 
+		std::vector<VkDynamicState> dynamicStateEnables = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
+		VkPipelineDynamicStateCreateInfo dynamicState{};
+		dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+		dynamicState.pDynamicStates = dynamicStateEnables.data();
+		dynamicState.dynamicStateCount = dynamicStateEnables.size();
+		dynamicState.flags = 0;
+
 		VkGraphicsPipelineCreateInfo pipelineInfo{};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineInfo.stageCount = shaderStages.size();
@@ -126,6 +138,7 @@ namespace Ge
 		pipelineInfo.pMultisampleState = &multisampling;
 		pipelineInfo.pDepthStencilState = &depthStencil;
 		pipelineInfo.pColorBlendState = &colorBlending;
+		pipelineInfo.pDynamicState = &dynamicState;
 		pipelineInfo.layout = m_graphiquePipelineElement.m_pipelineLayout;
 		pipelineInfo.renderPass = vM->str_VulkanSwapChainMisc->str_renderPass;
 		pipelineInfo.subpass = 0;
@@ -139,18 +152,18 @@ namespace Ge
 
 		DestroyShaderElement(vM->str_VulkanDeviceMisc->str_device, VertShader);
 		DestroyShaderElement(vM->str_VulkanDeviceMisc->str_device, FragShader);
-		m_index = vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.size();
+		m_index = (int)(vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.size());
 		vM->str_VulkanSwapChainMisc->str_graphiquePipelineElement.push_back(&m_graphiquePipelineElement);		
 	}
 
 	int GraphiquePipeline::getIndex()
-	{
+	{		
 		return m_index;
 	}
 
 	ShaderPair * GraphiquePipeline::getShaderPair()
 	{
-		return m_sahderPair;
+		return m_shaderPair;
 	}
 
 	GraphiquePipeline::~GraphiquePipeline()

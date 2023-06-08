@@ -83,7 +83,7 @@ namespace Ge
 		return true;
 	}
 
-	bool BufferManager::createImageBuffer(uint32_t width, uint32_t height, VkImageType imageType, uint32_t arrayLayers, uint32_t mipLevels, VkSampleCountFlagBits numSamples, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VmaBufferImage& image, VkImageCreateFlags flags, VulkanMisc * vM)
+	bool BufferManager::createImageBuffer(uint32_t width, uint32_t height, VkImageType imageType, uint32_t arrayLayers, uint32_t mipLevels, VkSampleCountFlagBits numSamples, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VmaBufferImage& image, VkImageCreateFlags flags, VulkanMisc * vM, VkImageLayout initiallayout)
 	{
 		VkImageCreateInfo imageInfo{};
 		imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -95,7 +95,7 @@ namespace Ge
 		imageInfo.arrayLayers = arrayLayers;
 		imageInfo.format = format;
 		imageInfo.tiling = tiling;
-		imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		imageInfo.initialLayout = initiallayout;
 		imageInfo.usage = usage;
 		imageInfo.samples = numSamples;
 		imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
@@ -141,7 +141,7 @@ namespace Ge
 	void * BufferManager::mapMemory(VmaBuffer & buffer)
 	{
 		void * data;
-		vmaMapMemory(s_pInstance->m_allocator, buffer.allocation, &data);
+		vmaMapMemory(s_pInstance->m_allocator, buffer.allocation, &data);		
 		return data;
 	}
 

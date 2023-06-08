@@ -62,9 +62,9 @@ namespace Ge
 
 	void CameraManager::initDescriptor(VulkanMisc * vM)
 	{
-		if (m_descriptor == nullptr)
+		if (m_descriptor.size() == 0)
 		{
-			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+			m_descriptor.push_back(new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1));
 		}
 	}
 
@@ -76,7 +76,7 @@ namespace Ge
 		bufferI.offset = 0;
 		bufferI.range = sizeof(UniformBufferCamera);
 		bufferInfo.push_back(bufferI);
-		m_descriptor->updateCount(vulkanM, 1, bufferInfo);
+		m_descriptor[0]->updateCount(vulkanM, 1, bufferInfo);
 	}
 
     void CameraManager::release()
@@ -91,7 +91,11 @@ namespace Ge
 			delete(m_cameras[i]);
 		}
 		m_cameras.clear();
-        delete (m_descriptor);
+		for (int i = 0; i < m_descriptor.size(); i++)
+		{
+			delete m_descriptor[i];
+		}
+		m_descriptor.clear();
         Debug::RELEASESUCCESS("CameraManager");
     }
 }

@@ -29,6 +29,7 @@ namespace Ge
     void MaterialManager::destroyMaterial(Materials *material)
     {
 		m_materials.erase(std::remove(m_materials.begin(), m_materials.end(), material), m_materials.end());
+		int mat_pi = material->getPipelineIndex();
         delete(material);
 		for (int i = 0; i < m_materials.size(); i++)
 		{
@@ -37,10 +38,11 @@ namespace Ge
 		std::vector<Model *> all_models = ModelManager::GetModels();
 		for (int i = 0; i < all_models.size();i++)
 		{
-			all_models[i]->majMaterialIndex();
+			all_models[i]->majMaterialIndex(mat_pi);
 		}
         vulkanM->str_VulkanDescriptor->materialCount = m_materials.size();
         updateDescriptor();
+		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
     }
 
     void MaterialManager::updateDescriptor()
@@ -54,7 +56,7 @@ namespace Ge
 			bufferIM.range = sizeof(UniformBufferMaterial);
 			bufferInfoMaterial.push_back(bufferIM);
         }
-        m_descriptor->updateCount(vulkanM,m_materials.size(),bufferInfoMaterial);
+        m_descriptor[0]->updateCount(vulkanM,m_materials.size(),bufferInfoMaterial);
     }
 
     void MaterialManager::release()
@@ -64,16 +66,19 @@ namespace Ge
 			delete (m_materials[i]);
 		}
 		m_materials.clear();
-        delete (m_descriptor);
-		//delete(defaultMaterial);
+		for (int i = 0; i < m_descriptor.size(); i++)
+		{
+			delete m_descriptor[i];
+		}
+		m_descriptor.clear();
         Debug::RELEASESUCCESS("MaterialManager");
     }
 
 	void MaterialManager::initDescriptor(VulkanMisc * vM)
 	{
-		if (m_descriptor == nullptr)
+		if (m_descriptor.size() == 0)
 		{
-			m_descriptor = new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1);
+			m_descriptor.push_back(new Descriptor(vM, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1));
 		}
 	}
 

@@ -3,21 +3,6 @@
 
 namespace Ge
 {
-	void Camera::updatePerspective()
-	{
-		if (m_ortho)
-		{		
-			m_uniformBufferCamera.proj = glm::ortho(0.0f, (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.width, (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height, 0.0f, m_near, m_far);
-		}
-		else
-		{
-			m_uniformBufferCamera.proj = glm::perspective(glm::radians(m_fov), (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.width/ (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height, m_near, m_far);
-		}
-		//m_uniformBufferCamera.proj[1][1] *= -1;
-		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(UniformBufferCamera));
-		BufferManager::unMapMemory(m_vmaUniformBuffer);
-	}
-
 	Camera::Camera(VulkanMisc * vM) : GObject()
 	{
 		if (!BufferManager::createBuffer(sizeof(UniformBufferCamera), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM->str_VulkanDeviceMisc)) 
@@ -30,12 +15,8 @@ namespace Ge
 		m_priority = 0;
 		vulkanM = vM;
 		m_ortho = false;
-		m_uniformBufferCamera.camPos = m_transform.position;
-		m_uniformBufferCamera.view = m_transform.rotationMatrix * m_transform.translateMatrix;
-		Camera::updatePerspective();	
-		setPosition(glm::vec3(0.0f));
-		setEulerAngles(glm::vec3(0.0f));
-		setScale(glm::vec3(1.0f));
+		m_orthoSize = 10.0f;
+		mapMemory();
 	}	
 
 	Camera::~Camera()
@@ -43,10 +24,41 @@ namespace Ge
 		BufferManager::destroyBuffer(m_vmaUniformBuffer);
 	}
 
+	float Camera::aspectRatio() const
+	{
+		return (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.width / (float)vulkanM->str_VulkanSwapChainMisc->str_swapChainExtent.height;
+	}
+
+	glm::mat4 Camera::getViewMatrix() const
+	{
+		return glm::inverse(getModelMatrix());
+	}
+
+	glm::mat4 Camera::getProjectionMatrix() const
+	{
+		glm::mat4 projectionMatrix;
+		if (m_ortho) 
+		{
+			float halfHeight = m_orthoSize * 0.5f;
+			float halfWidth = halfHeight * aspectRatio();
+			projectionMatrix = glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, m_near, m_far);
+		}
+		else
+		{
+			projectionMatrix = glm::perspective(glm::radians(m_fov), aspectRatio(), m_near, m_far);
+		}
+
+		projectionMatrix = glm::scale(projectionMatrix, glm::vec3(1.0f, -1.0f, 1.0f));
+		//projectionMatrix[1][1] *= -1;
+
+		return projectionMatrix;
+	}
+
 	void Camera::mapMemory()
 	{		
 		m_uniformBufferCamera.camPos = m_transform.position;
-		m_uniformBufferCamera.view = m_transform.rotationMatrix * m_transform.translateMatrix;
+		m_uniformBufferCamera.view = getViewMatrix();
+		m_uniformBufferCamera.proj = getProjectionMatrix();
 		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_uniformBufferCamera, sizeof(UniformBufferCamera));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
@@ -59,31 +71,31 @@ namespace Ge
 	void Camera::setFieldOfView(float fov)
 	{
 		m_fov = fov;
-		Camera::updatePerspective();
+		mapMemory();
 	}
 
 	void Camera::setNear(float n)
 	{
 		m_near = n;
-		Camera::updatePerspective();
+		mapMemory();
 	}
 
 	void Camera::setFar(float f)
 	{
 		m_far = f;
-		Camera::updatePerspective();
+		mapMemory();
 	}
 
 	void Camera::setPriority(int p)
 	{
 		m_priority = p;
-		CameraManager::updatePriorityCamera();
+		mapMemory();
 	}
 
 	void Camera::setOrtho(bool state)
 	{
 		m_ortho = state;
-		Camera::updatePerspective();
+		mapMemory();
 	}
 
 	float Camera::getFieldOfView()
@@ -112,24 +124,27 @@ namespace Ge
 		ImGui::TextColored(ImVec4(0.2f, 1, 0.2f, 1), "Camera\n");
 		if (ImGui::DragFloat("Fov", &m_fov,2.0f,10.0f,180.0f))
 		{
-			Camera::updatePerspective();
+			mapMemory();
 		}
 		if (ImGui::DragFloat("Near", &m_near, 0.5f, 0.0001f, 10.0f))
 		{
-			Camera::updatePerspective();
+			mapMemory();
 		}
 		if (ImGui::DragFloat("Far", &m_far, 0.5f, 1.0f, 10000.0f))
 		{
-			Camera::updatePerspective();
+			mapMemory();
 		}
 		if (ImGui::DragInt("Priority", &m_priority, 1.0f))
 		{
-			CameraManager::updatePriorityCamera();
+			mapMemory();
 		}
 		if (ImGui::Checkbox("Ortho", &m_ortho))
 		{
-			Camera::updatePerspective();
+			mapMemory();
 		}
-
+		if (ImGui::DragFloat("OrthoSize", &m_orthoSize, 1.0f))
+		{
+			mapMemory();
+		}
 	}
 }

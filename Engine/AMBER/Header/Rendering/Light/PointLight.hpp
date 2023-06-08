@@ -9,12 +9,6 @@ namespace Ge
 	{
 	public:
 		PointLight(int index, VulkanMisc * vM);
-		float getConstant();
-		void setConstant(float constant);
-		float getLinear();
-		void setLinear(float linear);
-		float getQuadratic();
-		void setQuadratic(float quadratic);
 	};
 }
 

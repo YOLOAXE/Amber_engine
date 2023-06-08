@@ -11,7 +11,7 @@ namespace Ge
 	{
 	public:
 		void addBehaviour(Behaviour * b);
-		void removeBehaviour(Behaviour * b);	
+		void removeBehaviour(Behaviour * b,bool ignoreStop = false);	
 		void update();
 		void fixedUpdate();		
 	private:

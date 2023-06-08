@@ -3,7 +3,7 @@
 
 namespace Ge
 {
-	Textures::Textures(stbi_uc* pc, int Width, int Height,int ind, VulkanMisc * vM)
+	Textures::Textures(stbi_uc* pc, int Width, int Height,int ind,bool filter, VulkanMisc * vM)
 	{
 		index = ind;
 		vulkanM = vM->str_VulkanDeviceMisc;
@@ -28,8 +28,16 @@ namespace Ge
 
 		VkSamplerCreateInfo samplerInfo{};
 		samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-		samplerInfo.magFilter = VK_FILTER_LINEAR;
-		samplerInfo.minFilter = VK_FILTER_LINEAR;
+		if (filter)
+		{
+			samplerInfo.magFilter = VK_FILTER_LINEAR;
+			samplerInfo.minFilter = VK_FILTER_LINEAR;
+		}
+		else
+		{
+			samplerInfo.magFilter = VK_FILTER_NEAREST;
+			samplerInfo.minFilter = VK_FILTER_NEAREST;
+		}
 		samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 		samplerInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 		samplerInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;

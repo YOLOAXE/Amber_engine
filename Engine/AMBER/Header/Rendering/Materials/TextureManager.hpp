@@ -18,8 +18,10 @@ namespace Ge
         bool initialize(VulkanMisc *vM);
         void release();                
     public:
-        Textures * createTexture(const char * path);
-		TextureCubeMap * createTextureCubeMap(const char * path);
+        Textures * createTexture(const char * path,bool filter = true);
+        Textures * createTexture(std::vector<unsigned char> imageData, bool filter = true);
+        Textures * createTexture(unsigned char* pixel, int tw, int th, bool filter = true);
+		TextureCubeMap * createTextureCubeMap(const char * path, bool filter = true);
 		void destroyTexture(Textures * texture);
 		void destroyTextureCubeMap(TextureCubeMap * texture);
 		void initDescriptor(VulkanMisc * vM);
@@ -31,6 +33,7 @@ namespace Ge
         std::vector<Textures *> m_textures;
 		std::vector<TextureCubeMap *> m_texturesCube;
 		Textures * nullTexture;
+        Textures* normalTexture;
 		static TextureCubeMap * s_nullTextureCubeMap;
     };
 }

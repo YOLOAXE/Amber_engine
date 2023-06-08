@@ -11,13 +11,13 @@ namespace Ge
 	public:
 		virtual void initDescriptor(VulkanMisc * vM) = 0;
 		virtual void updateDescriptor() = 0;		
-		Descriptor* getDescriptor();
+		std::vector<Descriptor*> getDescriptor();
 		bool getDestroyElement();
 	protected:
 		friend class RenderingEngine;
 		virtual void destroyElement();
 	protected:
-		Descriptor *m_descriptor = nullptr;
+		std::vector<Descriptor*> m_descriptor;
 		bool m_destroyElement = false;
 	};
 }

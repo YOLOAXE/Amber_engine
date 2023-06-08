@@ -1,5 +1,5 @@
 #include "Model.hpp"
-#include <glm/gtx/string_cast.hpp>
+#include "ModelManager.hpp"
 
 namespace Ge
 {
@@ -15,9 +15,8 @@ namespace Ge
 		}
 		m_index.ubo = indexubo;
 		m_index.material = 0;
-		setPosition(glm::vec3(0.0f));
-		setEulerAngles(glm::vec3(0.0f));
-		setScale(glm::vec3(1.0f));
+		m_material = nullptr;
+		mapMemory();
 	}
 
 	Model::~Model()
@@ -25,48 +24,29 @@ namespace Ge
 		BufferManager::destroyBuffer(m_vmaUniformBuffer);
 	}
 
-	void Model::render(VkCommandBuffer CmdBuffer, std::vector<VkDescriptorSet> descriptorSets, VkPipelineLayout pipelineLayout, VkShaderStageFlags pushConstantShaderFlags)
-	{
-		VkDeviceSize offsets[] = { 0 };
-		vkCmdBindVertexBuffers(CmdBuffer, 0, 1, m_buffer->getVertexBuffer(), offsets);
-
-		vkCmdBindIndexBuffer(CmdBuffer, m_buffer->getIndexBuffer(), 0, VK_INDEX_TYPE_UINT32);
-
-		vkCmdBindDescriptorSets(CmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, static_cast<uint32_t>(descriptorSets.size()), descriptorSets.data(), 0, nullptr);
-
-		vkCmdPushConstants(
-			CmdBuffer,
-			pipelineLayout,
-			pushConstantShaderFlags,
-			0,
-			sizeof(PushConstants),
-			&m_index);
-
-		vkCmdDrawIndexed(CmdBuffer, m_buffer->getIndiceSize(), 1, 0, 0, 0);
-	}
-
 	void Model::mapMemory()
 	{
-		m_ubo.model = m_transform.translateMatrix * m_transform.rotationMatrix;
-		m_ubo.model = glm::scale(m_ubo.model, m_transform.scale);
-
+		m_ubo.model = getModelMatrix();		
 		memcpy(BufferManager::mapMemory(m_vmaUniformBuffer), &m_ubo, sizeof(m_ubo));
 		BufferManager::unMapMemory(m_vmaUniformBuffer);
 	}
 
 	void Model::setMaterial(Materials * m)
-	{
+	{			
+		int pi = 0;
 		if (m_material != nullptr)
 		{
+			pi = m_material->getPipelineIndex();			
 			removeComponent((Component *)m_material);
-		}		
+		}
 		addComponent((Component *)m);
-		m_material = m;		
-		m_index.material = m_material->getIndex();		
-		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
+		ModelManager::updateInstanced(m_buffer, this, pi, m->getPipelineIndex(), vulkanM);
+		m_material = m;				
+		m_index.material = m_material->getIndex();	
+		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;//TODO: verifier si dans ce cas c'est nessaire
 	}
 
-	void Model::majMaterialIndex()
+	void Model::majMaterialIndex(int pi_mat)
 	{
 		if (m_material != nullptr)
 		{
@@ -74,6 +54,7 @@ namespace Ge
 		}
 		else
 		{
+			ModelManager::updateInstanced(m_buffer,this, pi_mat, 0, vulkanM);
 			m_index.material = 0;
 		}
 	}
@@ -81,6 +62,11 @@ namespace Ge
 	Materials * Model::getMaterial()
 	{
 		return m_material;
+	}
+
+	PushConstants Model::getPushConstants()
+	{
+		return m_index;
 	}
 
 	VkBuffer Model::getUniformBuffers()
@@ -101,6 +87,7 @@ namespace Ge
 	void Model::setIndexUbo(int index)
 	{
 		m_index.ubo = index;
+		vulkanM->str_VulkanDescriptor->recreateCommandBuffer = true;
 	}
 
 }

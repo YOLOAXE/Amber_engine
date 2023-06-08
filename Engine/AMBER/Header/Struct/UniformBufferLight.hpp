@@ -6,8 +6,10 @@
 struct UniformBufferLight
 {
     glm::vec3 position;
-    alignas(16) glm::vec3 lightColor;
+    alignas(16) glm::vec3 color;
+	alignas(16) glm::vec3 direction;
 	float range;
+	float spotAngle;
 	int status; //DirLight = 0 ; PointLight = 1 ; SpotLight = 2
 };
 

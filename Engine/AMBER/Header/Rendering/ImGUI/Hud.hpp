@@ -3,6 +3,7 @@
 
 #include "Debug.hpp"
 #define GLFW_INCLUDE_NONE
+#include "implot.h"
 #include "imgui-cmake/Header/imgui.h"
 #include "imgui-cmake/Header/imgui_impl_vulkan.h"
 #include "imgui-cmake/Header/imgui_impl_glfw.h"

@@ -18,7 +18,7 @@ namespace Ge
 		ImGui::SetNextWindowBgAlpha(0.55f);
 		if (ImGui::Begin("Example: Simple overlay", &m_open, window_flags))
 		{
-			ImGui::TextColored(ImVec4(1.0f, 1.0f, 1.0f, 1.0f), "Image par seconde : %.1f (IPS)", io.Framerate);
+			ImGui::TextColored(ImVec4(1.0f, 1.0f, 1.0f, 1.0f), "Image par seconde : %.1f (FPS)", io.Framerate);
 			ImGui::TextColored(ImVec4(1.0f, 1.0f, 1.0f, 1.0f), "Temps entre chaque image  : %.3f ms/frame", 1000.0f / io.Framerate);
 			ImGui::TextColored(ImVec4(1.0f, 1.0f, 1.0f, 1.0f), "Nombre d'images : %d images", ImGui::GetFrameCount());
 			ImGui::Text("Temps depuis demarage %.1f", ImGui::GetTime());

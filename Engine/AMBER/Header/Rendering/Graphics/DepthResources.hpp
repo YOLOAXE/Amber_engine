@@ -3,6 +3,7 @@
 
 #include "VulkanMisc.hpp"
 #include "Debug.hpp"
+#include "VmaBufferImage.hpp"
 
 namespace Ge
 {
@@ -14,8 +15,7 @@ namespace Ge
 		void release();
 	private:
 		VulkanMisc * vulkanM;
-		VkImage m_depthImage;
-		VkDeviceMemory m_depthImageMemory;
+		VmaBufferImage m_depthTexture;
 		VkImageView m_depthImageView;
 	};
 }
