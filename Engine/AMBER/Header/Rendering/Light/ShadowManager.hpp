@@ -6,13 +6,14 @@
 #include "Descriptor.hpp"
 #include "Manager.hpp"
 #include "PushConstantShadow.hpp"
+#include "LightManager.hpp"
 
 namespace Ge
 {
 	class ShadowManager : public Manager
 	{
 	public:
-		bool initialize(VulkanMisc* vM);
+		bool initialize(VulkanMisc* vM, LightManager * lm);
 		void release();
 		Shadow * CreateShadow(LightData* light);
 		void RemoveShadow(Shadow * shadow);		
@@ -29,14 +30,16 @@ namespace Ge
 	private:
 		static ShadowManager* s_instance;
 		VulkanMisc* vMisc;
+		LightManager* m_lm;
 		std::vector<Shadow*> m_shadows;
 		GraphiquePipelineElement m_graphiquePipelineElement;
 		VkRenderPass m_renderPass;	
 		VmaBufferImage m_depthTexture;
 		VmaBuffer m_vmaUniformBuffers;
 		VkImageView m_depthTextureView;
-		LightData test{};
 		Transform t{};
+		int shadowMapCount = 0;
+		int shadowCubeMapCount = 0;
 	};
 }
 

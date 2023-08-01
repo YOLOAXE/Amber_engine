@@ -21,6 +21,7 @@ namespace Ge
         void destroyLight(Lights *light);
         void updateDescriptor();
         void majIndex();
+        void mapMemory();
 		void initDescriptor(VulkanMisc * vM);
 	private:
 		friend class RenderingEngine;

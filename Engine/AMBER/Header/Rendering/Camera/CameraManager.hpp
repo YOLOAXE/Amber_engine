@@ -21,6 +21,7 @@ namespace Ge
 		void updateFlyCam();
 		void initDescriptor(VulkanMisc * vM);
 		void updateDescriptor();
+        static CameraManager* getCameraManager();
 		static void updatePriorityCamera();
     private:		
 		static CameraManager * Instance;

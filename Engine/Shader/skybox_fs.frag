@@ -37,9 +37,12 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
 layout(set = 4, binding = 0) uniform UniformBufferLight
 {
 	vec3 position;
-    vec3 lightColor;
+    vec3 color;
+	vec3 direction;
 	float range;
+	float spotAngle;
 	uint status;//DirLight = 0 ; PointLight = 1 ; SpotLight = 2
+    uint shadowID;
 } ubl[];
 
 layout(set = 5, binding = 0) uniform UniformBufferDiver

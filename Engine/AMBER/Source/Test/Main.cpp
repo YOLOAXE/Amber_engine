@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include "GameEngine.hpp"
-
+#include "BaseScene.hpp"
 using namespace Ge;
 
 int main()
@@ -9,10 +9,13 @@ int main()
 	Debug::Info("Moteur Graphique");	
 	GameEngine engine;	
 	ptrClass e = engine.getPtrClass();	
-	e.settingManager->setName("VirtualCreature");
+	e.settingManager->setName("Engine");
 	e.settingManager->setClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
-	e.settingManager->setWindowHeight(991);
+	e.settingManager->setWindowHeight(1024);
 	e.settingManager->setWindowWidth(1920);
+
+	BaseScene bs;
+	e.sceneManager->addScene("BaseScene",&bs);
 
 	if (!engine.initialize())
 	{

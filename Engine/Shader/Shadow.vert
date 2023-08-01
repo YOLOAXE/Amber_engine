@@ -27,6 +27,6 @@ layout (location = 1) out vec3 outLightPos;
 void main() 
 {
 	gl_Position = ubS[index.is].proj * ubS[index.is].view * ubo[index_ubo].model * vec4(inPosition, 1.0);
-    outPos = inPosition;
+    outPos = vec3(ubo[index_ubo].model * vec4(inPosition, 1.0));
 	outLightPos = ubS[index.is].position; 
 }

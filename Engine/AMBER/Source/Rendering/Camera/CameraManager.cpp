@@ -60,6 +60,11 @@ namespace Ge
         return currentCamera;
     }
 
+	CameraManager* CameraManager::getCameraManager()
+	{
+		return Instance;
+	}
+
 	void CameraManager::initDescriptor(VulkanMisc * vM)
 	{
 		if (m_descriptor.size() == 0)

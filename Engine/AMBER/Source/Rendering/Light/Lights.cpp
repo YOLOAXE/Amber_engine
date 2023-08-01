@@ -10,6 +10,7 @@ namespace Ge
 		m_ubl.color = glm::vec3(1.0f);
 		m_ubl.range = 10.0f;
 		m_ubl.spotAngle = 45.0f;
+		m_ubl.shadowID = -1;
 		if (!BufferManager::createBuffer(sizeof(UniformBufferLight), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffer, vM->str_VulkanDeviceMisc))
 		{
 			Debug::Error("Echec de la creation d'un uniform buffer object");
@@ -40,6 +41,7 @@ namespace Ge
 	{
 		m_ubl.spotAngle = r;
 		updateUniformBufferLight();
+		mapMemory();
 	}
 
 	float Lights::getSpotAngle()
@@ -94,7 +96,9 @@ namespace Ge
 		{
 			ShadowManager::getShadowManager()->RemoveShadow(m_shadowData);
 			m_shadowData = nullptr;
+			m_ubl.shadowID = -1;
 		}
+		mapMemory();
 	}
 
 	bool Lights::getShadow()
@@ -126,7 +130,7 @@ namespace Ge
 		{
 			if (ImGui::DragFloat("Angle", &m_ubl.spotAngle, 0.2f, 0.01f))
 			{
-				updateUniformBufferLight();
+				setSpotAngle(m_ubl.spotAngle);			
 			}
 		}
 	}

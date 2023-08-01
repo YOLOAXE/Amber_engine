@@ -133,4 +133,12 @@ namespace Ge
 			m_lights[i]->setIndex(i);
 		}		
 	}
+
+	void LightManager::mapMemory()
+	{
+		for (int i = 0; i < m_lights.size(); i++)
+		{
+			m_lights[i]->mapMemory();
+		}
+	}
 }

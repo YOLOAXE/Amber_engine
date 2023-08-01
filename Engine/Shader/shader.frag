@@ -42,6 +42,7 @@ layout(set = 4, binding = 0) uniform UniformBufferLight
 	float range;
 	float spotAngle;
 	uint status;//DirLight = 0 ; PointLight = 1 ; SpotLight = 2
+    uint shadowID;
 } ubl[];
 
 layout(set = 5, binding = 0) uniform UniformBufferDiver
@@ -111,18 +112,22 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
     return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
-float ShadowCalculation(vec4 fragPosLightSpace,vec3 N,int id)
+float isInShadow(vec4 fragPosLightSpace,uint id)
 {
-    vec3 L = normalize(ubs[id].position - WorldPos);
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    projCoords = projCoords * 0.5 + 0.5;
-    float closestDepth = texture(shadowSampler[id], projCoords.xy).r; 
-    float currentDepth = projCoords.z;
-    float bias = max(0.05 * (1.0 - dot(N, L)), 0.005);  
-    float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;     
-
-    return shadow;
-}  
+    projCoords = projCoords * 0.5 + 0.5;    
+    if(projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
+    {
+        return 1.0;
+    }
+    float shadowDepth = texture(shadowSampler[id], projCoords.xy).r;    
+    shadowDepth = (shadowDepth - fragPosLightSpace.z) / (fragPosLightSpace.w - fragPosLightSpace.z);   
+    if(shadowDepth == 0)
+    {
+        return 1.0;
+    }
+    return (projCoords.z-0.5) >= shadowDepth ? 0.0 : 1.0;
+}
 
 void main()
 {   
@@ -141,17 +146,12 @@ void main()
     F0 = mix(F0, color, metallic);    
 
     vec3 reflectedSkyboxColor = texture(samplerCubeMap, reflect(-V, N)).rgb;
-
-    float shadow = 1.0f;
-    for(int i = 0; i < ubd.maxShadow;i++)
-    {
-        shadow += ShadowCalculation((ubs[i].proj * ubs[i].view) * vec4(WorldPos,1.0),N,i);
-    }
-
+    
     // Reflectance equation
     vec3 Lo = vec3(0.0);
     for (int i = 0; i < ubd.maxLight; i++)
     {
+        float shadow = 1.0;
         vec3 L = normalize(ubl[i].position - WorldPos);
         vec3 H = normalize(V + L);
         float distance = length(ubl[i].position - WorldPos);
@@ -181,7 +181,11 @@ void main()
 
         if (ubl[i].status == 0) // DirLight
         {
-            Lo += (kD * color + specular) * ubl[i].color * ubl[i].range/10.0f * NdotL;
+            if(ubl[i].shadowID >= 0 && ubm[imaterial].castShadow == 1)
+            {
+                shadow = isInShadow((ubs[ubl[i].shadowID].proj * ubs[ubl[i].shadowID].view) * vec4(WorldPos,1.0),ubl[i].shadowID);
+            }
+            Lo += (kD * color + specular) * ubl[i].color * ubl[i].range/10.0f * NdotL * shadow;
         }
         else if (ubl[i].status == 1) // PointLight
         {
@@ -191,7 +195,12 @@ void main()
         {
             vec3 lightDir = normalize(ubl[i].direction);
             float spotAngle = radians(ubl[i].spotAngle);
-            float spotEffect = dot(lightDir, -L);
+            float spotEffect = dot(lightDir, -L);            
+
+            if(ubl[i].shadowID >= 0 && ubm[imaterial].castShadow == 1)
+            {
+                shadow = isInShadow((ubs[ubl[i].shadowID].proj * ubs[ubl[i].shadowID].view) * vec4(WorldPos,1.0),ubl[i].shadowID);
+            }
 
             if (spotEffect > cos(spotAngle / 2.0))
             {
@@ -200,12 +209,12 @@ void main()
                 float edge1 = cos(spotAngle / 2.0);
                 float smoothFactor = smoothstep(edge1, edge0, spotEffect);
 
-                Lo += (kD * color / PI + specular) * radiance * NdotL * pow(smoothFactor, 2.0);
+                Lo += (kD * color / PI + specular) * radiance * NdotL * pow(smoothFactor, 2.0) * shadow;
             }
-        }
+        }        
     }    
         
-    color = ambient + Lo*shadow;
+    color = ambient + Lo;
         
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2));  

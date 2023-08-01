@@ -1,12 +1,13 @@
 #include "Shadow.hpp"
 #include "ImageViewSwapChains.hpp"
+#include "CameraManager.hpp"
 
 namespace Ge
 {
-	Shadow::Shadow(VkImageView depth, VkRenderPass renderPass,Transform* lightTransform, VulkanMisc* vM)
+	Shadow::Shadow(VkImageView depth, VkRenderPass renderPass, LightData* light, VulkanMisc* vM)
 	{
 		vMisc = vM;
-		m_lightTransform = lightTransform;
+		m_light = light;
 		
 		VkCommandBuffer commandBuffer = BufferManager::beginSingleTimeCommands(vMisc);
 		VmaBuffer buffer;
@@ -119,6 +120,11 @@ namespace Ge
 		return m_frameBuffer;
 	}
 
+	LightData* Shadow::getLightData()
+	{
+		return m_light;
+	}
+
 	void Shadow::createFrameBuffer(VkImageView depth, VkRenderPass renderPass)
 	{
 		for (int i = 0; i < m_frameBuffer.size(); i++)
@@ -173,15 +179,16 @@ namespace Ge
 	}
 
 	void Shadow::UpdateUniformBuffer(int frame)
-	{
-		m_pushConstantShadow[frame].pos = m_lightTransform->position;
-		m_pushConstantShadow[frame].view = glm::inverse(glm::translate(glm::mat4(1.0f), m_lightTransform->position) * glm::toMat4(glm::quat(m_lightTransform->rotation)) * glm::scale(glm::mat4(1.0f), m_lightTransform->scale));
+	{		
+		Camera* currentCamera = CameraManager::getCameraManager()->getCurrentCamera();
+		m_pushConstantShadow[frame].pos = m_light->ubl->status == 0 ? currentCamera->getPosition() : m_light->transform->position;
+		m_pushConstantShadow[frame].view = glm::inverse(glm::translate(glm::mat4(1.0f), m_pushConstantShadow[frame].pos) * glm::toMat4(glm::quat(m_light->transform->rotation)) * glm::scale(glm::mat4(1.0f), m_light->transform->scale));
 		glm::mat4 projectionMatrix;
-		bool m_ortho = false;
+		bool m_ortho = m_light->ubl->status == 0;
 		float m_orthoSize = 10.0f;
 		float m_near = 0.01f;
 		float m_far = 1000.0f;
-		float m_fov = 60.0f;
+		float m_fov = m_light->ubl->spotAngle;
 		if (m_ortho)
 		{
 			float halfHeight = m_orthoSize * 0.5f;

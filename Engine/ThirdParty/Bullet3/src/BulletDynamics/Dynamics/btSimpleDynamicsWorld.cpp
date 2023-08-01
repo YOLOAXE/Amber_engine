@@ -95,7 +95,7 @@ int		btSimpleDynamicsWorld::stepSimulation( btScalar timeStep,int maxSubSteps, b
 
 }
 
-void btSimpleDynamicsWorld::clearForces()
+void	btSimpleDynamicsWorld::clearForces()
 {
 	///@todo: iterate over awake simulation islands!
 	for ( int i=0;i<m_collisionObjects.size();i++)

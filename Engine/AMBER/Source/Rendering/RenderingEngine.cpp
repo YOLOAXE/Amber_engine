@@ -119,7 +119,7 @@ namespace Ge
             Debug::INITFAILED("ShaderUniformBufferDivers");
             return false;
         }
-        if (!RenderingEngine::m_shadowManager.initialize(&m_vulkanMisc))
+        if (!RenderingEngine::m_shadowManager.initialize(&m_vulkanMisc,&m_lightManager))
         {
             Debug::INITFAILED("ShadowManager");
             return false;

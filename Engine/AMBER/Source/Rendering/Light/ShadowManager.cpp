@@ -7,9 +7,10 @@
 namespace Ge
 {	
 	ShadowManager* ShadowManager::s_instance = nullptr;
-	bool ShadowManager::initialize(VulkanMisc* vM)
+	bool ShadowManager::initialize(VulkanMisc* vM, LightManager* lm)
 	{
 		vMisc = vM;
+		m_lm = lm;
 		Debug::INITSUCCESS("Shadow Manager");
 		s_instance = this;
 		if (!BufferManager::createBuffer(sizeof(ShadowMatrix), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_vmaUniformBuffers, vM->str_VulkanDeviceMisc))
@@ -126,7 +127,7 @@ namespace Ge
 
 	Shadow* ShadowManager::CreateShadow(LightData* light)
 	{
-		Shadow* s = new Shadow(m_depthTextureView,m_renderPass,light->transform, vMisc);
+		Shadow* s = new Shadow(m_depthTextureView,m_renderPass,light, vMisc);
 		m_shadows.push_back(s);		
 		int countShadowImage = 0;
 		for (int i = 0; i < m_shadows.size(); i++)
@@ -134,6 +135,18 @@ namespace Ge
 			countShadowImage += m_shadows[i]->getImageView().size();
 		}
 		vMisc->str_VulkanDescriptor->shadowCount = countShadowImage;
+
+		if (light->ubl->status == 1)
+		{
+			light->ubl->shadowID = shadowCubeMapCount;
+			shadowCubeMapCount++;
+		}
+		else
+		{
+			light->ubl->shadowID = shadowMapCount;
+			shadowMapCount++;
+		}		
+
 		updateDescriptor();
 		vMisc->str_VulkanDescriptor->recreateCommandBuffer = true;
 		vMisc->str_VulkanDescriptor->recreateShadowPipeline = true;
@@ -367,6 +380,24 @@ namespace Ge
 			countShadowImage += m_shadows[i]->getImageView().size();
 		}
 		vMisc->str_VulkanDescriptor->shadowCount = countShadowImage;
+		
+		shadowCubeMapCount = 0;
+		shadowMapCount = 0;
+		for (int i = 0; i < m_shadows.size(); i++)
+		{
+			LightData* ld = m_shadows[i]->getLightData();
+			if (ld->ubl->status == 1)
+			{
+				ld->ubl->shadowID = shadowCubeMapCount;
+				shadowCubeMapCount++;
+			}
+			else
+			{
+				ld->ubl->shadowID = shadowMapCount;
+				shadowMapCount++;
+			}
+		}
+		m_lm->mapMemory();
 		updateDescriptor();
 		vMisc->str_VulkanDescriptor->recreateCommandBuffer = true;		
 		vMisc->str_VulkanDescriptor->recreateShadowPipeline = true;
