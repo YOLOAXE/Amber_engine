@@ -4,7 +4,7 @@
 
 namespace Ge
 {
-	ComputeShader::ComputeShader(VulkanMisc* vM, const std::string& shaderPath, const std::vector<ComputeBuffer*>& buffers) : vulkanM(vM), m_Pipeline(VK_NULL_HANDLE), m_PipelineLayout(VK_NULL_HANDLE), m_Buffers(buffers)
+	ComputeShader::ComputeShader(VulkanMisc* vM, const std::string& shaderPath, const std::vector<ComputeData*>& buffers) : vulkanM(vM), m_Pipeline(VK_NULL_HANDLE), m_PipelineLayout(VK_NULL_HANDLE), m_Buffers(buffers)
 	{
 		VkShaderModule computeShader = LoadShader(shaderPath, vM->str_VulkanDeviceMisc->str_device,vM);
 		
@@ -20,7 +20,7 @@ namespace Ge
 		pipelineLayoutCreateInfo.pushConstantRangeCount = 0;
 
 		std::vector<VkDescriptorSetLayout> layout;
-		for (ComputeBuffer* buffer : m_Buffers)
+		for (ComputeData* buffer : m_Buffers)
 		{
 			layout.push_back(buffer->getDescriptorSetLayout());
 		}
@@ -65,7 +65,7 @@ namespace Ge
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_Pipeline);
 
 		std::vector<VkDescriptorSet> descriptors;
-		for (ComputeBuffer* buffer : m_Buffers) {
+		for (ComputeData* buffer : m_Buffers) {
 			descriptors.push_back(buffer->getDescriptorSet());
 		}
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_PipelineLayout, 0, static_cast<uint32_t>(descriptors.size()), descriptors.data(), 0, nullptr);
@@ -73,6 +73,28 @@ namespace Ge
 		vkCmdDispatch(commandBuffer, groupCountX, groupCountY, groupCountZ);
 
 		BufferManager::endSingleTimeCommands(commandBuffer, vulkanM);
+	}
+
+	void ComputeShader::swapBuffer(size_t index1, size_t index2)
+	{
+		if (index1 >= 0 && index1 < m_Buffers.size() && index2 >= 0 && index2 < m_Buffers.size())
+		{
+			std::swap(m_Buffers[index1], m_Buffers[index2]);
+		}
+	}
+
+	void ComputeShader::dispatch(VkCommandBuffer commandBuffer, uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ)
+	{
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_Pipeline);
+
+		std::vector<VkDescriptorSet> descriptors;
+		for (ComputeData* buffer : m_Buffers)
+		{
+			descriptors.push_back(buffer->getDescriptorSet());
+		}
+		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_PipelineLayout, 0, static_cast<uint32_t>(descriptors.size()), descriptors.data(), 0, nullptr);
+
+		vkCmdDispatch(commandBuffer, groupCountX, groupCountY, groupCountZ);
 	}
 
 	ComputeShader::~ComputeShader()

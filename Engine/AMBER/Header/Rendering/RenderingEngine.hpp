@@ -26,6 +26,7 @@
 #include "SyncObjects.hpp"
 #include "SkyboxManager.hpp"
 #include "ShadowManager.hpp"
+#include "PostProcessing.hpp"
 
 namespace Ge
 {
@@ -70,6 +71,7 @@ namespace Ge
 		SyncObjects m_syncObjects;
 		SkyboxManager m_skyboxManager;
         ShadowManager m_shadowManager;
+        PostProcessing m_postProcessing;
 		size_t m_currentFrame = 0;
     };
 }

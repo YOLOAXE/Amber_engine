@@ -27,7 +27,8 @@ namespace Ge
 		createInfo.imageColorSpace = surfaceFormat.colorSpace;
 		createInfo.imageExtent = extent;
 		createInfo.imageArrayLayers = 1; //imageArrayLayers indique le nombre de couches que chaque image possede
-		createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+		createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+		//createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
 		QueueFamilyIndices indices = PhysicalDevices::findQueueFamilies(vM->str_VulkanDeviceMisc->str_physicalDevice, vM);
 		uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentFamily.value()};
@@ -50,6 +51,7 @@ namespace Ge
 		createInfo.presentMode = presentMode;
 		createInfo.clipped = VK_TRUE;
 		createInfo.oldSwapchain = VK_NULL_HANDLE; //supr
+		
 		VkDevice device = vM->str_VulkanDeviceMisc->str_device;
 		if (vkCreateSwapchainKHR(device, &createInfo, nullptr, &m_swapChain) != VK_SUCCESS)
 		{
@@ -139,10 +141,14 @@ namespace Ge
 	{
 		for (const auto &availableFormat : availableFormats)
 		{
-			if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+			/*if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 			{
 				//VK_FORMAT_B8G8R8A8_SRGB  :  stock les canaux de couleur R, G, B et A dans cet ordre et en entiers non sign�s de 8 bits.
 				//VK_COLOR_SPACE_SRGB_NONLINEAR_KHR si le sRGB est supporte
+				return availableFormat;
+			}*/
+			if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM)
+			{
 				return availableFormat;
 			}
 		}

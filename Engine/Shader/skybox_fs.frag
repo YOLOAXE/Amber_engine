@@ -47,10 +47,11 @@ layout(set = 4, binding = 0) uniform UniformBufferLight
 
 layout(set = 5, binding = 0) uniform UniformBufferDiver
 {
-	uint maxLight;
-	float u_time;
-	float gamma;
-}ubd;
+    uint maxLight;
+    uint maxShadow;
+    float u_time;
+    float gamma;
+} ubd;
 
 layout (set = 6, binding = 0) uniform samplerCube samplerCubeMap;
 

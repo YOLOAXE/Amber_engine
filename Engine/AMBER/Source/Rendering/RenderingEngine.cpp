@@ -129,7 +129,12 @@ namespace Ge
 			Debug::INITFAILED("SkyboxManager");
 			return false;
 		}
-        if (!RenderingEngine::m_commandBuffer.initialize(&m_shadowManager,&m_vulkanMisc, p_ptrClass))
+        if (!RenderingEngine::m_postProcessing.initialize(&m_vulkanMisc))
+        {
+            Debug::INITFAILED("postProcessing");
+            return false;
+        }
+        if (!RenderingEngine::m_commandBuffer.initialize(&m_shadowManager, m_postProcessing ,&m_vulkanMisc, p_ptrClass))
 		{
             Debug::INITFAILED("CommandBuffer");
             return false;
@@ -155,6 +160,7 @@ namespace Ge
 		RenderingEngine::m_hud.release();
 		RenderingEngine::m_syncObjects.release();
 		RenderingEngine::m_commandBuffer.release();
+        RenderingEngine::m_postProcessing.release();
 		RenderingEngine::m_skyboxManager.release();
         RenderingEngine::m_shadowManager.release();
         RenderingEngine::m_shaderUniformBufferDivers.release();
@@ -191,15 +197,17 @@ namespace Ge
 		m_ptrClass->settingManager->setWindowWidth(width);        
 		vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);
 		RenderingEngine::m_commandBuffer.release();
+        RenderingEngine::m_postProcessing.release();
 		RenderingEngine::m_frameBuffers.release();
 		RenderingEngine::m_depthResources.release();
-		RenderingEngine::m_colorResources.release();
+		RenderingEngine::m_colorResources.release();        
 		m_swapChain.release();
 		m_swapChain.initialize(&m_vulkanMisc, m_ptrClass, &m_shaderUniformBufferDivers);
 		RenderingEngine::m_colorResources.initialize(&m_vulkanMisc);
 		RenderingEngine::m_depthResources.initialize(&m_vulkanMisc);
 		RenderingEngine::m_frameBuffers.initialize(&m_vulkanMisc);
-		RenderingEngine::m_commandBuffer.initialize(&m_shadowManager,&m_vulkanMisc, m_ptrClass);        
+        RenderingEngine::m_postProcessing.initialize(&m_vulkanMisc);
+		RenderingEngine::m_commandBuffer.initialize(&m_shadowManager, m_postProcessing ,&m_vulkanMisc, m_ptrClass);
 		m_hud.recreateSwapChain();
         m_cameraManager.getCurrentCamera()->mapMemory();
 	}
@@ -220,7 +228,7 @@ namespace Ge
                 m_shadowManager.recreatePipeline();
                 m_VulkanDescriptor.recreateShadowPipeline = false;
             }
-			RenderingEngine::m_commandBuffer.initialize(&m_shadowManager,&m_vulkanMisc, m_ptrClass);
+			RenderingEngine::m_commandBuffer.initialize(&m_shadowManager, m_postProcessing ,&m_vulkanMisc, m_ptrClass);
 			m_VulkanDescriptor.recreateCommandBuffer = false;            
 		}		
 		vkWaitForFences(m_vulkanDeviceMisc.str_device, 1, &m_syncObjects.m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
@@ -236,8 +244,8 @@ namespace Ge
 		else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 		{
 			Debug::Error("Echec l'or de l'optention d'une image de la swap chain");
-		}		
-				
+		}
+
 		if (m_syncObjects.m_imagesInFlight[imageIndex] != VK_NULL_HANDLE)
 		{
 			vkWaitForFences(m_vulkanDeviceMisc.str_device, 1, &m_syncObjects.m_imagesInFlight[imageIndex], VK_TRUE, UINT64_MAX);

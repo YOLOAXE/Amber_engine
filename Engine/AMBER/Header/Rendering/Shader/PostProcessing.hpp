@@ -3,6 +3,9 @@
 
 #include "VulkanMisc.hpp"
 #include "Debug.hpp"
+#include "ComputeShader.hpp"
+#include "ComputeImage.hpp"
+#include "ShaderUtil.hpp"
 
 namespace Ge
 {
@@ -10,9 +13,21 @@ namespace Ge
 	{
 	public:
 		bool initialize(VulkanMisc* vM);
+		void execute(VkCommandBuffer commandBuffer, uint32_t index);		
 		void release();
 	private:
 		VulkanMisc* vulkanM;
+		ComputeBuffer * m_sizeBufferData;
+		ComputeImage* m_bloomBlur;
+		ComputeImage* m_blur;
+		ComputeImage* m_imageBase;
+		ComputeImage* m_chromaticAberration;
+		ComputeImage* m_depthImage;
+		ComputeShader* m_cshaderTone;
+		ComputeShader* m_cshaderBlur;
+		ComputeShader* m_cshaderMix;
+		ComputeShader* m_cshaderChromaticAberration;
+		ComputeShader* m_cshaderDepthOfField;
 	};
 }
 

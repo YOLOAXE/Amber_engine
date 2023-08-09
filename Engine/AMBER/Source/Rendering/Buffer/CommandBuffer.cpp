@@ -6,9 +6,10 @@
 
 namespace Ge
 {
-	bool CommandBuffer::initialize(ShadowManager * shadowManager,VulkanMisc * vM, ptrClass * ptrC)
+	bool CommandBuffer::initialize(ShadowManager * shadowManager, PostProcessing postProcessing,VulkanMisc * vM, ptrClass * ptrC)
 	{
 		vulkanM = vM;
+
 		std::vector<VkFramebuffer> swapChainFramebuffers = vM->str_VulkanCommandeBufferMisc->str_swapChainFramebuffers;		
 		std::vector<VkDescriptorSet> tab_Descriptor;
 		std::vector<Descriptor *> all_descriptor = Descriptor::GetAllDescriptor();
@@ -100,7 +101,7 @@ namespace Ge
 			int globalShadowFrameCount = 0;
 			std::array<VkDescriptorSet, 2> shadowDesciptor { vM->str_VulkanSwapChainMisc->str_descriptorSetModel , (shadowManager->getDescriptor()[1])->getDescriptorSets() };
 			for (int j = 0; j < shadows.size(); j++)
-			{		
+			{
 				currentShadowFrames = shadows[j]->getFrameBuffer();
 				for (int k = 0; k < currentShadowFrames.size(); k++)
 				{
@@ -138,7 +139,7 @@ namespace Ge
 			std::array<VkClearValue, 2> clearValues{};
 			clearValues[0].color = { ptrC->settingManager->getClearColor().r, ptrC->settingManager->getClearColor().g, ptrC->settingManager->getClearColor().b, ptrC->settingManager->getClearColor().a };
 			clearValues[1].depthStencil = { 1.0f, 0 };			
-
+			
 			renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 			renderPassInfo.pClearValues = clearValues.data();
 
@@ -192,6 +193,8 @@ namespace Ge
 			}
 
 			vkCmdEndRenderPass(m_commandBuffers[i]);
+
+			postProcessing.execute(m_commandBuffers[i], i);
 
 			if (vkEndCommandBuffer(m_commandBuffers[i]) != VK_SUCCESS)
 			{

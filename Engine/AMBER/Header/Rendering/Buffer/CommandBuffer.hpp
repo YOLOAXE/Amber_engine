@@ -7,6 +7,7 @@
 #include "Model.hpp"
 #include "PointeurClass.hpp"
 #include "ShadowManager.hpp"
+#include "PostProcessing.hpp"
 
 namespace Ge
 {
@@ -14,7 +15,7 @@ namespace Ge
     {
     private:
         friend class RenderingEngine;
-        bool initialize(ShadowManager* shadowManager,VulkanMisc * vM, ptrClass * ptrC);
+        bool initialize(ShadowManager* shadowManager, PostProcessing postProcessing,VulkanMisc * vM, ptrClass * ptrC);
         VmaBuffer createInstanceBuffer(std::vector<Model*> models);
         void release();
     private:

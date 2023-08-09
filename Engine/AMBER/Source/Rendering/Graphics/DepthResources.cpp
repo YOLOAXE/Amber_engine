@@ -17,6 +17,7 @@ namespace Ge
 		m_depthImageView = ImageViewSwapChains::createImageView(m_depthTexture.image, VK_IMAGE_VIEW_TYPE_2D, depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, 1, vM);
 		Debug::INITSUCCESS("DepthResources");
 		vM->str_VulkanCommandeBufferMisc->str_depthImageView = m_depthImageView;
+		vM->str_VulkanCommandeBufferMisc->str_depthImage = m_depthTexture.image;
 		return true;
 	}
 

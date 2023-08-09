@@ -11,8 +11,10 @@ namespace Ge
 	class ComputeShader
 	{
 	public:
-		ComputeShader(VulkanMisc* vM, const std::string& shaderPath, const std::vector<ComputeBuffer*>& buffers);
+		ComputeShader(VulkanMisc* vM, const std::string& shaderPath, const std::vector<ComputeData*>& buffers);
 		void dispatch(uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ);
+		void dispatch(VkCommandBuffer commandBuffer,uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ);
+		void swapBuffer(size_t index1, size_t index2);
 		~ComputeShader();
 	private:
 		static VkShaderModule LoadShader(const std::string& filename, VkDevice device, VulkanMisc* vM);
@@ -20,7 +22,7 @@ namespace Ge
 		VulkanMisc* vulkanM;
 		VkPipeline m_Pipeline;
 		VkPipelineLayout m_PipelineLayout;
-		std::vector<ComputeBuffer*> m_Buffers;
+		std::vector<ComputeData*> m_Buffers;
 	};
 }
 

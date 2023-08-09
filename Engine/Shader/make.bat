@@ -1,5 +1,7 @@
 "%VULKAN_SDK%\Bin\glslc.exe" shader.vert -o vert.spv
 "%VULKAN_SDK%\Bin\glslc.exe" shader.frag -o frag.spv
+"%VULKAN_SDK%\Bin\glslc.exe" water.vert -o water_vs.spv
+"%VULKAN_SDK%\Bin\glslc.exe" water.frag -o water_fs.spv
 "%VULKAN_SDK%\Bin\glslc.exe" shader_unlit.vert -o vert_unlit.spv
 "%VULKAN_SDK%\Bin\glslc.exe" shader_unlit.frag -o frag_unlit.spv
 "%VULKAN_SDK%\Bin\glslc.exe" skybox_vs.vert -o skybox_vs.spv
@@ -9,5 +11,10 @@
 "%VULKAN_SDK%\Bin\glslc.exe" shader_mirror.vert -o mirror_vs.spv
 "%VULKAN_SDK%\Bin\glslc.exe" shader_mirror.frag -o mirror_fs.spv
 "%VULKAN_SDK%\Bin\glslc.exe" compute_shader.comp -o compute_shader.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" bloom.comp -o bloom.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" tonemapping.comp -o tonemapping.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" bloom_mix.comp -o bloom_mix.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" chromatic_aberation.comp -o chromatic_aberation.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" depth_of_field.comp -o depth_of_field.comp.spv
 pause
 

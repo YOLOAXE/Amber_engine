@@ -25,7 +25,7 @@ layout(set = 3, binding = 0) uniform UniformBufferMaterial
     float metallic;
     float roughness;    
     float normal;
-    float ao;    
+    float ao;
     uint albedoMap;
     uint normalMap;
     uint metallicMap;
