@@ -14,6 +14,7 @@ namespace Ge
 		void removeBehaviour(Behaviour * b,bool ignoreStop = false);	
 		void update();
 		void fixedUpdate();		
+		void release();
 	private:
 		std::vector<Behaviour *>  m_behaviours;
 		std::vector<Behaviour *>  m_startBehaviours;

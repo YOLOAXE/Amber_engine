@@ -36,6 +36,8 @@ namespace Ge
 
     void GameEngine::release()
     {        
+        m_sceneManager.release();
+        m_behaviourManager.release();
 		m_renderingEngine.release();
         m_time.release();
         m_inputManager.release();
@@ -48,8 +50,8 @@ namespace Ge
         m_time.startTime();
         m_physicsEngine.Initialize(m_settingManager.getGravity());
         Debug::Info("Moteur Start");
-		m_sceneManager.loadEntryScene();
-        GameEngine::update();
+        m_sceneManager.loadEntryScene();
+        GameEngine::update();        
     }
     
     void GameEngine::update()

@@ -38,6 +38,19 @@ namespace Ge
 		m_stopBehaviours.clear();
 	}
 
+	void BehaviourManager::release()
+	{
+		for (int i = 0; i < m_stopBehaviours.size(); i++)
+		{
+			if (m_stopBehaviours[i] != nullptr)
+			{
+				m_stopBehaviours[i]->stop();
+			}
+		}
+		m_stopBehaviours.clear();
+		m_behaviours.clear();
+	}
+
 	void BehaviourManager::fixedUpdate()
 	{	
 		for (int i = 0; i < m_behaviours.size(); i++)

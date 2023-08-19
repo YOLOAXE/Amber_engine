@@ -16,6 +16,7 @@
 #include "SkyboxManager.hpp"
 #include "PhysicsEngine.hpp"
 #include "ShadowManager.hpp"
+#include "ComputeShaderManager.hpp"
 
 using namespace Ge;
 
@@ -36,6 +37,7 @@ struct ptrClass
 	Hud * hud;	
 	GraphiquePipelineManager * graphiquePipelineManager;
 	ShadowManager* shadowManager;
+	ComputeShaderManager* computeShaderManager;
 };
 
 #endif //__ENGINE_POINTEUR_CLASS__

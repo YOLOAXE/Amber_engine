@@ -16,5 +16,15 @@
 "%VULKAN_SDK%\Bin\glslc.exe" bloom_mix.comp -o bloom_mix.comp.spv
 "%VULKAN_SDK%\Bin\glslc.exe" chromatic_aberation.comp -o chromatic_aberation.comp.spv
 "%VULKAN_SDK%\Bin\glslc.exe" depth_of_field.comp -o depth_of_field.comp.spv
+
+"%VULKAN_SDK%\Bin\glslc.exe" nn\neural_network.comp -o nn\neural_network.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" nn\init_weight.comp -o nn\init_weight.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" nn\reset_score.comp -o nn\reset_score.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" nn\init_xor.comp -o nn\init_xor.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" nn\score_xor.comp -o nn\score_xor.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" nn\best_score.comp -o nn\best_score.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" nn\cmp_best.comp -o nn\cmp_best.comp.spv
+"%VULKAN_SDK%\Bin\glslc.exe" nn\update_nn.comp -o nn\update_nn.comp.spv
+
 pause
 

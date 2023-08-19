@@ -33,6 +33,16 @@ namespace Ge
 		}
 	}
 
+	void SceneManager::release()
+	{
+		if (currentScene != nullptr)
+		{
+			currentScene->unload();
+		}
+		m_mapScene.clear();
+		entryScene = "";
+	}
+
 	void SceneManager::loadScene(std::string name)
 	{
 		if (m_mapScene.count(name) == 0)

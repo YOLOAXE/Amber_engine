@@ -15,6 +15,8 @@ namespace Ge
 		void dispatch(uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ);
 		void dispatch(VkCommandBuffer commandBuffer,uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ);
 		void swapBuffer(size_t index1, size_t index2);
+		void setComputeData(size_t index, ComputeData * cd);
+		ComputeData* getComputeData(size_t index);
 		~ComputeShader();
 	private:
 		static VkShaderModule LoadShader(const std::string& filename, VkDevice device, VulkanMisc* vM);

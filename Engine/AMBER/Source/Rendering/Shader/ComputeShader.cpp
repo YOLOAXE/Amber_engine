@@ -65,7 +65,8 @@ namespace Ge
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_Pipeline);
 
 		std::vector<VkDescriptorSet> descriptors;
-		for (ComputeData* buffer : m_Buffers) {
+		for (ComputeData* buffer : m_Buffers) 
+		{
 			descriptors.push_back(buffer->getDescriptorSet());
 		}
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE, m_PipelineLayout, 0, static_cast<uint32_t>(descriptors.size()), descriptors.data(), 0, nullptr);
@@ -81,6 +82,16 @@ namespace Ge
 		{
 			std::swap(m_Buffers[index1], m_Buffers[index2]);
 		}
+	}
+
+	void ComputeShader::setComputeData(size_t index, ComputeData * cd)
+	{
+		m_Buffers[index] = cd;
+	}
+
+	ComputeData* ComputeShader::getComputeData(size_t index)
+	{
+		return m_Buffers[index];
 	}
 
 	void ComputeShader::dispatch(VkCommandBuffer commandBuffer, uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ)

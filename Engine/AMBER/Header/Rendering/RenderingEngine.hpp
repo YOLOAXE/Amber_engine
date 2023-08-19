@@ -27,6 +27,7 @@
 #include "SkyboxManager.hpp"
 #include "ShadowManager.hpp"
 #include "PostProcessing.hpp"
+#include "ComputeShaderManager.hpp"
 
 namespace Ge
 {
@@ -73,6 +74,7 @@ namespace Ge
         ShadowManager m_shadowManager;
         PostProcessing m_postProcessing;
 		size_t m_currentFrame = 0;
+        ComputeShaderManager m_computeShaderManager;
     };
 }
 

@@ -27,6 +27,7 @@ namespace Ge
 		p_ptrClass->hud = &m_hud;
 		p_ptrClass->skyboxManager = &m_skyboxManager;
         p_ptrClass->shadowManager = &m_shadowManager;
+        p_ptrClass->computeShaderManager = &m_computeShaderManager;
         Debug::Info("Initialisation du moteur de rendu");
         if (!RenderingEngine::m_window.initialize(p_ptrClass->settingManager->getWindowWidth(), p_ptrClass->settingManager->getWindowHeight(), p_ptrClass->settingManager->getName(), p_ptrClass->settingManager->getIconPath(), &m_vulkanMisc))
         {
@@ -149,6 +150,11 @@ namespace Ge
 			Debug::INITFAILED("hud");
 			return false;
 		}
+        if (!RenderingEngine::m_computeShaderManager.initialize(&m_vulkanMisc))
+        {
+            Debug::INITFAILED("ComputeShaderManager");
+            return false;
+        }
         Debug::INITSUCCESS("RenderingEngine");
 
         return true;
@@ -157,6 +163,7 @@ namespace Ge
     void RenderingEngine::release()
     {
         vkDeviceWaitIdle(m_vulkanDeviceMisc.str_device);    
+        RenderingEngine::m_computeShaderManager.release();
 		RenderingEngine::m_hud.release();
 		RenderingEngine::m_syncObjects.release();
 		RenderingEngine::m_commandBuffer.release();
@@ -180,7 +187,7 @@ namespace Ge
         RenderingEngine::m_windowSurface.release();
         RenderingEngine::m_validationLayer.release();
         RenderingEngine::m_instanceVulkan.release();
-        RenderingEngine::m_window.release();
+        RenderingEngine::m_window.release();        
         Debug::RELEASESUCCESS("RenderingEngine");
     }
 
