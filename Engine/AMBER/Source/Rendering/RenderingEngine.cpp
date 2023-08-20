@@ -19,7 +19,7 @@ namespace Ge
             return false;
         }
 		m_ptrClass = p_ptrClass;
-		p_ptrClass->cameraManager = &m_cameraManager;		
+		p_ptrClass->cameraManager = &m_cameraManager;
 		p_ptrClass->lightManager = &m_lightManager;
 		p_ptrClass->materialManager = &m_materialManager;
 		p_ptrClass->modelManager = &m_modelManager;
@@ -187,7 +187,7 @@ namespace Ge
         RenderingEngine::m_windowSurface.release();
         RenderingEngine::m_validationLayer.release();
         RenderingEngine::m_instanceVulkan.release();
-        RenderingEngine::m_window.release();        
+        RenderingEngine::m_window.release();
         Debug::RELEASESUCCESS("RenderingEngine");
     }
 

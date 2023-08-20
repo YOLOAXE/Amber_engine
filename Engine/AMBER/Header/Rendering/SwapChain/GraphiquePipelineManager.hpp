@@ -15,7 +15,7 @@ namespace Ge
     public:
         bool initialize(VulkanMisc *vM);
         void release();
-		GraphiquePipeline * createPipeline(const std::string & frag,const std::string & vert,bool back = false, bool multiS = true);
+		GraphiquePipeline * createPipeline(const std::string & frag,const std::string & vert,bool back = false, bool multiS = true,bool transparency = false,int cullmode = 1);
         void destroyPipeline(GraphiquePipeline * pipeline);
 		static std::vector<GraphiquePipeline *> GetPipelines();
     private:

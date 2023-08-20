@@ -6,6 +6,19 @@
 
 namespace Ge
 {
+	bool compare_gp(const GraphiquePipeline* lhs, const GraphiquePipeline* rhs)
+	{
+		if (lhs->getShaderPair()->transparency && !rhs->getShaderPair()->transparency)
+		{
+			return false;
+		}
+		else if (!lhs->getShaderPair()->transparency && rhs->getShaderPair()->transparency)
+		{
+			return true;
+		}
+		return false;
+	}
+
 	bool CommandBuffer::initialize(ShadowManager * shadowManager, PostProcessing postProcessing,VulkanMisc * vM, ptrClass * ptrC)
 	{
 		vulkanM = vM;
@@ -33,7 +46,7 @@ namespace Ge
 
 		BufferManager::createBuffer(sizeof(PushConstants), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_instancedBufferSkybox, vulkanM->str_VulkanDeviceMisc);
 
-		for (const auto& descriptor : all_descriptor) 
+		for (const auto& descriptor : all_descriptor)
 		{
 			tab_Descriptor.push_back(descriptor->getDescriptorSets());
 		}
@@ -65,6 +78,8 @@ namespace Ge
 			std::vector<std::vector<Model*>> all_models = separateByPipeline;
 			std::vector<VmaBuffer> instancedBuffer = m_instancedBuffer;
 			std::vector<GraphiquePipeline*> all_pipeline = GraphiquePipelineManager::GetPipelines();
+			std::sort(all_pipeline.begin(), all_pipeline.end(), compare_gp);
+
 			if (vkBeginCommandBuffer(m_commandBuffers[i], &beginInfo) != VK_SUCCESS)
 			{
 				Debug::Error("Echec de l'enregistrer du commande buffer");
@@ -191,6 +206,8 @@ namespace Ge
 					}
 				}
 			}
+
+
 
 			vkCmdEndRenderPass(m_commandBuffers[i]);
 

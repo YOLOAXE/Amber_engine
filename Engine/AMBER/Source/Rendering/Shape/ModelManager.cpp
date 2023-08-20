@@ -371,6 +371,101 @@ namespace Ge
 		}
 	}
 
+	std::vector<ShapeBuffer*> ModelManager::allocateBuffers(const char* path)
+	{
+		tinyobj::attrib_t attrib;
+		std::vector<tinyobj::shape_t> shapes;
+		std::vector<tinyobj::material_t> materials;
+		std::vector<ShapeBuffer*> sbvec;
+		std::string warn, err;
+
+		if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path))
+		{
+			Debug::Warn("%s  %s", nullptr, warn.c_str(), err.c_str());
+			return sbvec;
+		}
+
+		std::vector<Vertex> vertices;
+		std::vector<uint32_t> indices;
+		std::unordered_map<Vertex, uint32_t> uniqueVertices;
+
+		vertices.reserve(attrib.vertices.size() / 3);
+		indices.reserve(attrib.vertices.size());
+
+		for (const auto& shape : shapes)
+		{
+			vertices.clear();
+			indices.clear();
+			uniqueVertices.clear();
+			for (const auto& index : shape.mesh.indices)
+			{
+				Vertex vertex{};
+
+				vertex.pos = {
+					attrib.vertices[3 * index.vertex_index + 0],
+					attrib.vertices[3 * index.vertex_index + 1],
+					attrib.vertices[3 * index.vertex_index + 2]
+				};
+
+				vertex.texCoord = {
+					attrib.texcoords[2 * index.texcoord_index + 0],
+					1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
+				};
+
+				vertex.normal = {
+					attrib.normals[3 * index.normal_index + 0],
+					attrib.normals[3 * index.normal_index + 1],
+					attrib.normals[3 * index.normal_index + 2]
+				};
+
+				vertex.color = { 1, 1, 1 };
+				vertex.tangents = { 0, 0, 0 };
+
+				if (uniqueVertices.count(vertex) == 0)
+				{
+					uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
+					vertices.emplace_back(vertex);
+				}
+
+				indices.emplace_back(uniqueVertices[vertex]);
+			}
+
+			uint32_t index0, index1, index2;
+			glm::vec3 edge1, edge2, tangent;
+			glm::vec2 deltaUV1, deltaUV2;
+			float r;
+			for (size_t i = 0; i < indices.size(); i += 3)
+			{
+				index0 = indices[i];
+				index1 = indices[i + 1];
+				index2 = indices[i + 2];
+
+				Vertex& vertex0 = vertices[index0];
+				Vertex& vertex1 = vertices[index1];
+				Vertex& vertex2 = vertices[index2];
+
+				edge1 = vertex1.pos - vertex0.pos;
+				edge2 = vertex2.pos - vertex0.pos;
+
+				deltaUV1 = vertex1.texCoord - vertex0.texCoord;
+				deltaUV2 = vertex2.texCoord - vertex0.texCoord;
+
+				r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+				tangent = glm::normalize(r * (deltaUV2.y * edge1 - deltaUV1.y * edge2));
+
+				vertex0.tangents = tangent;
+				vertex1.tangents = tangent;
+				vertex2.tangents = tangent;
+			}
+			ShapeBuffer* buffer = new ShapeBuffer(vertices, indices, vulkanM);
+			m_shapeBuffers.push_back(buffer);
+			sbvec.push_back(buffer);
+		}
+
+		return sbvec;
+	}
+
 	ShapeBuffer* ModelManager::allocateBuffer(const char* path)
 	{
 		tinyobj::attrib_t attrib;

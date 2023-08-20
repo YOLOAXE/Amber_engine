@@ -8,7 +8,7 @@ namespace Ge
 		vulkanM = vM;
 		for (int i = 0; i < m_fileNameShaders.size(); i++)
 		{
-			createPipeline(m_fileNameShaders[i]->Frag, m_fileNameShaders[i]->Vert, m_fileNameShaders[i]->back);
+			createPipeline(m_fileNameShaders[i]->Frag, m_fileNameShaders[i]->Vert, m_fileNameShaders[i]->back, m_fileNameShaders[i]->multiSampling, m_fileNameShaders[i]->transparency, m_fileNameShaders[i]->cullMode);
 		}
 		if (m_fileNameShaders.size() == 0)
 		{
@@ -28,9 +28,9 @@ namespace Ge
 		m_graphiquePipeline.clear();
 	}
 
-	GraphiquePipeline * GraphiquePipelineManager::createPipeline(const std::string &frag, const std::string &vert,bool back,bool multiS)
+	GraphiquePipeline * GraphiquePipelineManager::createPipeline(const std::string &frag, const std::string &vert,bool back,bool multiS,bool transparency,int cullmode)
 	{
-		ShaderPair * sp = new ShaderPair(frag, vert, back,multiS);
+		ShaderPair * sp = new ShaderPair(frag, vert, back,multiS, transparency, cullmode);
 		GraphiquePipeline * gp = new GraphiquePipeline(vulkanM, sp);
 		m_graphiquePipeline.push_back(gp);				
 		return gp;
