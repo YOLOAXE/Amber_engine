@@ -45,12 +45,15 @@ void BaseScene::load()
 	starm->setPosition(glm::vec3(0, 5, 15));
 	starm->setMaterial(starmat);
 
-	/*ShapeBuffer* waterSb = m_ptrc.modelManager->allocateBuffer("../Model/waterplane.obj");
+	ShapeBuffer* waterSb = m_ptrc.modelManager->allocateBuffer("../Model/waterplane.obj");
 	Materials* watermat = m_ptrc.materialManager->createMaterial();
 	Model* waterm = m_ptrc.modelManager->createModel(waterSb);
-	GraphiquePipeline* gpwater = m_ptrc.graphiquePipelineManager->createPipeline("../Shader/water_fs.spv", "../Shader/water_vs.spv");
+	watermat->setMetallic(0.0f);
+	watermat->setRoughness(0.1f);
+	watermat->setColor(glm::vec3(0.2f, 0.3f, 1.0f));	
+	GraphiquePipeline* gpwater = m_ptrc.graphiquePipelineManager->createPipeline("../Shader/water_fs.spv", "../Shader/water_vs.spv",false,true,true);
 	watermat->setPipeline(gpwater);
-	waterm->setMaterial(watermat);*/
+	waterm->setMaterial(watermat);
 
 	/*ShapeBuffer* sb = m_ptrc.modelManager->allocateBuffer("../Model/cube.obj");
 	

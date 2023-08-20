@@ -81,20 +81,28 @@ layout(location = 6) out int imaterial;
 
 void main() 
 {
-	float amplitude = 0.5; // Adjust this value to control the height of the water waves
-    float frequency = 2.0; // Adjust this value to control the frequency of the water waves
+    float amplitude = 3.5; 
+    float frequency = 2.0; 
+    float sizePos = 0.1;
 
-    // Apply water movement using the sine function and u_time
-    vec3 newPosition = inPosition + vec3(0.0, amplitude * sin(ubd.u_time * frequency + inPosition.x * 0.1), 0.0);
+    vec3 newPosition = inPosition + vec3(0.0, amplitude * sin(ubd.u_time * frequency + (inPosition.x + inPosition.z) * sizePos), 0.0);
+
+    vec3 normalDisplacement = vec3(sin(ubd.u_time * frequency + (inPosition.x + inPosition.z) * sizePos) * (amplitude / 12), 0.0, sin(ubd.u_time * frequency + (inPosition.x + inPosition.z) * sizePos) * (amplitude / 12));
+
+    // Update the normal to account for displacement
+    vec3 newNormal = normalize(inNormal + normalDisplacement);
+    newNormal.y = inNormal.y; // Keep the y-component unchanged
 
     fragTexCoord = ubm[index_material].offset + inTexCoord * ubm[index_material].tilling;
     WorldPos = vec3(ubo[index_ubo].model * vec4(newPosition, 1.0));
     Color = inColor;
+
     vec3 T = normalize(vec3(ubo[index_ubo].model * vec4(inTangent, 0.0)));
-    vec3 N = normalize(vec3(ubo[index_ubo].model * vec4(inNormal, 0.0)));
+    vec3 N = newNormal; 
     T = normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
     TBN = mat3(T, B, N);
+
     imaterial = index_material;
     gl_Position = ubc.proj * ubc.view * ubo[index_ubo].model * vec4(newPosition, 1.0);
 }
